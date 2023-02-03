@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { pageAnimation } from '../../utils/animations/animations';
 import { LinearProgress } from '@mui/material';
 import { notify } from '../../utils/tools';
@@ -10,6 +10,7 @@ import { selectCoursesList } from '../../src/store/courses/courses.reselect';
 import { tableContainer } from '../../utils/animations/animations';
 import setCoursesData from '../../src/store/courses/courses.action';
 import CoursesTable from '../../components/courses';
+import Link from 'next/link';
 const Labels = ['name', 'teacher', 'credit', 'semester', 'group'];
 const types = ['text', 'text', 'number', 'text', 'text'];
 
@@ -180,6 +181,20 @@ const Courses = () => {
             {toggle ? 'Close' : 'Add Course'}
           </motion.button>
         )}
+        <Link
+          href='courses/courseposts'
+          className='absolute right-5 top-16 mr-4 mt-4 text-slate-800 dark:text-slate-700 block'
+        >
+          <motion.button
+            whileTap={{ opacity: 0.5 }}
+            whileHover={{ translateY: -2 }}
+            className={`bg-blue-500
+            text-white py-1 px-5 rounded-lg mt-2 mb-3`}
+          >
+            Posts
+          </motion.button>
+        </Link>
+
         {toggle && (
           <div className=' dark:bg-gray-900 rounded-lg mb-4 w-1/2'>
             <form

@@ -49,7 +49,10 @@ const CoursesTable = ({ courses, deleteCourse, toggleUpdateCourse, loading, noAc
                   hover:bg-gray-100 dark:hover:bg-gray-200
                   '
             >
-              <Link href={`/courses/${item?._id}`}>
+              <Link
+                href={`/courses/${item?._id}`}
+                as={`/courses/${item?._id}?user=${user?.token}`}
+              >
                 <td className='p-3 text-sm text-blue-500 whitespace-nowrap'>{item?.name}</td>
               </Link>
               <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>{item?.semester}</td>
