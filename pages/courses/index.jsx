@@ -6,14 +6,15 @@ import { pageAnimation } from '../../utils/animations/animations';
 import { LinearProgress } from '@mui/material';
 import { notify } from '../../utils/tools';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
+import { selectCoursesList } from '../../src/store/courses/courses.reselect';
 import { tableContainer } from '../../utils/animations/animations';
 import setCoursesData from '../../src/store/courses/courses.action';
-import { usefetchCourses } from '../../src/customHooks/fetchCoures';
 import CoursesTable from '../../components/courses';
 const Labels = ['name', 'teacher', 'credit', 'semester', 'group'];
 const types = ['text', 'text', 'number', 'text', 'text'];
 
 const Courses = () => {
+  const courses = useSelector(selectCoursesList);
   const [toggle, setToggle] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formType, setFormType] = useState('add');
@@ -27,8 +28,6 @@ const Courses = () => {
     group: '',
   };
   const [coursesD, setCoursesD] = useState(coursesInput);
-
-  const courses = usefetchCourses(user, setLoading);
 
   if (!user) {
     return (
@@ -123,7 +122,7 @@ const Courses = () => {
         }
         return course;
       });
-      console.log(newCourses);
+
       dispatch(setCoursesData(newCourses));
       setCoursesD(coursesInput);
       setToggle(false);

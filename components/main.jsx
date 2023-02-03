@@ -3,33 +3,18 @@ import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../src/store/user/user.selector';
 import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
+import { usefetchCourses } from '../src/customHooks/fetchCoures';
 import CoursesTable from './courses';
 import CoursesCard from './courses/coursesCards';
 import SlidesAnimation from './slidesAnimation';
 
 const Main = () => {
-  const [courses, setCourses] = useState([]);
-  const newCourses = courses?.slice(0, 5);
   const router = useRouter();
   const user = useSelector(selectCurrentUser);
   const [mount, setMounted] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
-  useEffect(() => {
-    const getCourse = async () => {
-      const res = await fetch('https://vast-pink-moth-toga.cyclic.app/courses', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${user?.token}`,
-        },
-      });
-      const data = await res.json();
-      setCourses(data);
-    };
-    getCourse();
-
-    return () => setCourses([]);
-  }, []);
+  const [loading, setLoading] = useState(false);
+  const courses = usefetchCourses(user, setLoading);
   useEffect(() => {
     if (!user) {
       setFadeOut(true);
@@ -121,7 +106,7 @@ const Main = () => {
             </svg>
           </h1>
           <CoursesTable
-            courses={newCourses}
+            courses={courses}
             noAction={true}
           />
         </div>

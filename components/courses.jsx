@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../src/store/user/user.selector';
 import Link from 'next/link';
 
-const tableHead = ['Course', 'Semester', 'Group', 'Teacher', 'Posts', 'Credit', 'Participants', 'Action'];
+const tableHead = ['Course', 'Semester', 'Group', 'Teacher', 'Credits', 'Posts', 'Participants', 'Action'];
 const randomLightBgs = ['bg-blue-100', 'bg-green-100', 'bg-yellow-100', 'bg-red-100', 'bg-purple-100', 'bg-pink-100'];
 const getRandomLightBg = () => {
   return randomLightBgs[Math.floor(Math.random() * randomLightBgs.length)];
@@ -56,14 +56,13 @@ const CoursesTable = ({ courses, deleteCourse, toggleUpdateCourse, loading, noAc
               <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>{item?.group}</td>
               <td className='p-4 text-sm text-gray-700 whitespace-nowrap'>{item?.teacher}</td>
               <td
-                className={`p-3 text-sm dark:text-gray-900
-                        ${getRandomLightBg()}
+                className={`p-3 text-sm dark:text-gray-900 text-gray-700
                       whitespace-nowrap`}
               >
                 {item?.credit}
               </td>
-              <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>{item?.posts?.length}</td>
-              <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>{item?.participants?.length}</td>
+              <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>{item?.posts?.length || 0}</td>
+              <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>{item?.participants?.length || 0}</td>
 
               {!noAction && user?.user.admin && (
                 <td className={`p-3 text-sm space-x-2 text-gray-700 whitespace-nowrap ${loading ? 'animate-pulse' : ''}`}>
@@ -84,7 +83,7 @@ const CoursesTable = ({ courses, deleteCourse, toggleUpdateCourse, loading, noAc
                   <motion.button
                     whileTap={{ opacity: 0.5 }}
                     whileHover={{ translateY: -2 }}
-                    onClick={() => toggleUpdateCourse(item._id)}
+                    onClick={() => toggleUpdateCourse(item?._id)}
                     type='submit'
                     className='border-2 border-blue-500 py-1 px-3 rounded-lg text-blue-500'
                   >
