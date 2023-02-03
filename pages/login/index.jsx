@@ -13,8 +13,8 @@ import axios from 'axios';
 import { Typography, LinearProgress } from '@mui/material';
 
 const loginStyles = {
-  inputStyle: 'focus:outline-none border-2 bg-gray-100 border-gray-300 w-full shadow-md px-2 py-3',
-  labelStyle: 'absolute top-3 left-3 pointer-events-none',
+  inputStyle: 'focus:outline-none bg-gray-100 border-2 border-gray-300 w-full shadow-md px-2 py-2',
+  labelStyle: 'absolute top-2 left-3 transition-all duration-300 pointer-events-none z-10',
 };
 
 const SignIn = () => {
@@ -110,7 +110,7 @@ const SignIn = () => {
               e.preventDefault();
               localSignIn();
             }}
-            className='space-y-5 
+            className='space-y-5 form-signin 
         w-[90%] sm:w-[60%] md:w-[40%] lg:w-[30%]
         text-gray-600 dark:text-gray-300
       '
@@ -126,7 +126,7 @@ const SignIn = () => {
             ${loading ? ' border-gray-500 ' : ''}
           `}
               labelClassName={`${loginStyles.labelStyle}
-          ${userData.username !== '' ? 'text-transparent' : 'top-3 text-gray-300'}
+          ${userData.username !== '' ? 'text-transparent' : 'top-2 text-gray-300'}
           `}
             />
 
@@ -141,7 +141,7 @@ const SignIn = () => {
           ${loading ? ' border-gray-500 ' : ''}
           `}
               labelClassName={`${loginStyles.labelStyle}
-          ${userData.password !== '' ? 'text-transparent' : 'top-3 text-gray-300'}
+          ${userData.password !== '' ? 'text-transparent' : 'top-2 text-gray-300'}
           `}
             />
             <motion.button
