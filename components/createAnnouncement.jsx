@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { notify } from '../utils/tools';
 import { useSelector } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
+import { CircularProgress } from '@mui/material';
 import { selectCurrentUser } from '../src/store/user/user.selector';
 const CreateAnnouncement = ({ setToggleAnnouncement, toggleAnnouncement, setAnnouncement, announcement }) => {
   const user = useSelector(selectCurrentUser);
-
+  const [loading, setLoading] = useState(false);
   const [coursesD, setCoursesD] = useState({ title: '', subject: '' });
   const handleKeyDown = (event) => {
     if (event.keyCode === 27) {
@@ -42,6 +43,7 @@ const CreateAnnouncement = ({ setToggleAnnouncement, toggleAnnouncement, setAnno
       return;
     }
     try {
+      setLoading(true);
       const res = await fetch('https://vast-pink-moth-toga.cyclic.app/groups/announcements', {
         method: 'POST',
         headers: {
@@ -54,6 +56,7 @@ const CreateAnnouncement = ({ setToggleAnnouncement, toggleAnnouncement, setAnno
       const data = await res.json();
       console.log(data);
       if (res.ok) {
+        setLoading(false);
         notify('Announcement added', 'success');
         setTimeout(() => {
           setAnnouncement([
@@ -78,7 +81,7 @@ const CreateAnnouncement = ({ setToggleAnnouncement, toggleAnnouncement, setAnno
   return (
     <div
       onClick={handleBackdropClick}
-      className=' backdrop-blur-md font-sans backdrop-filter backdrop-brightness-75 absolute -top-5 -left-2 min-h-[100%] w-full  '
+      className=' w-full h-full fixed top-0 left-0 flex justify-center items-center bg-black bg-opacity-50 z-50 '
     >
       <div className='flex flex-col items-center justify-center w-full h-[85vh] px-10 md:px-0'>
         <form
@@ -93,10 +96,10 @@ const CreateAnnouncement = ({ setToggleAnnouncement, toggleAnnouncement, setAnno
             Make an announcement
           </p>
           <button
-            className='absolute right-7 top-14 md:top-7 font-semibold text-xl border px-3 py self-center hover:bg-gray-200'
+            className='absolute right-7 top-14 pt-1 md:top-7 font-semibold text-xl border px-3 py self-center hover:bg-gray-200'
             onClick={() => setToggleAnnouncement(!toggleAnnouncement)}
           >
-            x
+            {loading ? <CircularProgress size={20} /> : 'X'}
           </button>
           <div>
             <div className='flex flex-col'>

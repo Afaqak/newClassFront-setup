@@ -3,11 +3,12 @@ import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
 import CoursesPosts from '../../components/post';
 import CourseLayout from '../../components/courses/layout/CourseLayout';
+import { LinearProgress } from '@mui/material';
 import withAuth from '../../components/withAuth';
 import Announcement from '../../components/Announcement';
 const Participants = ({ data, id }) => {
   //get All users
-
+  const [loading, setLoading] = useState(false);
   const [participants, setParticipants] = useState(data);
   const [page, setPage] = useState(1);
   const [accounts, setAccounts] = useState([]);
@@ -19,15 +20,21 @@ const Participants = ({ data, id }) => {
 
   useEffect(() => {
     const getAllUsers = async () => {
-      const res = await fetch('https://vast-pink-moth-toga.cyclic.app/accounts', {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-      const data = await res.json();
-      console.log(data);
-      setAccounts(data);
+      try {
+        setLoading(true);
+        const res = await fetch('https://vast-pink-moth-toga.cyclic.app/accounts', {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
+        const data = await res.json();
+        console.log('data', data);
+        setAccounts(data);
+        setLoading(false);
+      } catch (err) {
+        console.log(err);
+      }
     };
     getAllUsers();
   }, []);
@@ -40,6 +47,7 @@ const Participants = ({ data, id }) => {
     console.log('input', input);
     e.preventDefault();
     try {
+      setLoading(true);
       const res = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/${id}/participants`, {
         method: 'POST',
         headers: {
@@ -52,6 +60,7 @@ const Participants = ({ data, id }) => {
       if (!res.ok) throw new Error(res.statusText);
       setParticipants([...participants, input]);
       setToggle(false);
+      setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -59,12 +68,14 @@ const Participants = ({ data, id }) => {
 
   return (
     <div
-      className='min-h-screen font-sans mt-5
+      className='min-h-screen font-sans
       w-full relative bg-white 
       flex flex-col dark:bg-gray-900 
     '
     >
-      <div className='px-4'>
+      {loading && <LinearProgress />}
+
+      <div className='px-4 mt-4'>
         <p
           className='text-gray-500 
         dark:text-gray-400'
@@ -131,11 +142,14 @@ const Participants = ({ data, id }) => {
         id={id}
       >
         {page === 1 && (
-          <div className='flex flex-col w-full px-4 py-4 gap-y-2'>
-            {participants.map((participant) => (
+          <div
+            className='flex flex-col w-full px-4 py-4 gap-y-2  
+          '
+          >
+            {accounts.map((participant) => (
               <div
                 key={participant._id}
-                className='flex items-center justify-between px-4 py-2 border '
+                className='flex items-center justify-between px-4 py-2 border hover:bg-gray-100 cursor-pointer'
               >
                 {participant._id}
               </div>
@@ -143,7 +157,12 @@ const Participants = ({ data, id }) => {
           </div>
         )}
         {page === 2 && <CoursesPosts id={id} />}
-        {page === 3 && <Announcement id={id} />}
+        {page === 3 && (
+          <Announcement
+            id={id}
+            setLoading={setLoading}
+          />
+        )}
       </CourseLayout>
 
       {/* <div className='flex flex-col w-full px-4 py-4 gap-y-2'>

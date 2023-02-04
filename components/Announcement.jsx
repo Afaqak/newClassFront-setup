@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { selectCurrentUser } from '../src/store/user/user.selector';
 import CreateAnnouncement from './createAnnouncement';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from 'react-redux';
-const Announcement = () => {
+import DeletePopup from './deletePopup';
+const Announcement = ({ setLoading }) => {
   const [toggleAnnouncement, setToggleAnnouncement] = useState(false);
   const user = useSelector(selectCurrentUser);
   const [announcement, setAnnouncement] = useState([]);
@@ -12,9 +15,42 @@ const Announcement = () => {
     announcement.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     slicedAnnouncement = announcement.slice(0, 10);
   }
+
+  const [toggleDelete, setToggleDelete] = useState(false);
+
+  const [deleteId, setDeleteId] = useState('');
+
+  const handleDelete = (id) => {
+    setDeleteId(id);
+    setToggleDelete(!toggleDelete);
+  };
+
+  const handleDeleteAnnouncement = async (id) => {
+    try {
+      setLoading(true);
+      const res = await fetch(`https://vast-pink-moth-toga.cyclic.app/groups/announcements/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+      const data = await res.json();
+      console.log(data);
+      if (res.ok) {
+        setLoading(false);
+        notify('Announcement deleted', 'success');
+        setToggleDelete(!toggleDelete);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     const getAnnouncement = async () => {
       try {
+        setLoading(true);
         const res = await fetch('https://vast-pink-moth-toga.cyclic.app/groups/announcements', {
           headers: {
             'Content-Type': 'application/json',
@@ -23,6 +59,7 @@ const Announcement = () => {
         });
         const data = await res.json();
         console.log(data);
+        setLoading(false);
         setAnnouncement(data);
       } catch (error) {
         console.log(error);
@@ -42,15 +79,14 @@ const Announcement = () => {
 
   return (
     <div className='px-4 py-3 mb-8 bg-white  dark:bg-gray-800'>
-      {' '}
-      <div className='flex-1 px-4 mt-3'></div>
-      <h1 className='text-2xl font-semibold tracking-wide'>Announcements</h1>
-      <button
-        className='bg-blue-500 text-white px-4 py-1 rounded-md mt-2'
-        onClick={() => setToggleAnnouncement(!toggleAnnouncement)}
-      >
-        Announce!
-      </button>
+      {toggleDelete && (
+        <DeletePopup
+          setLoading={setLoading}
+          toggleDelete={toggleDelete}
+          setToggleDelete={setToggleDelete}
+          handleDelete={handleDeleteAnnouncement}
+        />
+      )}
       {toggleAnnouncement && (
         <CreateAnnouncement
           announcement={announcement}
@@ -59,12 +95,27 @@ const Announcement = () => {
           setToggleAnnouncement={setToggleAnnouncement}
         />
       )}
+      <button
+        className='bg-blue-500 text-white px-4 py-1 rounded-md mt-2'
+        onClick={() => setToggleAnnouncement(!toggleAnnouncement)}
+      >
+        Announce!
+      </button>
       {slicedAnnouncement?.map((ann) => (
         <div
           className='
-        bg-blue-50 dark:bg-gray-800 max-w-2xl overflow-hidden
+        bg-blue-50 dark:bg-gray-800 max-w-[34rem] overflow-hidden md:max-w-2xl relative 
         px-4 py-2 mt-6 flex flex-col gap-2 rounded-md'
         >
+          <button
+            onClick={() => handleDelete(ann._id)}
+            className='bg-red-500 text-white px-2 rounded-md absolute right-5'
+          >
+            <FontAwesomeIcon
+              size='xs'
+              icon={faTrash}
+            />
+          </button>
           <p
             className='text-blue-500 text-[0.75rem] font-bold tracking-wider
           '
