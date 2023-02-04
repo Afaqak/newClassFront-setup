@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
 import { motion } from 'framer-motion';
-import { pageAnimation } from '../../utils/animations/animations';
+import { useRouter } from 'next/router';
 import { LinearProgress } from '@mui/material';
 import { notify } from '../../utils/tools';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
@@ -11,10 +11,12 @@ import { tableContainer } from '../../utils/animations/animations';
 import setCoursesData from '../../src/store/courses/courses.action';
 import CoursesTable from '../../components/courses';
 import Link from 'next/link';
+import { useEffect } from 'react';
 const Labels = ['name', 'teacher', 'credit', 'semester', 'group'];
 const types = ['text', 'text', 'number', 'text', 'text'];
 
 const Courses = () => {
+  const router = useRouter();
   const courses = useSelector(selectCoursesList);
   const [toggle, setToggle] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -30,18 +32,10 @@ const Courses = () => {
   };
   const [coursesD, setCoursesD] = useState(coursesInput);
 
-  if (!user) {
-    return (
-      <motion.div
-        variants={pageAnimation}
-        initial='hidden'
-        animate='show'
-        exit='exit'
-      >
-        Please login
-      </motion.div>
-    );
-  }
+  useEffect(() => {
+    if (!user) router.push('/');
+  }, [user]);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setCoursesD({ ...coursesD, [name]: value });
