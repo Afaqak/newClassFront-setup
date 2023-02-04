@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
+import CoursesPosts from '../../components/post';
 import CourseLayout from '../../components/courses/layout/CourseLayout';
 const Participants = ({ data, id }) => {
   //get All users
@@ -124,7 +125,11 @@ const Participants = ({ data, id }) => {
         </form>
       )} */}
 
-      <CourseLayout setPage={setPage}>
+      <CourseLayout
+        setPage={setPage}
+        page={page}
+        id={id}
+      >
         {page === 1 && (
           <div className='flex flex-col w-full px-4 py-4 gap-y-2'>
             {participants.map((participant) => (
@@ -137,6 +142,7 @@ const Participants = ({ data, id }) => {
             ))}
           </div>
         )}
+        {page === 2 && <CoursesPosts id={id} />}
       </CourseLayout>
 
       {/* <div className='flex flex-col w-full px-4 py-4 gap-y-2'>

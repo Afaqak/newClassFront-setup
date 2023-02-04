@@ -1,24 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../src/store/user/user.selector';
 import { motion, AnimatePresence } from 'framer-motion';
-import { usefetchCourses } from '../src/customHooks/fetchCoures';
+import { setCoursesData } from '../src/store/courses/courses.action';
 import { LinearProgress } from '@mui/material';
+import { selectCoursesList } from '../src/store/courses/courses.reselect';
+import { toast } from 'react-hot-toast';
 import CoursesTable from './courses';
 import CoursesCard from './courses/coursesCards';
 
 const Main = () => {
+  const courses = useSelector(selectCoursesList);
   const user = useSelector(selectCurrentUser);
   const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    console.count('useEffect');
+    let isCancelled = false;
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const res = await fetch('https://vast-pink-moth-toga.cyclic.app/courses', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
+        const data = await res.json();
+        if (!isCancelled) {
+          setLoading(false);
+          dispatch(setCoursesData(data));
+        }
+      } catch (err) {
+        if (!isCancelled) {
+          setLoading(false);
+          toast.error('Something went wrong');
+        }
+      }
+    };
+    fetchData();
+    return () => {
+      isCancelled = true;
+      setLoading(false);
+    };
+  }, []);
 
-  const courses = usefetchCourses(user, setLoading);
   return (
-    <AnimatePresence>
+    <AnimatePresence mode='wait'>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, transition: { duration: 0.3 } }}
         exit={{ opacity: 0, transition: { duration: 0.3 } }}
-        exitAfter={300}
         className='min-h-screen font-sans
       w-full relative bg-white 
       flex flex-col dark:bg-gray-900 
@@ -41,7 +73,6 @@ const Main = () => {
           >
             <input
               type='date'
-              value={new Date().toISOString().slice(0, 10)}
               className='
             bg-transparent h-5 px-5 pr-10 rounded-lg text-sm focus:outline-none
             '

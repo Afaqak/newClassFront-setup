@@ -14,7 +14,6 @@ const Batches = () => {
     const getBatches = async () => {
       try {
         const res = await FetchTypeGet(`https://vast-pink-moth-toga.cyclic.app/batches/${batchId}/programs`, userData.token);
-        console.log(res);
         setBatches(res);
       } catch (err) {
         console.log(err);

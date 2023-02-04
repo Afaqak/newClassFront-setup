@@ -12,6 +12,7 @@ import { Toaster } from 'react-hot-toast';
 import batches from '../../utils/data';
 import LinearProgress from '@mui/material/LinearProgress';
 import axios from 'axios';
+import withAuth from '../../components/withAuth';
 
 const loginStyles = {
   inputStyle: 'focus:outline-none bg-gray-100 border-2 border-gray-300 w-full shadow-md px-2 py-2',
@@ -43,7 +44,7 @@ const SignUp = () => {
   ];
 
   const [userData, setUserData] = useState(userValues);
-  console.log(userData);
+
   const handlechange = (e) => {
     const { name, value } = e.target;
     setUserData({
@@ -60,7 +61,7 @@ const SignUp = () => {
         setLoading(true);
         const response = await axios.post('https://vast-pink-moth-toga.cyclic.app/users/signup', userData);
         const { data } = response;
-        console.log(data);
+
         if (data) {
           setLoading(false);
           router.push('/');
@@ -287,4 +288,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default withAuth(SignUp);

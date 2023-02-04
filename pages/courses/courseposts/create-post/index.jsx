@@ -3,8 +3,8 @@ import { Box, Button, LinearProgress, TextField } from '@mui/material';
 import { toast } from 'react-hot-toast';
 import { Toaster } from 'react-hot-toast';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
-import checkFile from '../../../../utils/checkfile';
 import axios from 'axios';
 import { selectCurrentUser } from '../../../../src/store/user/user.selector';
 import { useState } from 'react';
@@ -14,7 +14,23 @@ const initialValues = {
   text: '',
 };
 
+const checkFile = (details) => {
+  let error = {};
+  if (details.title.trim() === '') {
+    error.title = 'Title must not be empty';
+  }
+  if (details.text.trim() === '') {
+    error.text = 'Text must not be empty';
+  }
+  if (details.phile === null) {
+    error.phile = 'File must not be empty';
+  }
+  return error;
+};
+
 const Post = () => {
+  const router = useRouter();
+  const { courseId } = router.query;
   const [loading, setLoading] = useState(false);
   const [postDetails, setPostDetails] = React.useState(initialValues);
   const [file, setFile] = React.useState(null);
@@ -55,14 +71,14 @@ const Post = () => {
       formData.append('text', postDetails.text);
 
       try {
-        const res = await axios.post(`https://vast-pink-moth-toga.cyclic.app/courses/${_id}/posts`, formData, {
+        const res = await axios.post(`https://vast-pink-moth-toga.cyclic.app/courses/${courseId}/posts`, formData, {
           headers: {
             'Content-Type': 'form-data',
             Authorization: `Bearer ${token}`,
           },
         });
         setLoading(false);
-        console.log(res.data);
+        console.log(res);
         notifySucces('Posted !');
       } catch (err) {
         setLoading(false);

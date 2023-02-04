@@ -4,11 +4,11 @@ import Box from '@mui/material/Box';
 import Link from 'next/link';
 import { Button, LinearProgress } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { selectCurrentUser } from '../../../src/store/user/user.selector';
+import { selectCurrentUser } from '../src/store/user/user.selector';
 import { motion } from 'framer-motion';
 import { pageAnimation } from '../utils/animations/animations';
 import axios from 'axios';
-const CoursesPosts = () => {
+const CoursesPosts = ({ id }) => {
   const [loading, setLoading] = useState(false);
   const [postDetails, setPostDetails] = React.useState([]);
   const { token, user } = useSelector(selectCurrentUser) || {
@@ -37,7 +37,7 @@ const CoursesPosts = () => {
     }
     const handleReq = async () => {
       try {
-        const response = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/63dd36dfc0a7344fba416503/posts`, {
+        const response = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/${id}/posts`, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
@@ -45,7 +45,7 @@ const CoursesPosts = () => {
         });
 
         const data = await response.json();
-        console.log('data', data);
+
         if (data) {
           setLoading(false);
           setPostDetails(
@@ -95,16 +95,9 @@ const CoursesPosts = () => {
     return '';
   }
   return (
-    <motion.div
-      variants={pageAnimation}
-      initial='hidden'
-      animate='show'
-      exit='exit'
-      className='h-screen bg-gray-50 dark:bg-gray-900'
-    >
-      {loading && <LinearProgress />}
+    <div className='h-screen bg-gray-50 dark:bg-gray-900'>
       <div className='px-4'>
-        <Link href='/courses/courseposts/create-post'>
+        <Link href={`/courses/create-post?courseId=${id}`}>
           <Button
             onClick={() => setLoading(true)}
             sx={{ marginTop: '3vh' }}
@@ -186,7 +179,7 @@ const CoursesPosts = () => {
           pageSize={7}
         />
       </Box>
-    </motion.div>
+    </div>
   );
 };
 

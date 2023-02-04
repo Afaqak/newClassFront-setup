@@ -6,7 +6,6 @@ import UserAccount from '../../components/user accounts/UserAccount';
 const SingleUser = ({ id }) => {
   const [user, setUser] = useState(null);
   const userData = useSelector(selectCurrentUser);
-  console.log(userData?.token);
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch(`https://vast-pink-moth-toga.cyclic.app/accounts/${id}`, {
@@ -54,7 +53,6 @@ const SingleUser = ({ id }) => {
           },
         });
         const data = await req.json();
-        console.log(data);
       };
       fetchUser();
     }
@@ -69,7 +67,7 @@ const SingleUser = ({ id }) => {
 
 export async function getServerSideProps(context) {
   const { _id } = context.params;
-  console.log(_id);
+
   return {
     props: {
       id: _id,

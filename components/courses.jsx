@@ -12,7 +12,7 @@ const getRandomLightBg = () => {
 
 const CoursesTable = ({ courses, deleteCourse, toggleUpdateCourse, loading, noAction }) => {
   const user = useSelector(selectCurrentUser);
-  console.log(courses);
+
   return (
     <table
       className='w-full whitespace-nowrap 
@@ -25,6 +25,7 @@ const CoursesTable = ({ courses, deleteCourse, toggleUpdateCourse, loading, noAc
         <tr>
           {tableHead.map((item) => (
             <th
+              key={item}
               className={`w-20 p-3 text-sm font-semibold
                        uppercase text-center
                       tracking-wide 
@@ -41,6 +42,7 @@ const CoursesTable = ({ courses, deleteCourse, toggleUpdateCourse, loading, noAc
       <tbody className='divide-y divide-gray-100 w-full'>
         {courses?.map((item) => (
           <tr
+            key={item?._id}
             className='bg-white text-center
                   hover:bg-gray-100 dark:hover:bg-gray-200
                   '
@@ -70,7 +72,6 @@ const CoursesTable = ({ courses, deleteCourse, toggleUpdateCourse, loading, noAc
                   whileHover={{ translateY: -2 }}
                   onClick={() => {
                     deleteCourse(item?._id);
-                    console.log(item?._id);
                   }}
                   disabled={loading}
                   type='submit'

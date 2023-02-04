@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
 import UserAccount from '../../components/user accounts/UserAccount';
+import withAuth from '../../components/withAuth';
 const UserAccountInfo = () => {
   const userData = useSelector(selectCurrentUser) || {};
   const { user } = userData || {};
@@ -16,4 +17,4 @@ const UserAccountInfo = () => {
   );
 };
 
-export default UserAccountInfo;
+export default withAuth(UserAccountInfo);

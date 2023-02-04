@@ -1,20 +1,17 @@
 import React from 'react';
 import useFetchUsers from '../../src/customHooks/useFetchUsers.h';
 import { LinearProgress } from '@mui/material';
-import SlidesAnimation from '../../components/slidesAnimation';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import withAuth from '../../components/withAuth';
 
 const Accounts = () => {
   const router = useRouter();
   const userr = useSelector(selectCurrentUser);
   const { users, loading, mount, user, userData } = useFetchUsers();
   const { admin, teacher } = user || {};
-  if (!mount) {
-    return <SlidesAnimation />;
-  }
 
   const getBatches = async (id) => {
     router.push(`accounts/batch/${id}`);
@@ -99,7 +96,7 @@ const Accounts = () => {
   );
 };
 
-export default Accounts;
+export default withAuth(Accounts);
 
 const UserProfile = ({ user }) => {
   return (

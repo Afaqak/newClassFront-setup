@@ -1,7 +1,7 @@
 import React from 'react';
-import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import Target from '../Links';
+import { setCoursesData } from '../../src/store/courses/courses.action';
 import { useDispatch } from 'react-redux';
 import { setCurrentUser } from '../../src/store/user/user.actions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,6 +14,7 @@ const Navbar = () => {
   const logout = () => {
     setTimeout(() => {
       dispatch(setCurrentUser(null));
+      dispatch(setCoursesData(null));
     }, 1000);
   };
 
