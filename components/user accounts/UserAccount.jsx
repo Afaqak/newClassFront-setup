@@ -3,12 +3,12 @@ import Image from 'next/image';
 const UserAccount = ({ userData, user }) => {
   const tagAsigner = (admin, teacher) => {
     if (admin && teacher) {
-      return <span className='text-blue-600 text-[0.6rem] tracking-widest font-bold'>Admin/teacher</span>;
+      return <span className='ml-1 text-blue-600 text-[0.6rem] tracking-widest font-bold'>Admin/teacher</span>;
     }
     if (admin) {
       return <span className='ml-1 text-blue-600 text-[0.6rem] tracking-widest font-bold'>Admin</span>;
     }
-    return <span className='text-blue-600 text-[0.6rem] tracking-widest font-bold'>Student</span>;
+    return <span className='ml-1 text-blue-600 text-[0.6rem] tracking-widest font-bold'>user</span>;
   };
 
   return (

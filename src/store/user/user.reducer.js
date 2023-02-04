@@ -2,6 +2,7 @@ import { UserActionTypes } from './user.action';
 
 const INITIAL_STATE = {
   currentUser: null,
+  toggleBroadcast: false,
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -10,6 +11,11 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         currentUser: action.payload,
+      };
+    case UserActionTypes.TOGGLE_BROADCAST:
+      return {
+        ...state,
+        toggleBroadcast: action.payload,
       };
     default:
       return state;

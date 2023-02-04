@@ -1,13 +1,19 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Target from '../Links';
+import { useRouter } from 'next/router';
 import { setCoursesData } from '../../src/store/courses/courses.action';
 import { useDispatch } from 'react-redux';
+import { setToggleBroadcast } from '../../src/store/user/user.actions';
 import { setCurrentUser } from '../../src/store/user/user.actions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt, faUser, faUserGroup, faBookOpen, faSchool, faBroadcastTower } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = () => {
+  const router = useRouter();
+  const toggle = useSelector((state) => state.user.toggleBroadcast);
+  console.log(toggle);
+  const [activeLink, setActiveLink] = React.useState(router.pathname);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user?.currentUser?.user);
 
@@ -21,9 +27,10 @@ const Navbar = () => {
   const showUser = () =>
     user.admin ? (
       <Target
+        onClick={() => setActiveLink('/accounts')}
         href='/accounts'
         label='Accounts'
-        className={`${NavStyles.flexDex}`}
+        className={`${NavStyles.flexDex} ${activeLink === '/accounts' ? 'bg-blue-500 text-white' : ''}`}
         icon={faUserGroup}
       />
     ) : (
@@ -35,7 +42,7 @@ const Navbar = () => {
     <nav>
       <div
         className='text-gray-600 mt-14 sm:min-h-[100vh] p-2 w-[5rem] md:w-[14rem] 
-      shadow-md bg-white border dark:border-blue-500 m-2 sm:m-0
+      shadow-md bg-white border dark:border-blue-500 m-2 sm:m-0 
        transition-all duration-300 ease-in-out
     '
       >
@@ -54,36 +61,52 @@ const Navbar = () => {
             `}
         >
           <Target
+            onClick={() => setActiveLink('/')}
             href='/'
             icon={faSchool}
-            className={`${NavStyles.flexDex} mt-2 md:0`}
+            className={`${NavStyles.flexDex} mt-2 md:0 ${activeLink === '/' ? 'bg-blue-500 text-white' : ''}`}
             label='Dashboard'
           />
           <Target
+            onClick={() => setActiveLink('/account')}
             icon={faUser}
             href='/account'
-            className={`${NavStyles.flexDex} ml-1 md:ml-0`}
+            className={`${NavStyles.flexDex} ml-1 md:ml-0 ${activeLink === '/account' ? 'bg-blue-500 text-white' : ''}`}
             label='Account'
           />
           {showUser()}
           <Target
+            onClick={() => setActiveLink('/courses')}
             icon={faBookOpen}
             href='/courses'
-            className={`${NavStyles.flexDex}`}
+            className={`${NavStyles.flexDex} ml-1 md:ml-0 ${activeLink === '/courses' ? 'bg-blue-500 text-white' : ''}`}
             label='Courses'
           />
-          <Target
-            icon={faBroadcastTower}
-            href='/broadcast'
-            className={`${NavStyles.flexDex}`}
-            label='Announcements'
-          />
+          <div
+            className={`${NavStyles.flexDex} ml-1 md:ml-0 ${activeLink === '/broadcast' ? 'bg-blue-500 text-white' : ''}`}
+            onClick={() => {
+              dispatch(setToggleBroadcast(!toggle));
+              console.log(toggle);
+              setActiveLink('/broadcast');
+            }}
+          >
+            <FontAwesomeIcon
+              className='w-6 h-6'
+              icon={faBroadcastTower}
+            />
+            <span className='ml-2'>Announcements</span>
+          </div>
         </div>
         <div
           className={` mt-10 px-3 py-3 space-x-2 cursor-pointer text-red-400
             hover:text-red-500 transition-all duration-300 ease-in-out
             `}
-          onClick={logout}
+          onClick={() => {
+            logout();
+            setTimeout(() => {
+              setActiveLink('/');
+            }, 1000);
+          }}
         >
           <FontAwesomeIcon
             className='w-6 h-6'

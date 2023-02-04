@@ -59,6 +59,7 @@ const CreateAnnouncement = ({ setToggleAnnouncement, toggleAnnouncement, setAnno
         setLoading(false);
         notify('Announcement added', 'success');
         setTimeout(() => {
+          if (!announcement) return;
           setAnnouncement([
             ...announcement,
             {

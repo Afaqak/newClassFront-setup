@@ -1,9 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-const Target = ({ href, className, icon, label }) => {
+const Target = ({ href, className, icon, label, onClick }) => {
   return (
     <Link
+      onClick={onClick}
       href={href}
       className={className}
     >

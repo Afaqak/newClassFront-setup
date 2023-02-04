@@ -50,20 +50,8 @@ const SignIn = () => {
         }
       } catch (err) {
         setLoading(false);
-        if (err.response) {
-          if (err.response.status == 401) {
-          }
-          if (err.response.status === 400) {
-            notify('Invalid Credentials', 'error');
-          }
-          if (err.response.status === 500) {
-            notify('Server Error Occured! Try Again Later', 'error');
-          }
-        } else if (err.request) {
-          notify('Server Error Occured! Try Again Later', 'error');
-        } else {
-          notify('Server Error Occured! Try Again Later', 'error');
-        }
+        console.log(err.message);
+        notify(err.message, 'error');
       }
     } else {
       setLoading(false);
@@ -161,8 +149,8 @@ const SignIn = () => {
             </div>
           </motion.form>
         </div>
-        <Toaster />
       </motion.div>
+      <Toaster />
     </AnimatePresence>
   );
 };

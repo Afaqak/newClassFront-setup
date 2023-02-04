@@ -6,10 +6,14 @@ import { setCoursesData } from '../src/store/courses/courses.action';
 import { LinearProgress } from '@mui/material';
 import { selectCoursesList } from '../src/store/courses/courses.reselect';
 import { toast } from 'react-hot-toast';
+import { setToggleBroadcast } from '../src/store/user/user.actions';
 import CoursesTable from './courses';
 import CoursesCard from './courses/coursesCards';
+import CreateAnnouncement from './createAnnouncement';
 
 const Main = () => {
+  const toggleBroadCast = useSelector((state) => state.user.toggleBroadcast);
+  console.log(toggleBroadCast);
   const dispatch = useDispatch();
   const courses = useSelector(selectCoursesList);
   console.log(courses);
@@ -60,6 +64,12 @@ const Main = () => {
       flex flex-col dark:bg-gray-900 
     '
       >
+        {toggleBroadCast && (
+          <CreateAnnouncement
+            setToggleAnnouncement={() => dispatch(setToggleBroadcast(!toggleBroadCast))}
+            toggleAnnouncement={toggleBroadCast}
+          />
+        )}
         {loading && <LinearProgress />}
         <div className='flex-1 px-4 mt-3'>
           <h1
