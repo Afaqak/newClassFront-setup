@@ -273,7 +273,7 @@ const SignUp = () => {
               >
                 Have an account ?{' '}
                 <Link
-                  href='/login'
+                  href='/'
                   className='text-blue-500'
                 >
                   Sign in
