@@ -1,23 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { LinearProgress } from '@mui/material';
 import { notify } from '../../utils/tools';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
 import { selectCoursesList } from '../../src/store/courses/courses.reselect';
-import { tableContainer } from '../../utils/animations/animations';
 import setCoursesData from '../../src/store/courses/courses.action';
 import CoursesTable from '../../components/courses';
 import Link from 'next/link';
-import { useEffect } from 'react';
+
 const Labels = ['name', 'teacher', 'credit', 'semester', 'group'];
 const types = ['text', 'text', 'number', 'text', 'text'];
 
 const Courses = () => {
   const router = useRouter();
   const courses = useSelector(selectCoursesList);
+  const [mounted, setMounted] = useState(false);
   const [toggle, setToggle] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formType, setFormType] = useState('add');
@@ -159,94 +159,81 @@ const Courses = () => {
   };
 
   return (
-    <div>
-      {loading && <LinearProgress />}
-      <div className='p-4 bg-white min-h-screen dark:bg-gray-900'>
-        <h1 className='text-3xl font-semibold text-gray-900 dark:text-gray-50 tracking-wide'>Courses</h1>
-        <p className='text-slate-800 dark:text-slate-700 block mb-4'>Welcome to your courses page</p>
-        {user?.user.admin && (
-          <motion.button
-            onClick={toggleAddCourse}
-            whileTap={{ opacity: 0.5 }}
-            whileHover={{ translateY: -2 }}
-            className={`bg-blue-500 
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, transition: { duration: 0.7, ease: 'easeInOut' } }}
+        exit={{ opacity: 0, transition: { duration: 0.7 } }}
+      >
+        {loading && <LinearProgress />}
+        <div className='p-4 bg-white min-h-screen dark:bg-gray-900'>
+          <h1 className='text-3xl font-semibold text-gray-900 dark:text-gray-50 tracking-wide'>Courses</h1>
+          <p className='text-slate-800 dark:text-slate-700 block mb-4'>Welcome to your courses page</p>
+          {user?.user.admin && (
+            <motion.button
+              onClick={toggleAddCourse}
+              whileTap={{ opacity: 0.5 }}
+              whileHover={{ translateY: -2 }}
+              className={`bg-blue-500 
             text-white py-1 px-3 rounded-lg mt-2 mb-3`}
-          >
-            {toggle ? 'Close' : 'Add Course'}
-          </motion.button>
-        )}
-        <Link
-          href='courses/courseposts'
-          className='absolute right-5 top-16 mr-4 mt-4 text-slate-800 dark:text-slate-700 block'
-        >
-          <motion.button
-            whileTap={{ opacity: 0.5 }}
-            whileHover={{ translateY: -2 }}
-            className={`bg-blue-500
-            text-white py-1 px-5 rounded-lg mt-2 mb-3`}
-          >
-            Posts
-          </motion.button>
-        </Link>
-
-        {toggle && (
-          <div className=' dark:bg-gray-900 rounded-lg mb-4 w-1/2'>
-            <form
-              onSubmit={formType === 'add' ? addCourse : updateCourse}
-              className='flex flex-col'
             >
-              <motion.p className='text-slate-800 block'>{formType === 'add' ? 'Add Course' : 'Update Course'}</motion.p>
-              {Labels.map((label, i) => (
-                <div
-                  key={i}
-                  className='flex flex-col mb-2'
-                >
-                  <label
-                    htmlFor={label}
-                    className='text-slate-700 font-semibold'
-                  >
-                    {label}
-                  </label>
-                  <input
-                    placeholder={label}
-                    onChange={handleInputChange}
-                    type={types[i]}
-                    name={label}
-                    id={label}
-                    className='border-2 dark:bg-gray-50 border-gray-300 dark:text-gray-900 p-1 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent'
-                  />
-                </div>
-              ))}
+              {toggle ? 'Close' : 'Add Course'}
+            </motion.button>
+          )}
 
-              <motion.button
-                whileTap={{ opacity: 0.5 }}
-                whileHover={{ scale: 1.05 }}
-                className='bg-blue-500 text-white py-1 px-3 rounded-lg'
+          {toggle && (
+            <div className=' dark:bg-gray-900 rounded-lg mb-4 w-1/2'>
+              <form
+                onSubmit={formType === 'add' ? addCourse : updateCourse}
+                className='flex flex-col'
               >
-                {formType === 'add' ? 'Add Course' : 'Update Course'}
-              </motion.button>
-            </form>
+                <motion.p className='text-slate-800 block'>{formType === 'add' ? 'Add Course' : 'Update Course'}</motion.p>
+                {Labels.map((label, i) => (
+                  <div
+                    key={i}
+                    className='flex flex-col mb-2'
+                  >
+                    <label
+                      htmlFor={label}
+                      className='text-slate-700 font-semibold'
+                    >
+                      {label}
+                    </label>
+                    <input
+                      placeholder={label}
+                      onChange={handleInputChange}
+                      type={types[i]}
+                      name={label}
+                      id={label}
+                      className='border-2 dark:bg-gray-50 border-gray-300 dark:text-gray-900 p-1 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent'
+                    />
+                  </div>
+                ))}
+
+                <motion.button
+                  whileTap={{ opacity: 0.5 }}
+                  whileHover={{ scale: 1.05 }}
+                  className='bg-blue-500 text-white py-1 px-3 rounded-lg'
+                >
+                  {formType === 'add' ? 'Add Course' : 'Update Course'}
+                </motion.button>
+              </form>
+            </div>
+          )}
+          <div className='overflow-auto rounded-lg shadow hidden md:block'>
+            <CoursesTable
+              courses={courses}
+              deleteCourse={deleteCourse}
+              toggleUpdateCourse={toggleUpdateCourse}
+              addCourse={addCourse}
+              loading={loading}
+              noAction={false}
+            />
           </div>
-        )}
-        <motion.div
-          variants={tableContainer}
-          initial='hidden'
-          animate='show'
-          exit='exit'
-          className='overflow-auto rounded-lg shadow hidden md:block'
-        >
-          <CoursesTable
-            courses={courses}
-            deleteCourse={deleteCourse}
-            toggleUpdateCourse={toggleUpdateCourse}
-            addCourse={addCourse}
-            loading={loading}
-            noAction={false}
-          />
-        </motion.div>
-      </div>
-      <Toaster />
-    </div>
+        </div>
+        <Toaster />
+      </motion.div>
+    </AnimatePresence>
   );
 };
 

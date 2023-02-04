@@ -7,7 +7,7 @@ const UserAccountInfo = () => {
   const { user } = userData || {};
 
   return (
-    <div className='p-4 min-h-screen bg-gray-50 dark:bg-gray-900'>
+    <div className='p-4 min-h-screen dark:bg-gray-900'>
       <UserAccount
         userData={userData}
         user={user}

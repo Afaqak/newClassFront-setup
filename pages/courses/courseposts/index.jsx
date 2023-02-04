@@ -18,7 +18,7 @@ const Courses = () => {
   const { semesters } = user || { semesters: null };
   const deleteAll = async () => {
     try {
-      const response = await axios.delete(`https://vast-pink-moth-toga.cyclic.app/courses/${_id}/posts`, {
+      const response = await axios.delete(`https://vast-pink-moth-toga.cyclic.app/courses/63dd36dfc0a7344fba416503/posts`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -37,7 +37,7 @@ const Courses = () => {
     }
     const handleReq = async () => {
       try {
-        const response = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/${_id}/posts`, {
+        const response = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/63dd36dfc0a7344fba416503/posts`, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
@@ -45,7 +45,6 @@ const Courses = () => {
         });
 
         const data = await response.json();
-
         console.log('data', data);
         if (data) {
           setLoading(false);

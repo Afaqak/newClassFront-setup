@@ -28,7 +28,6 @@ const useFetchUsers = () => {
     setTimeout(() => {
       setMounted(true);
     }, 1300);
-    return () => setMounted(false);
   }, []);
 
   return { users, loading, mount, user, userData };

@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Image from 'next/image';
 const UserAccount = ({ userData, user }) => {
   const tagAsigner = (admin, teacher) => {
     if (admin && teacher) {
@@ -12,59 +12,21 @@ const UserAccount = ({ userData, user }) => {
   };
 
   return (
-    <div className=' min-h-screen bg-gray-50 dark:bg-gray-900'>
-      <h1
-        className='text-4xl font-semibold pb-4
-        border-b-2 border-gray-200
-        '
-      >
-        User Info
-      </h1>
-      <div className='mt-4'>
-        <div className='flex flex-col-reverse md:flex-row items-center'>
-          <div>
-            <div
-              className='font-bold bg-black 
-        p-2 text-center text-white
-        '
-            >
-              <span className='font-semibold ml-2 text-2xl'>
-                {user?.username}
-
-                {tagAsigner(user?.admin, user?.teacher)}
-              </span>
+    <div className=' min-h-screen dark:bg-gray-900'>
+      <div>
+        {' '}
+        <h1 className='text-3xl font-semibold text-gray-900 dark:text-gray-50 tracking-wide'>User Account</h1>
+        <p className='text-slate-800 dark:text-slate-700 block mb-4'>checkout your account details</p>
+        <div>
+          <div className=' w-[80%] bg-red-500 flex'>
+            <div className='bg-blue-500'>
+              <Image
+                src={'/Humaaans.svg'}
+                width={200}
+                height={200}
+              />
             </div>
-            <div
-              className='bg-opacity-90 backdrop-filter backdrop-blur-sm bg-gray-100 p-2 mt-4
-    w-[20rem] sm:w-[25rem] dark:bg-opacity-100
-  md:w-[40rem] 
-  '
-            >
-              <div className='text-gray-600 font-bold mt-2 border-b p-2 hover:bg-gray-200 cursor-pointer'>
-                Email:
-                <span className='text-gray-800 font-semibold ml-2'>{user?.email}</span>
-              </div>
-              <div className='text-gray-600 font-bold mt-2 border-b p-2 hover:bg-gray-200 cursor-pointer'>
-                Batch:
-                <span className='text-gray-800 font-semibold ml-2'>{user?.batch}</span>
-              </div>
-              <div className='text-gray-600 font-bold mt-2 border-b p-2 hover:bg-gray-200 cursor-pointer'>
-                Program:
-                <span className='text-gray-800 font-semibold ml-2'>{user?.program}</span>
-              </div>
-              <div className='text-gray-600 font-bold mt-2 border-b p-2 hover:bg-gray-200 cursor-pointer'>
-                Group:
-                <span className='text-gray-800 font-semibold ml-2'>{user?.group}</span>
-              </div>
-              <div className='text-gray-600 font-bold mt-2 border-b p-2 hover:bg-gray-200 cursor-pointer'>
-                Semester:
-                <span className='text-gray-800 font-semibold ml-2'>{user?.semesters?.length === 0 ? 'Not set' : user?.semesters[0].semester}</span>
-              </div>
-              <div className='text-gray-600 font-bold mt-2 border-b p-2 hover:bg-gray-200 cursor-pointer'>
-                Verified:
-                <span className='text-gray-800 font-semibold ml-2'>{user?.valid ? 'Yes' : 'No'}</span>
-              </div>
-            </div>
+            <div className='section_2'>sdgsd</div>
           </div>
         </div>
       </div>
@@ -73,3 +35,15 @@ const UserAccount = ({ userData, user }) => {
 };
 
 export default UserAccount;
+
+// const {
+//   user.username,
+//   user.batch,
+//   user.program,
+//   user.group,
+//   user.semesters,
+//   user.valid,
+//   user.email,
+//   user.admin,
+//   user.teacher,
+// }

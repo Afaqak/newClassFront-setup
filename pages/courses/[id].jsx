@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
-
+import CourseLayout from '../../components/courses/layout/CourseLayout';
 const Participants = ({ data, id }) => {
   //get All users
 
   const [participants, setParticipants] = useState(data);
+  const [page, setPage] = useState(1);
   const [accounts, setAccounts] = useState([]);
   const [input, setInput] = useState({ student: '' });
   console.log('inputM', input);
@@ -66,19 +67,27 @@ const Participants = ({ data, id }) => {
         dark:text-white
         '
         >
-          Participants
+          Courses Feed
         </h1>
-        <p className='text-gray-500 dark:text-gray-400'>students enrolled in this course</p>
-        {admin && (
+        <p className='text-gray-500 dark:text-gray-400'>This is the courses feed page</p>
+        {/* {admin && (
           <button
             onClick={toggleAddParticipant}
             className='bg-blue-500 mt-4 text-white py-1 px-3 rounded-lg'
           >
             {toggle ? 'Cancel' : 'Add Participant'}
           </button>
-        )}
+        )} */}
       </div>
-      {toggle && (
+      {/* <motion.button
+        whileTap={{ opacity: 0.5 }}
+        whileHover={{ translateY: -2 }}
+        className={`bg-blue-500
+            text-white py-1 px-5 rounded-lg mt-2 mb-3`}
+      >
+        Posts
+      </motion.button> */}
+      {/* {toggle && (
         <form
           className='w-1/2 px-4 py-6 text-gray-700 dark:text-gray-400'
           onSubmit={addParticipant}
@@ -113,8 +122,24 @@ const Participants = ({ data, id }) => {
             Add
           </button>
         </form>
-      )}
-      <div className='flex flex-col w-full px-4 py-4 gap-y-2'>
+      )} */}
+
+      <CourseLayout setPage={setPage}>
+        {page === 1 && (
+          <div className='flex flex-col w-full px-4 py-4 gap-y-2'>
+            {participants.map((participant) => (
+              <div
+                key={participant._id}
+                className='flex items-center justify-between px-4 py-2 border '
+              >
+                {participant._id}
+              </div>
+            ))}
+          </div>
+        )}
+      </CourseLayout>
+
+      {/* <div className='flex flex-col w-full px-4 py-4 gap-y-2'>
         {participants.map((participant) => (
           <div
             key={participant._id}
@@ -123,7 +148,7 @@ const Participants = ({ data, id }) => {
             {participant._id}
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };

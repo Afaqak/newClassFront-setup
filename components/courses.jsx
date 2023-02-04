@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../src/store/user/user.selector';
 import Link from 'next/link';
@@ -14,7 +14,7 @@ const CoursesTable = ({ courses, deleteCourse, toggleUpdateCourse, loading, noAc
   const user = useSelector(selectCurrentUser);
   console.log(courses);
   return (
-    <motion.table
+    <table
       className='w-full whitespace-nowrap 
             '
     >
@@ -37,68 +37,63 @@ const CoursesTable = ({ courses, deleteCourse, toggleUpdateCourse, loading, noAc
           ))}
         </tr>
       </thead>
-      <AnimatePresence>
-        <tbody
-          initial='hidden'
-          animate='show'
-          className='divide-y divide-gray-100 w-full'
-        >
-          {courses?.map((item) => (
-            <tr
-              className='bg-white text-center
+
+      <tbody className='divide-y divide-gray-100 w-full'>
+        {courses?.map((item) => (
+          <tr
+            className='bg-white text-center
                   hover:bg-gray-100 dark:hover:bg-gray-200
                   '
+          >
+            <Link
+              href={`/courses/${item?._id}`}
+              as={`/courses/${item?._id}?user=${user?.token}`}
             >
-              <Link
-                href={`/courses/${item?._id}`}
-                as={`/courses/${item?._id}?user=${user?.token}`}
-              >
-                <td className='p-3 text-sm text-blue-500 whitespace-nowrap'>{item?.name}</td>
-              </Link>
-              <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>{item?.semester}</td>
-              <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>{item?.group}</td>
-              <td className='p-4 text-sm text-gray-700 whitespace-nowrap'>{item?.teacher}</td>
-              <td
-                className={`p-3 text-sm dark:text-gray-900 text-gray-700
+              <td className='p-3 text-sm text-blue-500 whitespace-nowrap'>{item?.name}</td>
+            </Link>
+            <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>{item?.semester}</td>
+            <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>{item?.group}</td>
+            <td className='p-4 text-sm text-gray-700 whitespace-nowrap'>{item?.teacher}</td>
+            <td
+              className={`p-3 text-sm dark:text-gray-900 text-gray-700
                       whitespace-nowrap`}
-              >
-                {item?.credit}
-              </td>
-              <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>{item?.posts?.length || 0}</td>
-              <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>{item?.participants?.length || 0}</td>
+            >
+              {item?.credit}
+            </td>
+            <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>{item?.posts?.length || 0}</td>
+            <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>{item?.participants?.length || 0}</td>
 
-              {!noAction && user?.user.admin && (
-                <td className={`p-3 text-sm space-x-2 text-gray-700 whitespace-nowrap ${loading ? 'animate-pulse' : ''}`}>
-                  <motion.button
-                    whileTap={{ opacity: 0.5 }}
-                    whileHover={{ translateY: -2 }}
-                    onClick={() => {
-                      deleteCourse(item?._id);
-                      console.log(item?._id);
-                    }}
-                    disabled={loading}
-                    type='submit'
-                    className='bg-blue-500 
+            {!noAction && user?.user.admin && (
+              <td className={`p-3 text-sm space-x-2 text-gray-700 whitespace-nowrap ${loading ? 'animate-pulse' : ''}`}>
+                <motion.button
+                  whileTap={{ opacity: 0.5 }}
+                  whileHover={{ translateY: -2 }}
+                  onClick={() => {
+                    deleteCourse(item?._id);
+                    console.log(item?._id);
+                  }}
+                  disabled={loading}
+                  type='submit'
+                  className='bg-blue-500 
                           text-white py-1 px-4 rounded-lg'
-                  >
-                    Delete
-                  </motion.button>
-                  <motion.button
-                    whileTap={{ opacity: 0.5 }}
-                    whileHover={{ translateY: -2 }}
-                    onClick={() => toggleUpdateCourse(item?._id)}
-                    type='submit'
-                    className='border-2 border-blue-500 py-1 px-3 rounded-lg text-blue-500'
-                  >
-                    Update
-                  </motion.button>
-                </td>
-              )}
-            </tr>
-          ))}
-        </tbody>
-      </AnimatePresence>
-    </motion.table>
+                >
+                  Delete
+                </motion.button>
+                <motion.button
+                  whileTap={{ opacity: 0.5 }}
+                  whileHover={{ translateY: -2 }}
+                  onClick={() => toggleUpdateCourse(item?._id)}
+                  type='submit'
+                  className='border-2 border-blue-500 py-1 px-3 rounded-lg text-blue-500'
+                >
+                  Update
+                </motion.button>
+              </td>
+            )}
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 };
 
