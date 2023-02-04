@@ -288,4 +288,4 @@ const SignUp = () => {
   );
 };
 
-export default withAuth(SignUp);
+export default SignUp;

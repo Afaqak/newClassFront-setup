@@ -34,6 +34,7 @@ const Participants = ({ data, id }) => {
         setLoading(false);
       } catch (err) {
         console.log(err);
+        setLoading(false);
       }
     };
     getAllUsers();
@@ -190,7 +191,11 @@ export async function getServerSideProps(context) {
   });
 
   const data = await res.json();
-
+  if (!data) {
+    return {
+      notFound: true,
+    };
+  }
   return {
     props: {
       data,

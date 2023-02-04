@@ -84,7 +84,7 @@ const Announcement = ({ setLoading }) => {
           setLoading={setLoading}
           toggleDelete={toggleDelete}
           setToggleDelete={setToggleDelete}
-          handleDelete={handleDeleteAnnouncement}
+          handleDelete={() => handleDeleteAnnouncement(deleteId)}
         />
       )}
       {toggleAnnouncement && (
