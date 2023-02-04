@@ -4,9 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import checkError from '../utils/errorChecker';
 import { setCurrentUser } from '../src/store/user/user.actions';
-import { selectCurrentUser } from '../src/store/user/user.selector';
 import FormInput from './FormInput';
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
 import { pageAnimation } from '../utils/animations/animations';
 import axios from 'axios';
@@ -19,7 +18,6 @@ const loginStyles = {
 };
 
 const SignIn = () => {
-  const user = useSelector(selectCurrentUser);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();

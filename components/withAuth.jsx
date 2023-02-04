@@ -12,7 +12,6 @@ const withAuth = (WrappedComponent) => {
       if (user && router.pathname === '/signup') {
         router.push('/');
       }
-
       if (!user) {
         router.push('/');
       }

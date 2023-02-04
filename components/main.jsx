@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectCurrentUser } from '../src/store/user/user.selector';
 import { motion, AnimatePresence } from 'framer-motion';
 import { setCoursesData } from '../src/store/courses/courses.action';
@@ -10,7 +10,9 @@ import CoursesTable from './courses';
 import CoursesCard from './courses/coursesCards';
 
 const Main = () => {
+  const dispatch = useDispatch();
   const courses = useSelector(selectCoursesList);
+  console.log(courses);
   const user = useSelector(selectCurrentUser);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
@@ -26,7 +28,9 @@ const Main = () => {
             Authorization: `Bearer ${user.token}`,
           },
         });
+
         const data = await res.json();
+
         if (!isCancelled) {
           setLoading(false);
           dispatch(setCoursesData(data));

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
 import UserAccount from '../../components/user accounts/UserAccount';
-
+import withAuth from '../../components/withAuth';
 const SingleUser = ({ id }) => {
   const [user, setUser] = useState(null);
   const userData = useSelector(selectCurrentUser);
@@ -75,4 +75,4 @@ export async function getServerSideProps(context) {
   };
 }
 
-export default SingleUser;
+export default withAuth(SingleUser);

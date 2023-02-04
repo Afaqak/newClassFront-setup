@@ -1,0 +1,137 @@
+import React, { useEffect, useState } from 'react';
+import { notify } from '../utils/tools';
+import { useSelector } from 'react-redux';
+import { Toaster } from 'react-hot-toast';
+import { selectCurrentUser } from '../src/store/user/user.selector';
+const CreateAnnouncement = ({ setToggleAnnouncement, toggleAnnouncement, setAnnouncement, announcement }) => {
+  const user = useSelector(selectCurrentUser);
+
+  const [coursesD, setCoursesD] = useState({ title: '', subject: '' });
+  const handleKeyDown = (event) => {
+    if (event.keyCode === 27) {
+      setToggleAnnouncement(!toggleAnnouncement);
+    }
+  };
+
+  const handleBackdropClick = (event) => {
+    if (event.target === event.currentTarget) {
+      setToggleAnnouncement(!toggleAnnouncement);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setCoursesD({ ...coursesD, [name]: value });
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    console.log(user);
+    console.log(coursesD);
+    const check = Object.values(coursesD).every((item) => item !== '');
+
+    if (!check) {
+      notify('Please fill all fields', 'error');
+      return;
+    }
+    try {
+      const res = await fetch('https://vast-pink-moth-toga.cyclic.app/groups/announcements', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify(coursesD),
+      });
+      console.log(res);
+      if (res.ok) {
+        notify('Announcement added', 'success');
+        setTimeout(() => {
+          setAnnouncement([...announcement, coursesD]);
+          setToggleAnnouncement(!toggleAnnouncement);
+        }, 1000);
+        console.log(res);
+      }
+    } catch (error) {
+      console.log(error);
+      notify('Something went wrong', 'error');
+    }
+  };
+
+  return (
+    <div
+      onClick={handleBackdropClick}
+      className=' backdrop-blur-md font-sans backdrop-filter backdrop-brightness-75 absolute -top-5 -left-2 min-h-[100%] w-full  '
+    >
+      <div className='flex flex-col items-center justify-center w-full h-[85vh] px-10 md:px-0'>
+        <form
+          onSubmit={handleSubmit}
+          className='bg-white md:w-2/3 w-full px-6 py-4 relative shadow-md rounded-sm'
+        >
+          <p
+            className='
+        text-slate-900 mb-2 text-2xl font-semibold
+        '
+          >
+            Make an announcement
+          </p>
+          <button
+            className='absolute right-7 top-14 md:top-7 font-semibold text-xl border px-3 py self-center hover:bg-gray-200'
+            onClick={() => setToggleAnnouncement(!toggleAnnouncement)}
+          >
+            x
+          </button>
+          <div>
+            <div className='flex flex-col'>
+              <label
+                className='mt-2 font-semibold'
+                htmlFor='title'
+              >
+                Title
+              </label>
+              <input
+                onChange={handleInputChange}
+                className='w-2/3 px-3 py-2 text-gray-700 border  focus:outline-none border-slate-300 rounded-sm focus:border-blue-500'
+                type='text'
+                name='title'
+                id='title'
+              />
+            </div>
+            <div>
+              <label
+                className='mt-2 font-semibold'
+                htmlFor='body'
+              >
+                Body
+              </label>
+              <textarea
+                onChange={handleInputChange}
+                className='w-full px-3 py-2 text-gray-700 border  focus:outline-none border-slate-300 rounded-sm focus:border-blue-500'
+                name='subject'
+                id='body'
+                cols='30'
+                rows='10'
+              ></textarea>
+              <button
+                type='submit'
+                className='bg-blue-500 text-white px-4 py-1 rounded-md mt-2'
+              >
+                Announce!
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <Toaster />
+    </div>
+  );
+};
+
+export default CreateAnnouncement;

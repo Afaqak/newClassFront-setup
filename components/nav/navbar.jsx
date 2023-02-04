@@ -76,7 +76,7 @@ const Navbar = () => {
             icon={faBroadcastTower}
             href='/broadcast'
             className={`${NavStyles.flexDex}`}
-            label='Broadcast'
+            label='Announcements'
           />
         </div>
         <div

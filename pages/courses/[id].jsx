@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
 import CoursesPosts from '../../components/post';
 import CourseLayout from '../../components/courses/layout/CourseLayout';
+import withAuth from '../../components/withAuth';
+import Announcement from '../../components/Announcement';
 const Participants = ({ data, id }) => {
   //get All users
 
@@ -63,14 +65,12 @@ const Participants = ({ data, id }) => {
     '
     >
       <div className='px-4'>
-        <h1
-          className='text-4xl font-semibold tracking-wide text-slate-900 
-        dark:text-white
-        '
+        <p
+          className='text-gray-500 
+        dark:text-gray-400'
         >
-          Courses Feed
-        </h1>
-        <p className='text-gray-500 dark:text-gray-400'>This is the courses feed page</p>
+          This is the courses feed page
+        </p>
         {/* {admin && (
           <button
             onClick={toggleAddParticipant}
@@ -143,6 +143,7 @@ const Participants = ({ data, id }) => {
           </div>
         )}
         {page === 2 && <CoursesPosts id={id} />}
+        {page === 3 && <Announcement id={id} />}
       </CourseLayout>
 
       {/* <div className='flex flex-col w-full px-4 py-4 gap-y-2'>
@@ -161,7 +162,6 @@ const Participants = ({ data, id }) => {
 
 export async function getServerSideProps(context) {
   const { id, user } = context.query;
-  console.log(id, user);
   const res = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/${id}/participants`, {
     method: 'GET',
     headers: {
@@ -180,4 +180,4 @@ export async function getServerSideProps(context) {
   };
 }
 
-export default Participants;
+export default withAuth(Participants);

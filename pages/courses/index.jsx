@@ -229,4 +229,4 @@ const Courses = () => {
   );
 };
 
-export default withAuth(Courses);
+export default Courses;
