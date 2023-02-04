@@ -32,8 +32,9 @@ const CoursesPosts = ({ id }) => {
 
   useEffect(() => {
     setLoading(true);
-    if (user && semesters) {
-      var [_id] = (semesters && semesters[0]?.courses) || {};
+    var _id;
+    if (semesters && semesters[0] && Array.isArray(semesters[0].courses)) {
+      [_id] = semesters[0].courses;
     }
     const handleReq = async () => {
       try {

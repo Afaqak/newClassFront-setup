@@ -44,6 +44,7 @@ const Announcement = ({ setLoading }) => {
       }
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   };
 
@@ -63,6 +64,7 @@ const Announcement = ({ setLoading }) => {
         setAnnouncement(data);
       } catch (error) {
         console.log(error);
+        setLoading(false);
       }
     };
     getAnnouncement();
