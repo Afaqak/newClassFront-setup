@@ -43,9 +43,6 @@ const checkError = (userData, type = 'register') => {
     if (userData.password !== '' && userData.password.length < 6) {
       error.password = 'Password must be at least 6 characters';
     }
-    if (userData.program !== '' && !validator.isAlpha(userData.program)) {
-      error.program = 'Program must be a string';
-    }
     if (userData.group === '') {
       error.group = 'Group is required';
     }

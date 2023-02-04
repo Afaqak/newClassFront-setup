@@ -12,7 +12,6 @@ import { Toaster } from 'react-hot-toast';
 import batches from '../../utils/data';
 import LinearProgress from '@mui/material/LinearProgress';
 import axios from 'axios';
-import withAuth from '../../components/withAuth';
 
 const loginStyles = {
   inputStyle: 'focus:outline-none bg-gray-100 border-2 border-gray-300 w-full shadow-md px-2 py-2',
@@ -22,7 +21,9 @@ const loginStyles = {
 const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [teacher, setTeacher] = useState(false);
-  const [selectedYear, setSelectedYear] = useState(null);
+  const [programId, setProgramId] = useState(null);
+  const [batches, setBatches] = useState([]);
+  const [groups, setGroups] = useState([]);
   const [selectedProgram, setSelectedProgram] = useState(null);
   const router = useRouter();
 
@@ -86,18 +87,60 @@ const SignUp = () => {
     }
   };
 
-  const handleYearChange = (e) => {
+  useEffect(() => {
+    const getBatches = async () => {
+      try {
+        const response = await axios.get('https://vast-pink-moth-toga.cyclic.app/batches');
+        const { data } = response;
+        setBatches(data);
+        console.log(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    getBatches();
+  }, []);
+
+  const handleYearChange = async (e) => {
+    if (e.target.value === 'Select Batch') {
+      setSelectedProgram(null);
+      setGroups([]);
+      return;
+    }
+
+    setProgramId(e.target.value);
+
     setUserData({ ...userData, batch: e.target.value });
-    setSelectedYear(e.target.value);
-    if (e.target.value == 'Select Batch') {
-      setUserData({ ...userData, batch: '', program: '', group: '' });
-      setSelectedYear(null);
+    try {
+      const response = await axios.get(`https://vast-pink-moth-toga.cyclic.app/batches/${e.target.value}/programs`);
+      const { data } = response;
+      console.log(data);
+      setSelectedProgram(data);
+      console.log(groups);
+    } catch (err) {
+      console.error(err);
     }
   };
 
-  const handleProgramChange = (e) => {
+  const handleProgramChange = async (e) => {
+    if (e.target.value === 'Select Program') {
+      setGroups([]);
+      return;
+    }
     setUserData({ ...userData, program: e.target.value });
-    setSelectedProgram(e.target.value);
+    try {
+      const response = await axios.get(`https://vast-pink-moth-toga.cyclic.app/batches/${programId}/programs/${e.target.value}/groups`);
+      const { data } = response;
+      console.log(data);
+      setGroups(data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleGroupChange = (e) => {
+    setUserData({ ...userData, group: e.target.value });
   };
 
   return (
@@ -160,10 +203,10 @@ const SignUp = () => {
                 <option value={null}>Select Batch</option>
                 {batches?.map((batch) => (
                   <option
-                    key={batch.year}
-                    value={batch.year}
+                    key={batch._id}
+                    value={batch._id}
                   >
-                    {batch.year}
+                    {batch.session}
                   </option>
                 ))}
               </select>
@@ -177,24 +220,21 @@ const SignUp = () => {
                 name='role'
               />
             ) : (
-              selectedYear && (
-                <div className='space-y-2'>
-                  <select
-                    onChange={handleProgramChange}
-                    className={`${loginStyles.inputStyle}`}
-                  >
-                    <option value={null}>Select Program</option>
-                    {batches?.find((batch) => batch.year === selectedYear)?.programs &&
-                      Object.keys(batches?.find((batch) => batch?.year === selectedYear)?.programs).map((program) => (
-                        <option
-                          key={program}
-                          value={program}
-                        >
-                          {program}
-                        </option>
-                      ))}
-                  </select>
-                </div>
+              selectedProgram && (
+                <select
+                  className={`${loginStyles.inputStyle}`}
+                  onChange={handleProgramChange}
+                >
+                  <option value={null}>Select Program</option>
+                  {selectedProgram?.map((program) => (
+                    <option
+                      key={program._id}
+                      value={program._id}
+                    >
+                      {program.program}
+                    </option>
+                  ))}
+                </select>
               )
             )}
             {teacher ? (
@@ -206,27 +246,21 @@ const SignUp = () => {
                 name='role'
               />
             ) : (
-              selectedProgram && (
-                <div>
-                  <select
-                    onChange={(e) => {
-                      setUserData({ ...userData, group: e.target.value });
-                    }}
-                    className={`${loginStyles.inputStyle}`}
-                  >
-                    <option value={null}>Select Group</option>
-                    {batches
-                      ?.find((batch) => batch?.year === selectedYear)
-                      ?.programs?.[selectedProgram]?.group?.map((group) => (
-                        <option
-                          key={group}
-                          value={group}
-                        >
-                          {group}
-                        </option>
-                      ))}
-                  </select>
-                </div>
+              groups.length > 0 && (
+                <select
+                  className={`${loginStyles.inputStyle}`}
+                  onChange={handleGroupChange}
+                >
+                  <option value={null}>Select Group</option>
+                  {groups?.map((group) => (
+                    <option
+                      key={group._id}
+                      value={group._id}
+                    >
+                      {group.group}
+                    </option>
+                  ))}
+                </select>
               )
             )}
           </div>
@@ -239,8 +273,12 @@ const SignUp = () => {
                 onChange={(e) => {
                   setTeacher(e.target.checked);
                   if (e.target.checked) {
-                    setSelectedYear(null);
-                    setSelectedProgram(null);
+                    setUserData({
+                      ...userData,
+                      batch: 'teacher',
+                      program: 'teacher',
+                      group: 'teacher',
+                    });
                   }
                   setUserData({
                     ...userData,

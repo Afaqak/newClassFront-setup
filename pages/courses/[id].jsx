@@ -147,14 +147,15 @@ const Participants = ({ data, id }) => {
             className='flex flex-col w-full px-4 py-4 gap-y-2  
           '
           >
-            {accounts.map((participant) => (
-              <div
-                key={participant._id}
-                className='flex items-center justify-between px-4 py-2 border hover:bg-gray-100 cursor-pointer'
-              >
-                {participant._id}
-              </div>
-            ))}
+            {Array.isArray(accounts) &&
+              accounts?.map((participant) => (
+                <div
+                  key={participant._id}
+                  className='flex items-center justify-between px-4 py-2 border hover:bg-gray-100 cursor-pointer'
+                >
+                  {participant._id}
+                </div>
+              ))}
           </div>
         )}
         {page === 2 && <CoursesPosts id={id} />}

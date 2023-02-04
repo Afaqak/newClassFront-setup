@@ -107,15 +107,17 @@ const Announcement = ({ setLoading }) => {
         bg-blue-50 dark:bg-gray-800 max-w-[34rem] overflow-hidden md:max-w-2xl relative 
         px-4 py-2 mt-6 flex flex-col gap-2 rounded-md'
         >
-          <button
-            onClick={() => handleDelete(ann._id)}
-            className='bg-red-500 text-white px-2 rounded-md absolute right-5'
-          >
-            <FontAwesomeIcon
-              size='xs'
-              icon={faTrash}
-            />
-          </button>
+          {user?.user?.admin && (
+            <button
+              onClick={() => handleDelete(ann._id)}
+              className='bg-red-500 text-white px-2 rounded-md absolute right-5'
+            >
+              <FontAwesomeIcon
+                size='xs'
+                icon={faTrash}
+              />
+            </button>
+          )}
           <p
             className='text-blue-500 text-[0.75rem] font-bold tracking-wider
           '
