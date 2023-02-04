@@ -51,10 +51,20 @@ const CreateAnnouncement = ({ setToggleAnnouncement, toggleAnnouncement, setAnno
         body: JSON.stringify(coursesD),
       });
       console.log(res);
+      const data = await res.json();
+      console.log(data);
       if (res.ok) {
         notify('Announcement added', 'success');
         setTimeout(() => {
-          setAnnouncement([...announcement, coursesD]);
+          setAnnouncement([
+            ...announcement,
+            {
+              author: user.user.username,
+              createdAt: new Date().toISOString(),
+              title: coursesD.title,
+              body: coursesD.subject,
+            },
+          ]);
           setToggleAnnouncement(!toggleAnnouncement);
         }, 1000);
         console.log(res);
