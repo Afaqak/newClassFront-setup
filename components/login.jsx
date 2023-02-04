@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import checkError from '../../utils/errorChecker';
-import { setCurrentUser } from '../../src/store/user/user.actions';
-import { selectCurrentUser } from '../../src/store/user/user.selector';
-import FormInput from '../../components/FormInput';
+import checkError from '../utils/errorChecker';
+import { setCurrentUser } from '../src/store/user/user.actions';
+import { selectCurrentUser } from '../src/store/user/user.selector';
+import FormInput from './FormInput';
 import toast, { Toaster } from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
-import { pageAnimation } from '../../utils/animations/animations';
+import { pageAnimation } from '../utils/animations/animations';
 import axios from 'axios';
+import { notify } from '../utils/tools';
 import { Typography, LinearProgress } from '@mui/material';
 
 const loginStyles = {
@@ -23,13 +24,6 @@ const SignIn = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (user) {
-      router.push('/');
-    }
-  }, [user]);
-
-  const notifyError = (message) => toast.error(message);
   const userValues = {
     username: '',
     password: '',
@@ -60,23 +54,22 @@ const SignIn = () => {
         setLoading(false);
         if (err.response) {
           if (err.response.status == 401) {
-            notifyError('unAuthorized');
           }
           if (err.response.status === 400) {
-            notifyError('Invalid Credentials Entered ! Try Again');
+            notify('Invalid Credentials', 'error');
           }
           if (err.response.status === 500) {
-            notifyError('Server Error Occured! Try Again Later');
+            notify('Server Error Occured! Try Again Later', 'error');
           }
         } else if (err.request) {
-          notifyError('Server Error Occured! Try Again Later');
+          notify('Server Error Occured! Try Again Later', 'error');
         } else {
-          notifyError('Server Error Occured! Try Again Later');
+          notify('Server Error Occured! Try Again Later', 'error');
         }
       }
     } else {
       setLoading(false);
-      notifyError(error.username || error.password);
+      notify(error.username || error.password, 'error');
     }
   };
 
@@ -110,9 +103,9 @@ const SignIn = () => {
               e.preventDefault();
               localSignIn();
             }}
-            className='space-y-5 form-signin 
-        w-[90%] sm:w-[60%] md:w-[40%] lg:w-[30%]
-        text-gray-600 dark:text-gray-300
+            className='form-signin space-y-3
+            w-[90%] sm:w-[60%] md:w-[40%] lg:w-[30%]
+            text-gray-600 dark:text-gray-300
       '
           >
             <FormInput

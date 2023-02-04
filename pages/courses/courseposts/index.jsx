@@ -37,13 +37,16 @@ const Courses = () => {
     }
     const handleReq = async () => {
       try {
-        const response = axios.get(`https://vast-pink-moth-toga.cyclic.app/courses/${_id}/posts`, {
+        const response = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/${_id}/posts`, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
         });
-        const { data } = await response;
+
+        const data = await response.json();
+
+        console.log('data', data);
         if (data) {
           setLoading(false);
           setPostDetails(
@@ -59,8 +62,7 @@ const Courses = () => {
         }
       } catch (err) {
         setLoading(false);
-        console.log(err.response);
-        console.log(err.response.data);
+        console.log(err);
       }
     };
     handleReq();
@@ -103,7 +105,7 @@ const Courses = () => {
     >
       {loading && <LinearProgress />}
       <div className='px-4'>
-        <Link href='/courses/create-post'>
+        <Link href='/courses/courseposts/create-post'>
           <Button
             onClick={() => setLoading(true)}
             sx={{ marginTop: '3vh' }}

@@ -8,13 +8,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt, faUser, faUserGroup, faBookOpen, faSchool, faBroadcastTower } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = () => {
-  const router = useRouter();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user?.currentUser?.user);
 
   const logout = () => {
-    dispatch(setCurrentUser(null));
-    router.push('/');
+    setTimeout(() => {
+      dispatch(setCurrentUser(null));
+    }, 1000);
   };
 
   const showUser = () =>

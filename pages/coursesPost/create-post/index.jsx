@@ -5,7 +5,6 @@ import { Toaster } from 'react-hot-toast';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useSelector } from 'react-redux';
 import checkFile from '../../../utils/checkfile';
-import axios from 'axios';
 import { selectCurrentUser } from '../../../src/store/user/user.selector';
 import { useState } from 'react';
 
@@ -55,14 +54,16 @@ const Post = () => {
       formData.append('text', postDetails.text);
 
       try {
-        const res = await axios.post(`https://vast-pink-moth-toga.cyclic.app/courses/${_id}/posts`, formData, {
+        const res = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/${_id}/posts`, {
+          method: 'POST',
           headers: {
             'Content-Type': 'form-data',
             Authorization: `Bearer ${token}`,
           },
+          body: formData,
         });
         setLoading(false);
-        console.log(res.data);
+        console.log(res);
         notifySucces('Posted !');
       } catch (err) {
         setLoading(false);

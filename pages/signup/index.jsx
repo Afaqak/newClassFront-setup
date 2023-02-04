@@ -4,11 +4,11 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { Typography, FormControlLabel, Checkbox } from '@mui/material';
 import FormInput from '../../components/FormInput';
-import Button from '../../components/Button';
+import { notify } from '../../utils/tools';
 import checkError from '../../utils/errorChecker';
 import { motion } from 'framer-motion';
 import { pageAnimation } from '../../utils/animations/animations';
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 import batches from '../../utils/data';
 import LinearProgress from '@mui/material/LinearProgress';
 import axios from 'axios';
@@ -25,7 +25,6 @@ const SignUp = () => {
   const [selectedProgram, setSelectedProgram] = useState(null);
   const router = useRouter();
 
-  const notifyError = (message) => toast.error(message);
   const userValues = {
     firstName: '',
     lastName: '',
@@ -54,8 +53,8 @@ const SignUp = () => {
   };
 
   const submitForm = async () => {
-    const error = checkError(userData);
-
+    const error = checkError(userData, 'signup');
+    console.log(error);
     if (Object.keys(error).length === 0) {
       try {
         setLoading(true);
@@ -64,26 +63,25 @@ const SignUp = () => {
         console.log(data);
         if (data) {
           setLoading(false);
-          router.push('/login');
+          router.push('/');
         }
       } catch (err) {
         setLoading(false);
         if (err.response.status == 500) {
-          notifyError('Username already exits ! try again');
+          notify('Username already exists', 'error');
         }
         if (err.response) {
           console.error(err.response.status);
         } else if (err.request) {
           console.error(err.request);
-
-          notifyError('Unable to connect to server');
+          notify('Something went wrong please try again later', 'error');
         } else {
           console.error('Error', err.message);
-          notifyError('Something went wrong please try again later');
+          notify('Something went wrong please try again later', 'error');
         }
       }
     } else {
-      notifyError(error.firstName || error.lastName || error.username || error.password || error.batch || error.program || error.group);
+      notify(error.firstName || error.lastName || error.username || error.password || error.batch || error.program || error.group, 'error');
     }
   };
 

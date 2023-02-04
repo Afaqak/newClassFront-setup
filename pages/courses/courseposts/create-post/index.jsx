@@ -4,9 +4,9 @@ import { toast } from 'react-hot-toast';
 import { Toaster } from 'react-hot-toast';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useSelector } from 'react-redux';
-import checkFile from '../../../utils/checkfile';
+import checkFile from '../../../../utils/checkfile';
 import axios from 'axios';
-import { selectCurrentUser } from '../../../src/store/user/user.selector';
+import { selectCurrentUser } from '../../../../src/store/user/user.selector';
 import { useState } from 'react';
 
 const initialValues = {
