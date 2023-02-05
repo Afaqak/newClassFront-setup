@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    *{
+        @apply box-border p-0 m-0
+    }
+ 
+    b{
+        @apply text-colordark
+    }
+   
+    .link{
+        @apply relative transition-all duration-300 ease-in-out text-slate-600;
+        backface-visibility: hidden;
+    }
+
+    .link:hover{
+        @apply text-blue-500 md:bg-gray-200 bg-none 
+    }
+    .logout{
+        @apply text-danger
+    }
+    .logout:hover{
+        @apply text-danger
+    }
+    .logout:active{
+        @apply text-danger bg-colorlight 
+    }
+    
+    .courses{
+        @apply flex flex-col p-3 bg-white w-full
+        space-y-3 font-mono text-colordark rounded-lg shadow-md
+    }
+    .insights{
+        @apply  overflow-x-hidden
+    }
+     .middle {
+        @apply flex justify-between
+     }
+     .course-icons{
+        @apply bg-primary rounded-lg p-2 text-white 
+     }
+     .link h3{
+        @apply hidden md:block
+     }
+     .toggles:hover .toggle-2{
+        @apply bg-primary
+     }
+        .toggles:hover .toggle-1{
+            @apply bg-primary
+        }
+        .calcput{
+            @apply w-full bg-white text-colordark focus:outline-none
+            ring-2 ring-slate-700
+        }
+        .btn{
+            @apply bg-colorlight rounded-full text-center
+        }
+        .btn-2{
+            
+        }
+        .form-signin input:focus ~ label{
+            @apply -top-3 left-3 bg-blue-500 text-white px-1
+        }
+        .icon-announcement{
+            clip-path: polygon(0 29%, 0% 100%, 64% 63%);
+        }
+       
+          
+          .groupBar{
+            clip-path:circle(40px at 100% -10%);
+          }
+          
+        
+}
