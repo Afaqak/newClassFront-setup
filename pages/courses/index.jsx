@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
-import { motion, AnimateSharedLayout } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { LinearProgress } from '@mui/material';
 import withAuth from '../../components/withAuth';
 import { notify } from '../../utils/tools';
@@ -9,9 +9,8 @@ import { selectCurrentUser } from '../../src/store/user/user.selector';
 import { selectCoursesList } from '../../src/store/courses/courses.reselect';
 import { setCoursesData } from '../../src/store/courses/courses.action';
 import CoursesTable from '../../components/courses';
-
-const Labels = ['name', 'teacher', 'credit', 'semester', 'group'];
-const types = ['text', 'text', 'number', 'text', 'text'];
+import Heading_1 from '../../components/Heading_1';
+import Form from '../../components/courses/Form';
 
 const Courses = () => {
   const courses = useSelector(selectCoursesList);
@@ -64,17 +63,14 @@ const Courses = () => {
       const data = await res.json();
       console.log(data);
       if (!res.ok) throw new Error(res.statusText);
-
       dispatch(setCoursesData([...courses, data]));
       setCoursesD(coursesInput);
-      setToggle(false);
-      setLoading(false);
       notify('Course added', 'success');
     } catch (err) {
-      setToggle(false);
       console.log(err);
-      notify('Something went wrong', 'error');
+    } finally {
       setLoading(false);
+      setToggle(false);
     }
   };
 
@@ -113,14 +109,12 @@ const Courses = () => {
 
       dispatch(setCoursesData(newCourses));
       setCoursesD(coursesInput);
-      setToggle(false);
-      setLoading(false);
       notify('Course updated', 'success');
     } catch (err) {
-      setToggle(false);
       console.log(err);
-      notify('Something went wrong', 'error');
+    } finally {
       setLoading(false);
+      setToggle(false);
     }
   };
 
@@ -139,15 +133,27 @@ const Courses = () => {
         console.log('deleted');
         const newCourses = courses.filter((course) => course._id !== id);
         dispatch(setCoursesData(newCourses));
-        setLoading(false);
-      } else {
-        setLoading(false);
-        notify('Something went wrong', 'error');
       }
     } catch (err) {
-      setLoading(false);
       console.log(err.message);
-      notify('Something went wrong', 'error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const checkButton = () => {
+    if (user.user.admin) {
+      return (
+        <motion.button
+          onClick={toggleAddCourse}
+          whileTap={{ opacity: 0.5 }}
+          whileHover={{ translateY: -2 }}
+          className={`bg-blue-500 
+        text-white py-1 px-3 rounded-lg mt-2 mb-3`}
+        >
+          {toggle ? 'Close' : 'Add Course'}
+        </motion.button>
+      );
     }
   };
 
@@ -159,57 +165,18 @@ const Courses = () => {
     >
       {loading && <LinearProgress />}
       <div className='p-4 bg-white min-h-screen dark:bg-gray-900'>
-        <h1 className='text-3xl font-semibold text-gray-900 dark:text-gray-50 tracking-wide'>Courses</h1>
+        <Heading_1 label='Courses' />
         <p className='text-slate-800 dark:text-slate-700 block mb-4'>Welcome to your courses page</p>
-        {user?.user.admin && (
-          <motion.button
-            onClick={toggleAddCourse}
-            whileTap={{ opacity: 0.5 }}
-            whileHover={{ translateY: -2 }}
-            className={`bg-blue-500 
-            text-white py-1 px-3 rounded-lg mt-2 mb-3`}
-          >
-            {toggle ? 'Close' : 'Add Course'}
-          </motion.button>
-        )}
+        {checkButton()}
 
         {toggle && (
           <div className=' dark:bg-gray-900 rounded-lg mb-4 w-1/2'>
-            <form
-              onSubmit={formType === 'add' ? addCourse : updateCourse}
-              className='flex flex-col'
-            >
-              <motion.p className='text-slate-800 block'>{formType === 'add' ? 'Add Course' : 'Update Course'}</motion.p>
-              {Labels.map((label, i) => (
-                <div
-                  key={i}
-                  className='flex flex-col mb-2'
-                >
-                  <label
-                    htmlFor={label}
-                    className='text-slate-700 font-semibold'
-                  >
-                    {label}
-                  </label>
-                  <input
-                    placeholder={label}
-                    onChange={handleInputChange}
-                    type={types[i]}
-                    name={label}
-                    id={label}
-                    className='border-2 dark:bg-gray-50 border-gray-300 dark:text-gray-900 p-1 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent'
-                  />
-                </div>
-              ))}
-
-              <motion.button
-                whileTap={{ opacity: 0.5 }}
-                whileHover={{ scale: 1.05 }}
-                className='bg-blue-500 text-white py-1 px-3 rounded-lg'
-              >
-                {formType === 'add' ? 'Add Course' : 'Update Course'}
-              </motion.button>
-            </form>
+            <Form
+              handleInputChange={handleInputChange}
+              addCourse={addCourse}
+              updateCourse={updateCourse}
+              formType={formType}
+            />
           </div>
         )}
         <div className='overflow-auto rounded-lg shadow hidden md:block'>

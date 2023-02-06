@@ -5,17 +5,13 @@ import { selectCurrentUser } from '../src/store/user/user.selector';
 import Link from 'next/link';
 
 const tableHead = ['Course', 'Semester', 'Group', 'Teacher', 'Credits', 'Posts', 'Participants', 'Action'];
-const randomLightBgs = ['bg-blue-100', 'bg-green-100', 'bg-yellow-100', 'bg-red-100', 'bg-purple-100', 'bg-pink-100'];
-const getRandomLightBg = () => {
-  return randomLightBgs[Math.floor(Math.random() * randomLightBgs.length)];
-};
 
 const CoursesTable = ({ courses, deleteCourse, toggleUpdateCourse, loading, noAction }) => {
   const user = useSelector(selectCurrentUser);
 
   return (
     <table
-      className='w-full whitespace-nowrap 
+      className='w-full whitespace-nowrap mt-4
             '
     >
       <thead

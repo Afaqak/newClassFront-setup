@@ -55,12 +55,11 @@ const Participants = ({ data, id }) => {
       if (res.ok) {
         setParticipants([...participants, input]);
         setToggle(false);
-        setLoading(false);
       } else {
-        setLoading(false);
       }
     } catch (err) {
       console.log(err);
+    } finally {
       setLoading(false);
     }
   };

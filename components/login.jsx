@@ -10,7 +10,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { pageAnimation } from '../utils/animations/animations';
 import axios from 'axios';
 import { notify } from '../utils/tools';
-import { Typography, LinearProgress } from '@mui/material';
+import { checkUserData } from '../utils/tools';
+import { LinearProgress } from '@mui/material';
 
 const loginStyles = {
   inputStyle: 'focus:outline-none bg-gray-100 border-2 border-gray-300 w-full shadow-md px-2 py-2',
@@ -72,10 +73,7 @@ const SignIn = () => {
       >
         {loading && <LinearProgress />}
         <div className=' flex w-screen flex-col items-center justify-center h-[80vh]'>
-          <Typography
-            variant='h4'
-            className='text-4xl font-bold text-gray-600 dark:text-gray-300'
-          >
+          <h1 className='text-4xl font-bold text-gray-600 dark:text-gray-300'>
             <p
               className='mb-4
           text-slate-700 font-semibold text-3xl font-sans tracking-wide
@@ -83,7 +81,7 @@ const SignIn = () => {
             >
               Sign In
             </p>
-          </Typography>
+          </h1>
           <motion.form
             onSubmit={(e) => {
               e.preventDefault();
@@ -105,7 +103,7 @@ const SignIn = () => {
             ${loading ? ' border-gray-500 ' : ''}
           `}
               labelClassName={`${loginStyles.labelStyle}
-          ${userData.username !== '' ? 'text-transparent' : 'top-2 text-gray-300'}
+          ${checkUserData(userData.username)}
           `}
             />
 
@@ -120,7 +118,7 @@ const SignIn = () => {
           ${loading ? ' border-gray-500 ' : ''}
           `}
               labelClassName={`${loginStyles.labelStyle}
-          ${userData.password !== '' ? 'text-transparent' : 'top-2 text-gray-300'}
+          ${checkUserData(userData.password)}
           `}
             />
             <motion.button
@@ -133,11 +131,7 @@ const SignIn = () => {
             </motion.button>
 
             <div className='flex justify-center items-center mt-3'>
-              <Typography
-                variant='body2'
-                component='p'
-                className='text-slate-700 font-semibold text-sm'
-              >
+              <p className='text-slate-700 font-semibold text-sm'>
                 Don't have an account?{' '}
                 <Link
                   href='/signup'
@@ -145,7 +139,7 @@ const SignIn = () => {
                 >
                   Sign Up
                 </Link>
-              </Typography>
+              </p>
             </div>
           </motion.form>
         </div>

@@ -1,12 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setCoursesData } from '../store/courses/courses.action';
-import { selectCoursesList } from '../store/courses/courses.reselect';
 
 export const usefetchCourses = (user, setLoading) => {
-  const courses = useSelector(selectCoursesList);
   const dispatch = useDispatch();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const res = await fetch('https://vast-pink-moth-toga.cyclic.app/courses', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
 
-  return courses;
+        const data = await res.json();
+        dispatch(setCoursesData(data));
+      } catch (err) {
+        toast.error('Something went wrong');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 };

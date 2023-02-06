@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import Main from '../components/main';
+import Main from '../components/main/main';
 import { motion, AnimatePresence } from 'framer-motion';
 import { selectCurrentUser } from '../src/store/user/user.selector';
 import { useSelector } from 'react-redux';

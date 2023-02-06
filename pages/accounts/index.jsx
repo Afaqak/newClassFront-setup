@@ -9,7 +9,6 @@ import withAuth from '../../components/withAuth';
 
 const Accounts = () => {
   const router = useRouter();
-  const userr = useSelector(selectCurrentUser);
   const { users, loading, mount, user, userData } = useFetchUsers();
   const { admin, teacher } = user || {};
 

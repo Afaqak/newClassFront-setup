@@ -18,4 +18,11 @@ const formatDate = (date) => {
   return `${formattedDate} at ${formattedTime}`;
 };
 
+export const checkUserData = (data) => {
+  if (data !== '') {
+    return 'text-transparent';
+  }
+  return 'top-2 text-gray-300';
+};
+
 export default formatDate;
