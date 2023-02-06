@@ -9,7 +9,7 @@ import withAuth from '../../components/withAuth';
 import Announcement from '../../components/Announcement/Announcement';
 import useFetchUsers from '../../src/customHooks/useFetchUsers.h';
 const Participants = ({ data, id }) => {
-  const [input, setInput] = useState({ batch: '', program: '', group: '' });
+  const [input, setInput] = useState({ batch: '', program: '', group: '', participant: '' });
   const [loading, setLoading] = useState(false);
   const [program, setProgram] = useState([]);
   const [group, setGroup] = useState([]);
@@ -21,10 +21,14 @@ const Participants = ({ data, id }) => {
   const { users } = useFetchUsers();
 
   const addParticipant = async (e) => {
+    if (Object.values(input).some((item) => item === '')) {
+      return;
+    }
+
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/${id}/participants`, {
+      const res = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/${input.participant}/participants`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -96,6 +100,12 @@ const Participants = ({ data, id }) => {
       setLoading(false);
     }
   };
+
+  const handleParticipantChange = (e) => {
+    const { name, value } = e.target;
+    setInput({ ...input, [name]: value });
+  };
+
   return (
     <div
       className='min-h-screen font-sans
@@ -181,7 +191,23 @@ const Participants = ({ data, id }) => {
                     ))}
                   </select>
                 )}
-
+                {input.group && (
+                  <select
+                    name='participant'
+                    onChange={handleParticipantChange}
+                    className='shadow appearance-none w-[300px] border mt-1 border-blue-500 rounded block py-2 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                  >
+                    <option value={null}>Select Participant</option>
+                    {group?.participants?.map((participant) => (
+                      <option
+                        key={participant._id}
+                        value={participant._id}
+                      >
+                        {participant.username}
+                      </option>
+                    ))}
+                  </select>
+                )}
                 <button
                   className='bg-slate-900 mt-4 text-white py-1 px-5 rounded-lg'
                   type='submit'

@@ -35,10 +35,11 @@ const CoursesPosts = ({ id }) => {
     var _id;
     if (semesters && semesters[0] && Array.isArray(semesters[0].courses)) {
       [_id] = semesters[0].courses;
+      console.log(_id);
     }
     const handleReq = async () => {
       try {
-        const response = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/${id}/posts`, {
+        const response = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/${_id}/posts`, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
@@ -48,7 +49,6 @@ const CoursesPosts = ({ id }) => {
         const data = await response.json();
 
         if (data) {
-          setLoading(false);
           setPostDetails(
             data.map((post) => {
               return {
@@ -61,8 +61,9 @@ const CoursesPosts = ({ id }) => {
           );
         }
       } catch (err) {
-        setLoading(false);
         console.log(err);
+      } finally {
+        setLoading(false);
       }
     };
     handleReq();
@@ -97,6 +98,7 @@ const CoursesPosts = ({ id }) => {
   }
   return (
     <div className='h-screen bg-gray-50 dark:bg-gray-900'>
+      {loading && <LinearProgress />}
       <div className='px-4'>
         <Link href={`/courses/create-post?courseId=${id}`}>
           <Button
