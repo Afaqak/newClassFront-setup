@@ -7,6 +7,8 @@ import { LinearProgress } from '@mui/material';
 import withAuth from '../../components/withAuth';
 import Announcement from '../../components/Announcement/Announcement';
 const Participants = ({ data, id }) => {
+  console.log('Serverdata', data);
+
   const [loading, setLoading] = useState(false);
   const [participants, setParticipants] = useState(data);
   const [page, setPage] = useState(1);
@@ -49,7 +51,7 @@ const Participants = ({ data, id }) => {
         },
         body: JSON.stringify(input),
       });
-
+      console.log('res', res);
       if (res.ok) {
         setParticipants([...participants, input]);
         setToggle(false);
@@ -123,12 +125,12 @@ const Participants = ({ data, id }) => {
 
             <h1 className='text-xl font-bold tracking-wide text-slate-900'>All Participants</h1>
             {Array.isArray(data) &&
-              data?.map((participant) => (
+              data?.map((dataP) => (
                 <div
-                  key={participant._id}
+                  key={dataP?._id}
                   className='flex items-center justify-between px-4 py-2 border hover:bg-gray-100 cursor-pointer'
                 >
-                  {participant._id}
+                  {dataP?.participant?.username}
                 </div>
               ))}
           </div>
