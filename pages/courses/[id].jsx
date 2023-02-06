@@ -6,38 +6,17 @@ import CourseLayout from '../../components/courses/layout/CourseLayout';
 import { LinearProgress } from '@mui/material';
 import withAuth from '../../components/withAuth';
 import Announcement from '../../components/Announcement/Announcement';
+import useFetchUsers from '../../src/customHooks/useFetchUsers.h';
 const Participants = ({ data, id }) => {
   console.log('Serverdata', data);
 
   const [loading, setLoading] = useState(false);
   const [participants, setParticipants] = useState(data);
   const [page, setPage] = useState(1);
-  const [accounts, setAccounts] = useState([]);
   const [input, setInput] = useState({ student: '' });
   const user = useSelector(selectCurrentUser);
   const { admin } = user?.user || {};
-
-  useEffect(() => {
-    const getAllUsers = async () => {
-      try {
-        setLoading(true);
-        const res = await fetch('https://vast-pink-moth-toga.cyclic.app/accounts', {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${user.token}`,
-          },
-        });
-        const data = await res.json();
-        console.log('data', data);
-        setAccounts(data);
-        setLoading(false);
-      } catch (err) {
-        console.log(err);
-        setLoading(false);
-      }
-    };
-    getAllUsers();
-  }, []);
+  const { users } = useFetchUsers();
 
   const addParticipant = async (e) => {
     e.preventDefault();
@@ -103,7 +82,7 @@ const Participants = ({ data, id }) => {
                   id='studentId'
                   onChange={(e) => setInput({ student: e.target.value })}
                 >
-                  {accounts.map((account) => (
+                  {users.map((account) => (
                     <option
                       key={account._id}
                       value={account._id}

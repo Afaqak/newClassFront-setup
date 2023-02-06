@@ -88,7 +88,6 @@ const CreateAnnouncement = ({ setToggleAnnouncement, id, type, toggleAnnouncemen
     } catch (error) {
       console.log(error);
       setLoading(false);
-      notify('Something went wrong', 'error');
     }
   };
 

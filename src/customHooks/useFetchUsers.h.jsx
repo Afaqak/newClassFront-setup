@@ -7,7 +7,6 @@ const useFetchUsers = () => {
   const { user } = userData || {};
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [mount, setMounted] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -16,21 +15,16 @@ const useFetchUsers = () => {
       try {
         const data = await FetchTypeGet('https://vast-pink-moth-toga.cyclic.app/accounts', userData.token);
         setUsers(data);
-        setLoading(false);
       } catch (err) {
+        console.log(err);
+      } finally {
         setLoading(false);
       }
     };
     fetchUser();
   }, [userData]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setMounted(true);
-    }, 1300);
-  }, []);
-
-  return { users, loading, mount, user, userData };
+  return { users, loading, user, userData };
 };
 
 export default useFetchUsers;

@@ -1,15 +1,14 @@
 import React from 'react';
 import useFetchUsers from '../../src/customHooks/useFetchUsers.h';
 import { LinearProgress } from '@mui/material';
-import { selectCurrentUser } from '../../src/store/user/user.selector';
 import Link from 'next/link';
-import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import withAuth from '../../components/withAuth';
+import Heading_1 from '../../components/Heading_1';
 
 const Accounts = () => {
   const router = useRouter();
-  const { users, loading, mount, user, userData } = useFetchUsers();
+  const { users, loading, user } = useFetchUsers();
   const { admin, teacher } = user || {};
 
   const getBatches = async (id) => {
@@ -30,14 +29,14 @@ const Accounts = () => {
   // });
 
   return (
-    <div className='dark:bg-gray-900 min-h-[95vh] font-sans'>
+    <div className='dark:bg-gray-900 min-h-[95vh] font-sans '>
       {loading && <LinearProgress />}
 
       {admin && teacher && (
-        <>
-          <h1 className='text-4xl font-semibold mb-2 p-3'>Sessions</h1>
-          <p className='text-sm text-gray-500 mb-2 p-3'>List of all sessions</p>
-          <div className='gap-2 flex flex-col p-3'>
+        <div className='px-4 mt-2'>
+          <Heading_1 label='Batches' />
+          <p className='text-sm text-gray-500 mb-2 py-3'>List of all sessions</p>
+          <div className='gap-2 flex flex-col py-3'>
             {users.map((user) => (
               <Link
                 href={`accounts/batch?batchId=${user._id}`}
@@ -51,31 +50,12 @@ const Accounts = () => {
               </Link>
             ))}
           </div>
-        </>
+        </div>
       )}
-
-      {/* add input element for search */}
-      {/* <div
-        className="
-      flex justify-center items-center mt-4
-      "
-      >
-        <input
-          type="text"
-          placeholder="Search"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className=" border-b-4 
-           p-2 mb-4 shadow-md  dark:text-gray-100 bg-gray-50 dark:bg-gray-900
-          text-gray-800 focus:outline-none transition-all duration-150 ease-in
-          border-[#404145] focus:border-cyan-500 w-[60%] md:w-1/2 lg:w-1/2
-          "
-        />
-      </div> */}
 
       {admin && !teacher && (
         <div className='mt-5 px-4'>
-          <h1 className='text-4xl font-semibold mb-2'>Accounts</h1>
+          <Heading_1 label='Accounts' />
           <p className='text-sm text-gray-500 mb-2'>List of all accounts</p>
           <div
             className='
