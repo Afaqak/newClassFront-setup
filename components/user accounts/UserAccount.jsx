@@ -25,6 +25,7 @@ const UserAccount = ({ userData, user }) => {
           >
             <div className='bg-blue-500'>
               <Image
+                alt='user'
                 className='w-[40%] sm:w-[70%] md:w-[100%]'
                 src={'/Humaaans.svg'}
                 width={250}

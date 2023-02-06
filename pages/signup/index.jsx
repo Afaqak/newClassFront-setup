@@ -9,12 +9,11 @@ import checkError from '../../utils/errorChecker';
 import { motion } from 'framer-motion';
 import { pageAnimation } from '../../utils/animations/animations';
 import { Toaster } from 'react-hot-toast';
-import batches from '../../utils/data';
 import LinearProgress from '@mui/material/LinearProgress';
 import axios from 'axios';
 
 const loginStyles = {
-  inputStyle: 'focus:outline-none bg-gray-100 border-2 border-gray-300 w-full shadow-md px-2 py-2',
+  inputStyle: 'focus:outline-none border-2 border-gray-300 w-full shadow-md px-2 py-2',
   labelStyle: 'absolute top-2 left-3 transition-all duration-300 pointer-events-none z-10',
 };
 
@@ -150,7 +149,7 @@ const SignUp = () => {
       animate='show'
       exit='exit'
       className='
-    h-[100vh] w-screen bg-gray-100 dark:bg-gray-900
+    h-[100vh] w-screen dark:bg-gray-900
     '
     >
       {loading && <LinearProgress />}
@@ -197,7 +196,7 @@ const SignUp = () => {
               />
             ) : (
               <select
-                className={`${loginStyles.inputStyle}`}
+                className={`shadow appearance-none border border-blue-500 rounded block py-2 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
                 onChange={handleYearChange}
               >
                 <option value={null}>Select Batch</option>
@@ -222,7 +221,7 @@ const SignUp = () => {
             ) : (
               selectedProgram && (
                 <select
-                  className={`${loginStyles.inputStyle}`}
+                  className={`shadow appearance-none border border-blue-500 rounded block py-2 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
                   onChange={handleProgramChange}
                 >
                   <option value={null}>Select Program</option>
@@ -248,7 +247,7 @@ const SignUp = () => {
             ) : (
               groups.length > 0 && (
                 <select
-                  className={`${loginStyles.inputStyle}`}
+                  className={`shadow appearance-none border border-blue-500 rounded block py-2 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
                   onChange={handleGroupChange}
                 >
                   <option value={null}>Select Group</option>
@@ -305,18 +304,15 @@ const SignUp = () => {
               {loading ? 'Loading...' : 'Sign Up'}
             </motion.button>
             <div className='flex justify-center items-center mt-3'>
-              <Typography
-                variant='body2'
-                component='p'
-              >
-                Have an account ?{' '}
+              <p className='text-slate-700 font-semibold text-sm'>
+                Have an account?{' '}
                 <Link
                   href='/'
                   className='text-blue-500'
                 >
                   Sign in
                 </Link>
-              </Typography>
+              </p>
             </div>
           </div>
         </form>

@@ -5,6 +5,7 @@ import { setCoursesData } from '../store/courses/courses.action';
 
 export const usefetchCourses = (user, setLoading) => {
   const dispatch = useDispatch();
+  console.log('user', user);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -13,11 +14,12 @@ export const usefetchCourses = (user, setLoading) => {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${user.token}`,
+            Authorization: `Bearer ${user}`,
           },
         });
 
         const data = await res.json();
+        console.log('courses', data);
         dispatch(setCoursesData(data));
       } catch (err) {
         toast.error('Something went wrong');

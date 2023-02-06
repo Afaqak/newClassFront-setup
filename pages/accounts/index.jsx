@@ -7,26 +7,8 @@ import withAuth from '../../components/withAuth';
 import Heading_1 from '../../components/Heading_1';
 
 const Accounts = () => {
-  const router = useRouter();
   const { users, loading, user } = useFetchUsers();
   const { admin, teacher } = user || {};
-
-  const getBatches = async (id) => {
-    router.push(`accounts/batch/${id}`);
-    // try {
-    //   const res = await FetchTypeGet(`https://vast-pink-moth-toga.cyclic.app/batches/${id}/programs`, userr.token);
-    // } catch (err) {
-    //   console.log(err);
-    // }
-  };
-
-  // filter users based on search term
-  // const filteredUsers = users.filter((user) => {
-  //   return (
-  //     user?.username?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  //     user?.email?.toLowerCase().includes(searchTerm.toLowerCase())
-  //   );
-  // });
 
   return (
     <div className='dark:bg-gray-900 min-h-[95vh] font-sans '>

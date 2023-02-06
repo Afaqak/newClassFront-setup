@@ -16,6 +16,7 @@ const GroupAnnouncement = () => {
   }
 
   useEffect(() => {
+    console.log('GROUP ANNOUNCEMENT');
     const getGroupAnnouncement = async () => {
       try {
         const res = await fetch('https://vast-pink-moth-toga.cyclic.app//groups/announcements', {

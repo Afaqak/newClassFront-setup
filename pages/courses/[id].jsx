@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
 import CoursesPosts from '../../components/post';
 import CourseLayout from '../../components/courses/layout/CourseLayout';
@@ -8,14 +9,15 @@ import withAuth from '../../components/withAuth';
 import Announcement from '../../components/Announcement/Announcement';
 import useFetchUsers from '../../src/customHooks/useFetchUsers.h';
 const Participants = ({ data, id }) => {
-  console.log('Serverdata', data);
-
+  const [input, setInput] = useState({ batch: '', program: '', group: '' });
   const [loading, setLoading] = useState(false);
+  const [program, setProgram] = useState([]);
+  const [group, setGroup] = useState([]);
   const [participants, setParticipants] = useState(data);
   const [page, setPage] = useState(1);
-  const [input, setInput] = useState({ student: '' });
+
   const user = useSelector(selectCurrentUser);
-  const { admin } = user?.user || {};
+  const { admin, teacher } = user?.user || {};
   const { users } = useFetchUsers();
 
   const addParticipant = async (e) => {
@@ -43,6 +45,57 @@ const Participants = ({ data, id }) => {
     }
   };
 
+  const handleBatchChange = async (e) => {
+    const { name, value } = e.target;
+    setInput({ ...input, [name]: value });
+
+    try {
+      console.log('batch', input.batch);
+      setLoading(true);
+      const response = await axios.get(`https://vast-pink-moth-toga.cyclic.app/batches/${input.batch}/programs`);
+      const { data } = response;
+      setProgram(data);
+      console.log('data', data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleProgramChange = async (e) => {
+    const { name, value } = e.target;
+    setInput({ ...input, [name]: value });
+    try {
+      setLoading(true);
+      const response = await axios.get(`https://vast-pink-moth-toga.cyclic.app/batches/${input.batch}/programs/${value}/groups`);
+      const { data } = response;
+      console.log('dg', data);
+      setGroup(data);
+      console.log('data', data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGroupChange = async (e) => {
+    const { name, value } = e.target;
+    setInput({ ...input, [name]: value });
+    try {
+      setLoading(true);
+      const response = await axios.get(`https://vast-pink-moth-toga.cyclic.app/batches/${input.batch}/programs/${input.program}/groups/${value}`);
+
+      const { data } = response;
+      console.log('gd data', data);
+      setGroup(data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div
       className='min-h-screen font-sans
@@ -70,27 +123,64 @@ const Participants = ({ data, id }) => {
             className='flex flex-col w-4/5 px-4  gap-y-2  
           '
           >
-            {admin && (
+            {(teacher || admin) && (
               <form
                 className='w-1/2 py-2 text-gray-700 dark:text-gray-400'
                 onSubmit={addParticipant}
               >
                 <span className='text-xs text-gray-500'>Select the student ID from the dropdown to add</span>
+
                 <select
-                  className='shadow appearance-none border border-blue-500 rounded block py-2 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                  name='studentId'
-                  id='studentId'
-                  onChange={(e) => setInput({ student: e.target.value })}
+                  onChange={handleBatchChange}
+                  name='batch'
+                  className={`shadow appearance-none border w-[300px] border-blue-500 rounded block py-2 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
                 >
-                  {users.map((account) => (
+                  <option value={null}>Select Batch</option>
+                  {users?.map((batch) => (
                     <option
-                      key={account._id}
-                      value={account._id}
+                      key={batch._id}
+                      value={batch._id}
                     >
-                      {account._id}
+                      {batch.session}
                     </option>
                   ))}
                 </select>
+                {input.batch && (
+                  <select
+                    name='program'
+                    onChange={handleProgramChange}
+                    className={`shadow appearance-none w-[300px] border mt-1  border-blue-500 rounded block py-2 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
+                  >
+                    <option value={null}>Select Program</option>
+                    {program?.map((program) => (
+                      <option
+                        key={program._id}
+                        value={program._id}
+                      >
+                        {program.program}
+                      </option>
+                    ))}
+                  </select>
+                )}
+                {input.program && (
+                  <select
+                    name='group'
+                    onChange={handleGroupChange}
+                    className={`shadow appearance-none border mt-1 
+                    w-[300px]
+                    border-blue-500 rounded block py-2 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
+                  >
+                    <option value={null}>Select Group</option>
+                    {group?.map((group) => (
+                      <option
+                        key={group._id}
+                        value={group._id}
+                      >
+                        {group.group}
+                      </option>
+                    ))}
+                  </select>
+                )}
 
                 <button
                   className='bg-slate-900 mt-4 text-white py-1 px-5 rounded-lg'

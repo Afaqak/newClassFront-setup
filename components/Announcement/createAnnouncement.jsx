@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import Form from './Form';
 import { notify } from '../../utils/tools';
 import { useSelector } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
-import { CircularProgress } from '@mui/material';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
 const CreateAnnouncement = ({ setToggleAnnouncement, id, type, toggleAnnouncement, setAnnouncement, announcement }) => {
   const user = useSelector(selectCurrentUser);
@@ -34,8 +34,6 @@ const CreateAnnouncement = ({ setToggleAnnouncement, id, type, toggleAnnouncemen
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(user);
-    console.log(coursesD);
     const check = Object.values(coursesD).every((item) => item !== '');
     let res;
     if (!check) {
@@ -97,63 +95,13 @@ const CreateAnnouncement = ({ setToggleAnnouncement, id, type, toggleAnnouncemen
       className=' w-full h-full fixed top-0 left-0 flex justify-center items-center bg-black bg-opacity-50 z-50 '
     >
       <div className='flex flex-col items-center justify-center w-full px-10 md:px-0'>
-        <form
-          onSubmit={handleSubmit}
-          className='bg-white md:w-3/5 w-full px-6 py-3 relative shadow-md rounded-md'
-        >
-          <p
-            className='
-        text-slate-900 mb-2 text-2xl font-semibold
-        '
-          >
-            Make an announcement
-          </p>
-          <button
-            className='absolute right-7 top-14 pt-1 md:top-7 font-semibold text-xl border px-3 py self-center hover:bg-gray-200'
-            onClick={() => setToggleAnnouncement(!toggleAnnouncement)}
-          >
-            {loading ? <CircularProgress size={20} /> : 'X'}
-          </button>
-          <div>
-            <div className='flex flex-col'>
-              <label
-                className='mt-2 font-semibold'
-                htmlFor='title'
-              >
-                Title
-              </label>
-              <input
-                onChange={handleInputChange}
-                className='w-2/3 px-3 py-2 text-gray-700 border  focus:outline-none border-slate-300 rounded-sm focus:border-blue-500'
-                type='text'
-                name='title'
-                id='title'
-              />
-            </div>
-            <div>
-              <label
-                className='mt-2 font-semibold'
-                htmlFor='body'
-              >
-                Body
-              </label>
-              <textarea
-                onChange={handleInputChange}
-                className='w-full px-3 py-2 text-gray-700 border  focus:outline-none border-slate-300 rounded-sm focus:border-blue-500'
-                name='subject'
-                id='body'
-                cols='30'
-                rows='10'
-              ></textarea>
-              <button
-                type='submit'
-                className='bg-blue-500 text-white px-4 py-1 rounded-md mt-2'
-              >
-                Announce!
-              </button>
-            </div>
-          </div>
-        </form>
+        <Form
+          loading={loading}
+          handleInputChange={handleInputChange}
+          handleSubmit={handleSubmit}
+          setToggleAnnouncement={setToggleAnnouncement}
+          toggleAnnouncement={toggleAnnouncement}
+        />
       </div>
       <Toaster />
     </div>
