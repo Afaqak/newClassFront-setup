@@ -9,6 +9,7 @@ import withAuth from '../../components/withAuth';
 import Announcement from '../../components/Announcement/Announcement';
 import useFetchUsers from '../../src/customHooks/useFetchUsers.h';
 const Participants = ({ data, id }) => {
+  console.log('participant', data);
   const [input, setInput] = useState({ batch: '', program: '', group: '', participant: '' });
   const [loading, setLoading] = useState(false);
   const [program, setProgram] = useState([]);
@@ -265,13 +266,17 @@ export async function getServerSideProps(context) {
 
     if (!res) {
       return {
-        notFound: true,
+        props: {
+          notFound: true,
+        },
       };
     }
     const data = await res.json();
     if (!data) {
       return {
-        notFound: true,
+        props: {
+          notFound: true,
+        },
       };
     }
     return {
@@ -283,7 +288,9 @@ export async function getServerSideProps(context) {
   } catch (err) {
     console.log(err);
     return {
-      error: err.message,
+      props: {
+        error: err.message,
+      },
     };
   }
 }

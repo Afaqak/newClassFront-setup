@@ -9,6 +9,7 @@ import { motion } from 'framer-motion';
 import { pageAnimation } from '../utils/animations/animations';
 import axios from 'axios';
 const CoursesPosts = ({ id }) => {
+  console.log('post', id);
   const [loading, setLoading] = useState(false);
   const [postDetails, setPostDetails] = React.useState([]);
   const { token, user } = useSelector(selectCurrentUser) || {
@@ -39,7 +40,7 @@ const CoursesPosts = ({ id }) => {
     }
     const handleReq = async () => {
       try {
-        const response = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/${_id}/posts`, {
+        const response = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/${id}/posts`, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
