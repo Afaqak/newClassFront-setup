@@ -6,7 +6,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-import { selectCurrentUser } from '../../../../src/store/user/user.selector';
+import { selectCurrentUser } from '../../../src/store/user/user.selector';
 import { useState } from 'react';
 
 const initialValues = {

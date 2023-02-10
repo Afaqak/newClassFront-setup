@@ -8,6 +8,8 @@ import { LinearProgress } from '@mui/material';
 import withAuth from '../../components/withAuth';
 import Announcement from '../../components/Announcement/Announcement';
 import useFetchUsers from '../../src/customHooks/useFetchUsers.h';
+
+
 const Participants = ({ data, id }) => {
   console.log('participant', data, id);
   const [input, setInput] = useState({ batch: '', program: '', group: '', participant: '' });
@@ -27,6 +29,8 @@ const Participants = ({ data, id }) => {
     }
 
     e.preventDefault();
+
+
     try {
       setLoading(true);
       const res = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/${input.participant}/participants`, {
@@ -107,6 +111,19 @@ const Participants = ({ data, id }) => {
     setInput({ ...input, [name]: value });
   };
 
+  const handleChange = (name) => (event) => {
+    if (name === "batch") {
+      handleBatchChange(event);
+    } else if (name === "program") {
+      handleProgramChange(event);
+    } else if (name === "group") {
+      handleGroupChange(event);
+    } else if (name === "participant") {
+      handleParticipantChange(event);
+    }
+  };
+
+
   return (
     <div
       className='min-h-screen font-sans
@@ -141,74 +158,24 @@ const Participants = ({ data, id }) => {
               >
                 <span className='text-xs text-gray-500'>Select the student ID from the dropdown to add</span>
 
-                <select
-                  onChange={handleBatchChange}
-                  name='batch'
-                  className={`shadow appearance-none border w-[300px] border-blue-500 rounded block py-2 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
-                >
-                  <option value={null}>Select Batch</option>
-                  {users?.map((batch) => (
-                    <option
-                      key={batch._id}
-                      value={batch._id}
-                    >
-                      {batch.session}
-                    </option>
-                  ))}
-                </select>
-                {input.batch && (
-                  <select
-                    name='program'
-                    onChange={handleProgramChange}
-                    className={`shadow appearance-none w-[300px] border mt-1  border-blue-500 rounded block py-2 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
-                  >
-                    <option value={null}>Select Program</option>
-                    {program?.map((program) => (
-                      <option
-                        key={program._id}
-                        value={program._id}
+                {inputs.map(({ name, label, options }) => (
+                  <>
+                    {input[name] && (
+                      <select
+                        name={name}
+                        onChange={handleChange(name)}
+                        className="shadow appearance-none border mt-1 w-[300px] border-blue-500 rounded block py-2 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                       >
-                        {program.program}
-                      </option>
-                    ))}
-                  </select>
-                )}
-                {input.program && (
-                  <select
-                    name='group'
-                    onChange={handleGroupChange}
-                    className={`shadow appearance-none border mt-1 
-                    w-[300px]
-                    border-blue-500 rounded block py-2 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
-                  >
-                    <option value={null}>Select Group</option>
-                    {group?.map((group) => (
-                      <option
-                        key={group._id}
-                        value={group._id}
-                      >
-                        {group.group}
-                      </option>
-                    ))}
-                  </select>
-                )}
-                {input.group && (
-                  <select
-                    name='participant'
-                    onChange={handleParticipantChange}
-                    className='shadow appearance-none w-[300px] border mt-1 border-blue-500 rounded block py-2 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                  >
-                    <option value={null}>Select Participant</option>
-                    {group?.participants?.map((participant) => (
-                      <option
-                        key={participant._id}
-                        value={participant._id}
-                      >
-                        {participant.username}
-                      </option>
-                    ))}
-                  </select>
-                )}
+                        <option value={null}>Select {label}</option>
+                        {options?.map((option) => (
+                          <option key={option._id} value={option._id}>
+                            {option[name]}
+                          </option>
+                        ))}
+                      </select>
+                    )}
+                  </>
+                ))}
                 <button
                   className='bg-slate-900 mt-4 text-white py-1 px-5 rounded-lg'
                   type='submit'
@@ -288,3 +255,45 @@ export async function getServerSideProps(context) {
 }
 
 export default withAuth(Participants);
+
+
+
+// const inputs = [
+//   { name: "batch", label: "Batch", options: batch },
+//   { name: "program", label: "Program", options: program },
+//   { name: "group", label: "Group", options: group },
+//   { name: "participant", label: "Participant", options: group?.participants },
+// ];
+
+// {inputs.map(({ name, label, options }) => (
+//   <>
+//     {input[name] && (
+//       <select
+//         name={name}
+//         onChange={handleChange(name)}
+//         className="shadow appearance-none border mt-1 w-[300px] border-blue-500 rounded block py-2 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+//       >
+//         <option value={null}>Select {label}</option>
+//         {options?.map((option) => (
+//           <option key={option._id} value={option._id}>
+//             {option[name]}
+//           </option>
+//         ))}
+//       </select>
+//     )}
+//   </>
+// ))}
+
+
+
+// const handleChange = (name) => (event) => {
+//   if (name === "batch") {
+//     handleBatchChange(event);
+//   } else if (name === "program") {
+//     handleProgramChange(event);
+//   } else if (name === "group") {
+//     handleGroupChange(event);
+//   } else if (name === "participant") {
+//     handleParticipantChange(event);
+//   }
+// };

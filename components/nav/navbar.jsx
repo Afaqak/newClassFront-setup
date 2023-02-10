@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { setCoursesData } from '../../src/store/courses/courses.action';
 import { useDispatch } from 'react-redux';
 import { setToggleAnnouncement } from '../../src/store/user/user.actions';
+import { selectCurrentUser } from '../../src/store/user/user.selector';
 import { selectToggleAnnouncement } from '../../src/store/user/user.selector';
 import { setCurrentUser } from '../../src/store/user/user.actions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,7 +16,7 @@ const Navbar = () => {
   const toggleAnnouncement = useSelector(selectToggleAnnouncement);
   const [activeLink, setActiveLink] = React.useState(router.pathname);
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user?.currentUser?.user);
+  const { user, token } = useSelector(selectCurrentUser) || {};
 
   const logout = () => {
     setTimeout(() => {
@@ -28,7 +29,7 @@ const Navbar = () => {
     user.admin ? (
       <Target
         onClick={() => setActiveLink('/accounts')}
-        href='/accounts'
+        href={`/accounts?id=${token}`}
         label='Accounts'
         className={`${NavStyles.flexDex} ${activeLink === '/accounts' ? 'bg-blue-500 text-white' : ''}`}
         icon={faUserGroup}

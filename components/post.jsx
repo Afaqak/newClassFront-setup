@@ -102,7 +102,7 @@ const CoursesPosts = ({ id }) => {
     <div className='h-screen bg-gray-50 dark:bg-gray-900'>
       {loading && <LinearProgress />}
       <div className='px-4'>
-        <Link href={`/courses/courseposts/create-post?courseId=${id}`}>
+        <Link href={`/courses/create-post?courseId=${id}`}>
           <Button
             onClick={() => setLoading(true)}
             sx={{ marginTop: '3vh' }}

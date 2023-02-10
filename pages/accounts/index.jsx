@@ -2,24 +2,27 @@ import React from 'react';
 import useFetchUsers from '../../src/customHooks/useFetchUsers.h';
 import { LinearProgress } from '@mui/material';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import withAuth from '../../components/withAuth';
 import Heading_1 from '../../components/Heading_1';
+import { FetchTypeGet } from '../../utils/fetch/fetchtypeget';
+import { useSelector } from 'react-redux';
+import { selectCurrentUser } from '../../src/store/user/user.selector';
 
-const Accounts = () => {
-  const { users, loading, user } = useFetchUsers();
-  const { admin, teacher } = user || {};
+const Accounts = ({ id, data }) => {
+  const user = useSelector(selectCurrentUser)
+  const { admin, teacher } = user.user || {};
+  console.log('serversideId', id, data)
 
   return (
     <div className='dark:bg-gray-900 min-h-[95vh] font-sans '>
-      {loading && <LinearProgress />}
+      {/* {loading && <LinearProgress />} */}
 
       {admin && teacher && (
         <div className='px-4 mt-2'>
           <Heading_1 label='Batches' />
           <p className='text-sm text-gray-500 mb-2 py-3'>List of all sessions</p>
           <div className='gap-2 flex flex-col py-3'>
-            {users.map((user) => (
+            {data.map((user) => (
               <Link
                 href={`accounts/batch?batchId=${user._id}`}
                 key={user._id}
@@ -44,7 +47,7 @@ const Accounts = () => {
           grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4
         '
           >
-            {users.map((user) => (
+            {data.map((user) => (
               <UserProfile
                 key={user.id}
                 user={user}
@@ -58,6 +61,19 @@ const Accounts = () => {
 };
 
 export default withAuth(Accounts);
+
+export async function getServerSideProps(context) {
+  console.log('context.query: ', context.query)
+  const { id } = context.query
+  const data = await FetchTypeGet('https://vast-pink-moth-toga.cyclic.app/accounts', id);
+
+  return {
+    props: {
+      data,
+      id
+    }
+  }
+}
 
 const UserProfile = ({ user }) => {
   return (
