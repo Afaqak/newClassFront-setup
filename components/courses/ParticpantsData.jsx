@@ -23,7 +23,12 @@ const ParticpantsData = ({ data, id }) => {
   console.log('d', data);
   return (
     <div className='p-4'>
-      {IsOpen && <AddParticipant batch={batch} />}
+      {IsOpen && (
+        <AddParticipant
+          setIsOpen={setIsOpen}
+          batch={batch}
+        />
+      )}
 
       <button
         onClick={toggleAddParticipant}
