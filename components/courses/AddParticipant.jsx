@@ -16,6 +16,7 @@ const AddParticipant = ({ batch, setIsOpen }) => {
     e.preventDefault();
 
     try {
+      console.log({ student: input.participant });
       // setLoading(true);
       const res = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/${input.participant}/participants`, {
         method: 'POST',
@@ -81,6 +82,7 @@ const AddParticipant = ({ batch, setIsOpen }) => {
       const data = await res.json();
       console.log(data);
       setParticipants([...data?.participants, ...data?.admins]);
+      console.log(participants);
     } catch (err) {
       console.log(err);
     } finally {
@@ -91,6 +93,38 @@ const AddParticipant = ({ batch, setIsOpen }) => {
     const { name, value } = e.target;
     setInput({ ...input, [name]: value });
   };
+
+  const selectData = [
+    {
+      label: 'Batch',
+      name: 'batch',
+      value: 'session',
+      options: batch,
+      onChange: handleBatchChange,
+    },
+    {
+      label: 'Program',
+      value: 'program',
+      name: 'program',
+      options: program,
+      onChange: handleProgramChange,
+    },
+    {
+      label: 'Group',
+      value: 'group',
+      name: 'group',
+
+      options: group,
+      onChange: handleGroupChange,
+    },
+    {
+      label: 'Participant',
+      value: 'participants',
+      name: 'participant',
+      options: participants,
+      onChange: handleParticipantChange,
+    },
+  ];
 
   return (
     <div className='w-full h-full fixed top-0 left-0 flex justify-center items-center bg-black bg-opacity-50 z-50'>
@@ -110,80 +144,24 @@ const AddParticipant = ({ batch, setIsOpen }) => {
             <p className='text-slate-700'>choose a participant and than add it</p>
           </div>
           <div>
-            <label className='font-semibold'>Batch</label>
-            <select
-              name='batch'
-              onChange={handleBatchChange}
-              className='select_participant'
-            >
-              <option value='select batch'> select batch</option>
-              {batch.map((batch) => (
-                <option
-                  className=''
-                  value={batch._id}
-                >
-                  {batch.session}
-                </option>
-              ))}
-            </select>
-            {program.length > 0 && (
-              <>
-                <label className='font-semibold'>Program</label>
-                <select
-                  name='program'
-                  id=''
-                  onChange={handleProgramChange}
-                  className='select_participant'
-                >
-                  <option value='select program'> select program</option>
-                  {program.map((p) => (
-                    <option value={p._id}>{p.program}</option>
-                  ))}
-                </select>
-              </>
-            )}
-            {group.length > 0 && (
-              <>
-                <label
-                  className='font-semibold'
-                  htmlFor=''
-                >
-                  Group
-                </label>
-                <select
-                  onChange={handleGroupChange}
-                  name='group'
-                  id=''
-                  className='select_participant '
-                >
-                  <option value='select group'> select group</option>
-                  {group.map((g) => (
-                    <option value={g._id}>{g.group}</option>
-                  ))}
-                </select>
-              </>
-            )}
-            {participants.length > 0 && (
-              <>
-                <label
-                  className='font-semibold'
-                  htmlFor=''
-                >
-                  Participant
-                </label>
-
-                <select
-                  onChange={handleParticipantChange}
-                  name='participant'
-                  id=''
-                  className='select_participant '
-                >
-                  <option value='select participant'> select participant</option>
-                  {participants.map((part, i) => (
-                    <option value={part}>{part}</option>
-                  ))}
-                </select>
-              </>
+            {selectData.map(
+              ({ label, name, options, onChange, value }) =>
+                options.length > 0 && (
+                  <>
+                    <label className='font-semibold'>{label}</label>
+                    <select
+                      onChange={onChange}
+                      name={name}
+                      id=''
+                      className='select_participant'
+                    >
+                      <option value={`select ${label.toLowerCase()}`}>{`select ${label.toLowerCase()}`}</option>
+                      {options.map((item) => (
+                        <option value={item._id}>{value == 'participants' ? item : item[value]}</option>
+                      ))}
+                    </select>
+                  </>
+                )
             )}
           </div>
           <button

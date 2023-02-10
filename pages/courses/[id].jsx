@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
 import CoursesPosts from '../../components/post';
@@ -7,123 +7,15 @@ import { LinearProgress } from '@mui/material';
 import ParticpantsData from '../../components/courses/ParticpantsData';
 import withAuth from '../../components/withAuth';
 import Announcement from '../../components/Announcement/Announcement';
-// const inputs = [
-//   { name: 'batch', label: 'Batch', options: batch },
-//   { name: 'program', label: 'Program', options: program },
-//   { name: 'group', label: 'Group', options: group },
-//   { name: 'participant', label: 'Participant', options: group?.participants },
-// ];
 
 const Participants = ({ data, id }) => {
   console.log('participant', data, id);
-  const [input, setInput] = useState({ batch: '', program: '', group: '', participant: '' });
   const [loading, setLoading] = useState(false);
-  const [program, setProgram] = useState([]);
-  const [group, setGroup] = useState([]);
-  const [participants, setParticipants] = useState(data);
+
   const [page, setPage] = useState(1);
 
   const user = useSelector(selectCurrentUser);
   const { admin, teacher } = user?.user || {};
-
-  // const addParticipant = async (e) => {
-  //   if (Object.values(input).some((item) => item === '')) {
-  //     return;
-  //   }
-
-  //   e.preventDefault();
-
-  //   try {
-  //     setLoading(true);
-  //     const res = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/${input.participant}/participants`, {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         Authorization: `Bearer ${user.token}`,
-  //       },
-  //       body: JSON.stringify(input),
-  //     });
-  //     console.log('res', res);
-  //     if (res.ok) {
-  //       setParticipants([...participants, input]);
-  //       setToggle(false);
-  //     } else {
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // const handleBatchChange = async (e) => {
-  //   const { name, value } = e.target;
-  //   setInput({ ...input, [name]: value });
-
-  //   try {
-  //     console.log('batch', input.batch);
-  //     setLoading(true);
-  //     const response = await axios.get(`https://vast-pink-moth-toga.cyclic.app/batches/${input.batch}/programs`);
-  //     const { data } = response;
-  //     setProgram(data);
-  //     console.log('data', data);
-  //   } catch (err) {
-  //     console.log(err);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // const handleProgramChange = async (e) => {
-  //   const { name, value } = e.target;
-  //   setInput({ ...input, [name]: value });
-  //   try {
-  //     setLoading(true);
-  //     const response = await axios.get(`https://vast-pink-moth-toga.cyclic.app/batches/${input.batch}/programs/${value}/groups`);
-  //     const { data } = response;
-  //     console.log('dg', data);
-  //     setGroup(data);
-  //     console.log('data', data);
-  //   } catch (err) {
-  //     console.log(err);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // const handleGroupChange = async (e) => {
-  //   const { name, value } = e.target;
-  //   setInput({ ...input, [name]: value });
-  //   try {
-  //     setLoading(true);
-  //     const response = await axios.get(`https://vast-pink-moth-toga.cyclic.app/batches/${input.batch}/programs/${input.program}/groups/${value}`);
-
-  //     const { data } = response;
-  //     console.log('gd data', data);
-  //     setGroup(data);
-  //   } catch (err) {
-  //     console.log(err);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // const handleParticipantChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setInput({ ...input, [name]: value });
-  // };
-
-  // const handleChange = (name) => (event) => {
-  //   if (name === 'batch') {
-  //     handleBatchChange(event);
-  //   } else if (name === 'program') {
-  //     handleProgramChange(event);
-  //   } else if (name === 'group') {
-  //     handleGroupChange(event);
-  //   } else if (name === 'participant') {
-  //     handleParticipantChange(event);
-  //   }
-  // };
 
   return (
     <div

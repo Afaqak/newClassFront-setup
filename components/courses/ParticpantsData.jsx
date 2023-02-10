@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AddParticipant from './AddParticipant';
 
 const ParticpantsData = ({ data, id }) => {
+  console.log('dataa', data);
   const [IsOpen, setIsOpen] = useState(false);
   const [batch, setBatch] = useState([]);
   useEffect(() => {
