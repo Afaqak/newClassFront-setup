@@ -72,6 +72,8 @@
           .groupBar{
             clip-path:circle(40px at 100% -10%);
           }
-          
+          .select_participant{
+            @apply focus:outline-none block border mb-3 px-2 py-2 w-full md:w-1/2 focus:ring-1 focus:ring-blue-500
+          }
         
 }
