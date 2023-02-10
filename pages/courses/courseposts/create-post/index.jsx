@@ -31,6 +31,7 @@ const checkFile = (details) => {
 const Post = () => {
   const router = useRouter();
   const { courseId } = router.query;
+
   const [loading, setLoading] = useState(false);
   const [postDetails, setPostDetails] = React.useState(initialValues);
   const [file, setFile] = React.useState(null);

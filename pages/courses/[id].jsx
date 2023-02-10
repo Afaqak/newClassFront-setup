@@ -9,7 +9,7 @@ import withAuth from '../../components/withAuth';
 import Announcement from '../../components/Announcement/Announcement';
 import useFetchUsers from '../../src/customHooks/useFetchUsers.h';
 const Participants = ({ data, id }) => {
-  console.log('participant', data);
+  console.log('participant', data, id);
   const [input, setInput] = useState({ batch: '', program: '', group: '', participant: '' });
   const [loading, setLoading] = useState(false);
   const [program, setProgram] = useState([]);
@@ -255,44 +255,36 @@ const Participants = ({ data, id }) => {
 
 export async function getServerSideProps(context) {
   const { id, user } = context.query;
-  try {
-    const res = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/${id}/participants`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${user}`,
-      },
-    });
 
-    if (!res) {
-      return {
-        props: {
-          notFound: true,
-        },
-      };
-    }
-    const data = await res.json();
-    if (!data) {
-      return {
-        props: {
-          notFound: true,
-        },
-      };
-    }
-    return {
-      props: {
-        data,
-        id,
-      },
-    };
-  } catch (err) {
-    console.log(err);
-    return {
-      props: {
-        error: err.message,
-      },
-    };
-  }
+  const res = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/${id}/participants`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${user}`,
+    },
+  });
+
+  // if (!res) {
+  //   return {
+  //     props: {
+  //       notFound: true,
+  //     },
+  //   };
+  // }
+  const data = await res.json();
+  // if (!data) {
+  //   return {
+  //     props: {
+  //       notFound: true,
+  //     },
+  //   };
+  // }
+  return {
+    props: {
+      data,
+      id,
+    },
+  };
 }
 
 export default withAuth(Participants);

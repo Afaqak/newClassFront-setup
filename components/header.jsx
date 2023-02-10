@@ -35,7 +35,7 @@ const Header = () => {
             dark:text-gray-200 text-gray-800
             tracking-wider `}
       >
-        metaClass
+        Blink.
       </motion.h1>
       {/* <div className='header__right bg-gray-800 rounded-lg'>
         <div

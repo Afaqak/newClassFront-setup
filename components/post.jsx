@@ -5,8 +5,7 @@ import Link from 'next/link';
 import { Button, LinearProgress } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../src/store/user/user.selector';
-import { motion } from 'framer-motion';
-import { pageAnimation } from '../utils/animations/animations';
+
 import axios from 'axios';
 const CoursesPosts = ({ id }) => {
   console.log('post', id);
@@ -19,12 +18,14 @@ const CoursesPosts = ({ id }) => {
   const { semesters } = user || { semesters: null };
   const deleteAll = async () => {
     try {
-      const response = await axios.delete(`https://vast-pink-moth-toga.cyclic.app/courses/63dd36dfc0a7344fba416503/posts`, {
+      const response = await axios.delete(`https://vast-pink-moth-toga.cyclic.app/courses/${id}/posts`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
       });
+      const { data } = response;
+      console.log(data);
     } catch (err) {
       console.log(err?.response);
       console.log(err?.response?.data);
@@ -48,7 +49,7 @@ const CoursesPosts = ({ id }) => {
         });
 
         const data = await response.json();
-
+        console.log(data);
         if (data) {
           setPostDetails(
             data.map((post) => {
@@ -101,7 +102,7 @@ const CoursesPosts = ({ id }) => {
     <div className='h-screen bg-gray-50 dark:bg-gray-900'>
       {loading && <LinearProgress />}
       <div className='px-4'>
-        <Link href={`/courses/create-post?courseId=${id}`}>
+        <Link href={`/courses/courseposts/create-post?courseId=${id}`}>
           <Button
             onClick={() => setLoading(true)}
             sx={{ marginTop: '3vh' }}
