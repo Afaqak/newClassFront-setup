@@ -4,7 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { CircularProgress } from '@mui/material';
 import { setToggleGroupAnnouncement } from '../../src/store/user/user.actions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 const ShowAnnouncement = ({ announcements, handleDelete, admin, mode }) => {
   const dispatch = useDispatch();
@@ -24,7 +25,7 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode }) => {
         >
           <FontAwesomeIcon
             icon={faClose}
-            size={30}
+            size={25}
           />
         </button>
       )}
@@ -54,7 +55,7 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode }) => {
               className='bg-red-500 text-white px-2 rounded-md absolute right-5 mt-2'
             >
               <FontAwesomeIcon
-                size='xs'
+                size={20}
                 icon={faTrash}
               />
             </button>

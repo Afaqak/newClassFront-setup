@@ -86,6 +86,7 @@ const Announcement = ({ id, setLoading }) => {
           announcements={slicedAnnouncement}
           handleDelete={handleDelete}
           admin={admin}
+          setToggleAnnouncement={setToggleAnnouncement}
         />
       </div>
     </div>

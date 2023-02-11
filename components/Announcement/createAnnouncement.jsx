@@ -3,8 +3,13 @@ import Form from './Form';
 import { notify } from '../../utils/tools';
 import { useSelector } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
-const CreateAnnouncement = ({ setToggleAnnouncement, id, type, setAnnouncement, announcement }) => {
+import { setAnnouncementRedux } from '../../src/store/announcement/ancment.action';
+import { selectAnnouncement } from '../../src/store/announcement/ancment.reselect';
+const CreateAnnouncement = ({ id, type, announcement, setToggleAnnouncement }) => {
+  const announcementB = useSelector(selectAnnouncement);
+  const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
   const [loading, setLoading] = useState(false);
   const [coursesD, setCoursesD] = useState({ title: '', subject: '' });
@@ -33,7 +38,9 @@ const CreateAnnouncement = ({ setToggleAnnouncement, id, type, setAnnouncement, 
   };
 
   const handleSubmit = async (event) => {
+    console.log('submit', announcementB);
     event.preventDefault();
+    console.log(coursesD);
     const check = Object.values(coursesD).every((item) => item !== '');
     let res;
     if (!check) {
@@ -70,15 +77,7 @@ const CreateAnnouncement = ({ setToggleAnnouncement, id, type, setAnnouncement, 
         notify('Announcement added', 'success');
         setTimeout(() => {
           if (!announcement) return;
-          setAnnouncement([
-            ...announcement,
-            {
-              author: user.user.username,
-              createdAt: new Date().toISOString(),
-              title: coursesD.title,
-              body: coursesD.subject,
-            },
-          ]);
+          dispatch(setAnnouncementRedux([...announcement, data]));
           setToggleAnnouncement();
         }, 1000);
         console.log(res);

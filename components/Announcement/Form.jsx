@@ -57,6 +57,8 @@ const Form = ({ handleSubmit, handleInputChange, loading, setToggleAnnouncement 
             Body
           </label>
           <input
+            type='text'
+            name='subject'
             onChange={handleInputChange}
             className='w-full px-3 mb-2 py-2 text-slate-700 border-b  focus:outline-none border-slate-300 rounded-sm focus:border-blue-500'
           />

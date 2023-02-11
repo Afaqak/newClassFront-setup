@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setAnnouncementRedux } from '../../src/store/announcement/ancment.action';
 import ShowAnnouncement from './showAnnouncement';
-
+import { selectAnnouncement } from '../../src/store/announcement/ancment.reselect';
 const GroupAnnouncement = () => {
+  const announcement = useSelector(selectAnnouncement);
+  const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser) || {};
   const { token, user: { admin } = {} } = user;
-  const [announcement, setAnnouncement] = useState([]);
   let sliceAnnouncement;
   if (announcement.length > 0) {
     announcement.sort((a, b) => {
@@ -29,7 +31,7 @@ const GroupAnnouncement = () => {
         const data = await res.json();
         console.log('group', data);
         if (res.ok) {
-          setAnnouncement(data);
+          dispatch(setAnnouncementRedux(data));
         }
       } catch (error) {
         console.log(error);
