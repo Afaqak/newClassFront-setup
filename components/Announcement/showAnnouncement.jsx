@@ -3,19 +3,22 @@ import formatDate from '../../utils/tools';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { CircularProgress } from '@mui/material';
+
 const ShowAnnouncement = ({ announcements, handleDelete, admin, mode }) => {
   return (
     <div
-      className={`flex flex-col py-2 gap-2 px-4 shadow-md ${mode === 'courseAnnouncement' && 'shadow-none px-0'}
+      className={`flex ${mode === 'groupAnnouncement' && 'bg-white border px-0'}
+      flex-col py-2 gap-2 px-4
     `}
     >
       <h1
-        className={`text-2xl font-semibold text-gray-700
+        className={`md:text-2xl px-4 ${mode === 'groupAnnouncement' && 'mt-5'} font-semibold text-gray-700
 
-  dark:text-gray-200`}
+  dark:text-gray-200 text-lg`}
       >
         Announcements
       </h1>
+      <p className='text-slate-700 mb-3 px-4'>speak to your mind</p>
       {!announcements && (
         <div className='flex justify-center items-center'>
           <CircularProgress />
@@ -23,14 +26,15 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode }) => {
       )}
       {announcements?.map((ann) => (
         <div
-          className='
-        bg-blue-50 dark:bg-gray-800 overflow-hidden w-4/5  relative 
-        px-2 py-2 mt-2 flex flex-col gap-2 rounded-md'
+          className={`
+          ${mode === 'groupAnnouncement' ? 'bg-none w-full border-b' : 'bg-blue-50 w-4/5'}
+         dark:bg-gray-800 overflow-hidden  relative 
+        px-3 py-3 flex flex-col rounded-md`}
         >
           {admin && (
             <button
               onClick={() => handleDelete(ann._id)}
-              className='bg-red-500 text-white px-2 rounded-md absolute right-5'
+              className='bg-red-500 text-white px-2 rounded-md absolute right-5 mt-2'
             >
               <FontAwesomeIcon
                 size='xs'
@@ -39,7 +43,7 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode }) => {
             </button>
           )}
           <p
-            className='text-blue-500 text-[0.75rem] font-bold tracking-wider
+            className='text-blue-500 text-[0.75rem] font-bold tracking-wider mt-2
           '
           >
             {ann?.author}
@@ -52,8 +56,8 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode }) => {
             {ann.body}
           </p>
           <p
-            className='text-gray-600 
-            flex justify-end text-sm font-semibold
+            className='text-gray-600
+            flex justify-end text-[0.65rem] font-semibold
           '
           >
             {formatDate(ann?.createdAt)}

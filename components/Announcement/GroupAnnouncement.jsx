@@ -12,7 +12,7 @@ const GroupAnnouncement = () => {
     announcement.sort((a, b) => {
       return new Date(b.createdAt) - new Date(a.createdAt);
     });
-    sliceAnnouncement = announcement.slice(0, 3);
+    sliceAnnouncement = announcement.slice(0, 5);
   }
 
   useEffect(() => {

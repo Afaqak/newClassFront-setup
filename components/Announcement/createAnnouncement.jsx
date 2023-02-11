@@ -4,19 +4,19 @@ import { notify } from '../../utils/tools';
 import { useSelector } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
-const CreateAnnouncement = ({ setToggleAnnouncement, id, type, toggleAnnouncement, setAnnouncement, announcement }) => {
+const CreateAnnouncement = ({ setToggleAnnouncement, id, type, setAnnouncement, announcement }) => {
   const user = useSelector(selectCurrentUser);
   const [loading, setLoading] = useState(false);
   const [coursesD, setCoursesD] = useState({ title: '', subject: '' });
   const handleKeyDown = (event) => {
     if (event.keyCode === 27) {
-      setToggleAnnouncement(!toggleAnnouncement);
+      setToggleAnnouncement();
     }
   };
 
   const handleBackdropClick = (event) => {
     if (event.target === event.currentTarget) {
-      setToggleAnnouncement(!toggleAnnouncement);
+      setToggleAnnouncement();
     }
   };
 
@@ -79,7 +79,7 @@ const CreateAnnouncement = ({ setToggleAnnouncement, id, type, toggleAnnouncemen
               body: coursesD.subject,
             },
           ]);
-          setToggleAnnouncement(!toggleAnnouncement);
+          setToggleAnnouncement();
         }, 1000);
         console.log(res);
       }
@@ -92,7 +92,7 @@ const CreateAnnouncement = ({ setToggleAnnouncement, id, type, toggleAnnouncemen
   return (
     <div
       onClick={handleBackdropClick}
-      className=' w-full h-full fixed top-0 left-0 flex justify-center items-center bg-black bg-opacity-50 z-50 '
+      className=' w-full h-full fixed top-0 left-0 flex justify-center items-center bg-black bg-opacity-50 z-[1000] '
     >
       <div className='flex flex-col items-center justify-center w-full px-10 md:px-0'>
         <Form
@@ -100,7 +100,6 @@ const CreateAnnouncement = ({ setToggleAnnouncement, id, type, toggleAnnouncemen
           handleInputChange={handleInputChange}
           handleSubmit={handleSubmit}
           setToggleAnnouncement={setToggleAnnouncement}
-          toggleAnnouncement={toggleAnnouncement}
         />
       </div>
       <Toaster />

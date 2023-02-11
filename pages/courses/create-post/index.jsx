@@ -95,7 +95,7 @@ const Post = () => {
     <div className='h-[100vh] bg-white '>
       {loading && <LinearProgress />}
       <Box
-        paddingX='1rem'
+        padding='1rem'
         display='grid'
         gap='20px'
         gridTemplateColumns='repeat(1, minmax(0,1fr))'
@@ -103,7 +103,7 @@ const Post = () => {
           '& >div': { gridColumn: isNonMobile ? undefined : 'span 4' },
         }}
       >
-        <h1 className='text-2xl font-bold text-gray-600 mb-2'>Create Post</h1>
+        <h1 className='text-4xl font-semibold tracking-wide text-slate-900'>Create Post</h1>
         <form
           onSubmit={addFile}
           className='flex flex-col space-y-2'

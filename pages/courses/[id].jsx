@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { selectCurrentUser } from '../../src/store/user/user.selector';
+import React, { useState, useEffect } from 'react';
 import CoursesPosts from '../../components/post';
 import CourseLayout from '../../components/courses/layout/CourseLayout';
 import { LinearProgress } from '@mui/material';
@@ -8,14 +6,26 @@ import ParticpantsData from '../../components/courses/ParticpantsData';
 import withAuth from '../../components/withAuth';
 import Announcement from '../../components/Announcement/Announcement';
 
-const Participants = ({ data, id }) => {
-  console.log('participant', data, id);
+const Participants = ({ id, user }) => {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    console.count('useEffect');
+    const getParticipants = async () => {
+      const res = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/${id}/participants`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user}`,
+        },
+      });
+      const data = await res.json();
+      setData(data);
+    };
+    getParticipants();
+  }, []);
   const [loading, setLoading] = useState(false);
 
   const [page, setPage] = useState(1);
-
-  const user = useSelector(selectCurrentUser);
-  const { admin, teacher } = user?.user || {};
 
   return (
     <div
@@ -45,7 +55,12 @@ const Participants = ({ data, id }) => {
             data={data}
           />
         )}
-        {page === 2 && <CoursesPosts id={id} />}
+        {page === 2 && (
+          <CoursesPosts
+            id={id}
+            setLoading={setLoading}
+          />
+        )}
         {page === 3 && (
           <Announcement
             id={id}
@@ -53,17 +68,6 @@ const Participants = ({ data, id }) => {
           />
         )}
       </CourseLayout>
-
-      {/* <div className='flex flex-col w-full px-4 py-4 gap-y-2'>
-        {participants.map((participant) => (
-          <div
-            key={participant._id}
-            className='flex items-center justify-between px-4 py-2 border '
-          >
-            {participant._id}
-          </div>
-        ))}
-      </div> */}
     </div>
   );
 };
@@ -71,32 +75,9 @@ const Participants = ({ data, id }) => {
 export async function getServerSideProps(context) {
   const { id, user } = context.query;
 
-  const res = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/${id}/participants`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${user}`,
-    },
-  });
-
-  // if (!res) {
-  //   return {
-  //     props: {
-  //       notFound: true,
-  //     },
-  //   };
-  // }
-  const data = await res.json();
-  // if (!data) {
-  //   return {
-  //     props: {
-  //       notFound: true,
-  //     },
-  //   };
-  // }
   return {
     props: {
-      data,
+      user,
       id,
     },
   };

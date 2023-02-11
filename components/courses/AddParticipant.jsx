@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
 import axios from 'axios';
+import { CircularProgress } from '@mui/material';
 const AddParticipant = ({ batch, setIsOpen }) => {
   const user = useSelector(selectCurrentUser);
+  const [loading, setLoading] = useState(false);
   const [input, setInput] = useState({ batch: '', program: '', group: '', participant: '' });
   const [program, setProgram] = useState([]);
   const [group, setGroup] = useState([]);
@@ -35,7 +37,7 @@ const AddParticipant = ({ batch, setIsOpen }) => {
     } catch (err) {
       console.log(err);
     } finally {
-      // setLoading(false);
+      setLoading(false);
     }
   };
 
@@ -44,11 +46,14 @@ const AddParticipant = ({ batch, setIsOpen }) => {
     setInput({ ...input, [name]: value });
     console.log(input);
     try {
+      setLoading(true);
       const response = await axios.get(`https://vast-pink-moth-toga.cyclic.app/batches/${value}/programs`);
       const { data } = response;
       setProgram(data);
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -57,6 +62,7 @@ const AddParticipant = ({ batch, setIsOpen }) => {
     const { name, value } = e.target;
     setInput({ ...input, [name]: value });
     try {
+      setLoading(true);
       const response = await axios.get(`https://vast-pink-moth-toga.cyclic.app/batches/${input.batch}/programs/${value}/groups`);
       const { data } = response;
       console.log('dg', data);
@@ -65,6 +71,7 @@ const AddParticipant = ({ batch, setIsOpen }) => {
     } catch (err) {
       console.log(err);
     } finally {
+      setLoading(false);
     }
   };
 
@@ -72,6 +79,7 @@ const AddParticipant = ({ batch, setIsOpen }) => {
     const { name, value } = e.target;
     setInput({ ...input, [name]: value });
     try {
+      setLoading(true);
       const res = await fetch(`https://vast-pink-moth-toga.cyclic.app/batches/${input.batch}/programs/${input.program}/groups/${value}`, {
         method: 'GET',
         headers: {
@@ -135,9 +143,9 @@ const AddParticipant = ({ batch, setIsOpen }) => {
         >
           <button
             onClick={() => setIsOpen(false)}
-            className='absolute right-7 top-14 pt-1 md:top-7 font-semibold text-xl border px-3 py self-center hover:bg-gray-200'
+            className='absolute right-7 top-14 pt-1 md:top-7 font-semibold border px-3 py self-center hover:bg-gray-200'
           >
-            {'X'}
+            {loading ? <CircularProgress size={20} /> : 'X'}
           </button>
           <div className='mb-4'>
             <h1 className='font-semibold text-3xl text-slate-900'>Add Participant</h1>

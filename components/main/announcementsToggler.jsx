@@ -2,25 +2,19 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setToggleGroupAnnouncement } from '../../src/store/user/user.actions';
 import { selectToggleGroupAnnouncement } from '../../src/store/user/user.selector';
-import { motion } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMessage } from '@fortawesome/free-regular-svg-icons';
 const AnnouncementsToggler = () => {
   const dispatch = useDispatch();
   const toggleGroupAnnouncement = useSelector(selectToggleGroupAnnouncement);
   return (
     <div
       onClick={() => dispatch(setToggleGroupAnnouncement(!toggleGroupAnnouncement))}
-      className='toggeLines absolute md:right-12
-  right-4
-    top-7 flex flex-col space-y-1'
+      className='fixed top-[90%] left-[50%] transform -translate-x-1/2 -translate-y-1/2'
     >
-      <motion.div
-        animate={{ rotate: toggleGroupAnnouncement ? 45 : 0, transition: { duration: 0.3 } }}
-        className='line-1 bg-blue-600 h-[0.23rem] w-8'
-      ></motion.div>
-      <motion.div
-        animate={{ rotate: toggleGroupAnnouncement ? -45 : 0, translateY: toggleGroupAnnouncement ? '-0.5rem' : '0rem', transition: { duration: 0.3 } }}
-        className='line-2 bg-blue-600 h-[0.23rem] w-8 '
-      ></motion.div>
+      <div className='container bg-blue-50 flex items-center justify-center space-x-4 shadow-xl px-6 py-1'>
+        <span>3 </span> <FontAwesomeIcon icon={faMessage} />
+      </div>
     </div>
   );
 };

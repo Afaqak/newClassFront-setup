@@ -1,15 +1,13 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
 import Link from 'next/link';
-import { Button, LinearProgress } from '@mui/material';
+import { Button } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../src/store/user/user.selector';
-
 import axios from 'axios';
-const CoursesPosts = ({ id }) => {
+const CoursesPosts = ({ id, setLoading }) => {
   console.log('post', id);
-  const [loading, setLoading] = useState(false);
   const [postDetails, setPostDetails] = React.useState([]);
   const { token, user } = useSelector(selectCurrentUser) || {
     token: null,
@@ -100,7 +98,6 @@ const CoursesPosts = ({ id }) => {
   }
   return (
     <div className='h-screen bg-gray-50 dark:bg-gray-900'>
-      {loading && <LinearProgress />}
       <div className='px-4'>
         <Link href={`/courses/create-post?courseId=${id}`}>
           <Button

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AddParticipant from './AddParticipant';
 
-const ParticpantsData = ({ data, id }) => {
+const ParticpantsData = ({ data }) => {
   console.log('dataa', data);
   const [IsOpen, setIsOpen] = useState(false);
   const [batch, setBatch] = useState([]);
