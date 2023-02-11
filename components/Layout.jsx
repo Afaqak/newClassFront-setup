@@ -17,7 +17,7 @@ const Layout = ({ children }) => {
       {toggleAnnoucement && <CreateAnnouncement setToggleAnnouncement={() => dispatch(setToggleAnnouncement(!toggleAnnoucement))} />}
       <div
         className={`flex fixed transition-all duration-300 ease-in-out
-      ${toggleGroupAnnoucement ? 'right-0' : '-right-[50%] '}
+      ${user && toggleGroupAnnoucement ? 'right-0' : '-right-[50%] '}
       top-0 z-[40] overflow-y-scroll flex-col w-[70%] ease-out h-screen  md:w-1/3`}
       >
         {<GroupAnnouncement />}

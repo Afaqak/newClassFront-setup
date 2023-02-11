@@ -3,22 +3,39 @@ import formatDate from '../../utils/tools';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { CircularProgress } from '@mui/material';
-
+import { setToggleGroupAnnouncement } from '../../src/store/user/user.actions';
+import { useDispatch } from 'react-redux';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
 const ShowAnnouncement = ({ announcements, handleDelete, admin, mode }) => {
+  const dispatch = useDispatch();
   return (
     <div
-      className={`flex ${mode === 'groupAnnouncement' && 'bg-white border px-0'}
+      className={`flex relative ${mode === 'groupAnnouncement' && 'bg-white border px-0'}
       flex-col py-2 gap-2 px-4
     `}
     >
+      {mode === 'groupAnnouncement' && (
+        <button
+          className='absolute right-4 font-sans cursor-pointer top-12 p md:top-7 font-semibold text-lg  px-3 py self-center text-gray-400 '
+          type='button'
+          onClick={() => {
+            dispatch(setToggleGroupAnnouncement(false));
+          }}
+        >
+          <FontAwesomeIcon
+            icon={faClose}
+            size={30}
+          />
+        </button>
+      )}
+
       <h1
-        className={`md:text-2xl px-4 ${mode === 'groupAnnouncement' && 'mt-5'} font-semibold text-gray-700
+        className={`md:text-xl px-3 ${mode === 'groupAnnouncement' && 'mt-5'} font-semibold text-gray-900
 
   dark:text-gray-200 text-lg`}
       >
         Announcements
       </h1>
-      <p className='text-slate-700 mb-3 px-4'>speak to your mind</p>
       {!announcements && (
         <div className='flex justify-center items-center'>
           <CircularProgress />
