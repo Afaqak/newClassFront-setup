@@ -14,25 +14,17 @@ const Form = ({ handleSubmit, handleInputChange, loading, setToggleAnnouncement 
       >
         Make an announcement
       </p>
-      {/* <button
+      <button
         className='absolute right-7 cursor-pointer top-14 pt-1 md:top-7 font-semibold text-xl border px-3 py self-center hover:bg-gray-200'
+        type='button'
         onClick={() => {
           console.log('clicked');
           setToggleAnnouncement();
         }}
       >
         {loading ? <CircularProgress size={20} /> : 'X'}
-      </button> */}
-      <button
-        className='absolute right-7 cursor-pointer top-14 pt-1 md:top-7 font-semibold text-xl border px-3 py self-center hover:bg-gray-200'
-        onClick={() => {
-          console.log('clicked');
-          setToggleAnnouncement();
-        }}
-      >
-        {' '}
-        X
       </button>
+
       <div>
         <div className='flex flex-col'>
           <label

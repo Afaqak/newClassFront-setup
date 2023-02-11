@@ -159,6 +159,7 @@ const Courses = () => {
 
   return (
     <motion.div
+      className='z-[1000] relative'
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transition: { duration: 0.7, ease: 'easeInOut' } }}
       exit={{ opacity: 0, transition: { duration: 0.7 } }}

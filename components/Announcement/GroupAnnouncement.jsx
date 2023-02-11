@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
 import { useSelector } from 'react-redux';
-
 import ShowAnnouncement from './showAnnouncement';
+
 const GroupAnnouncement = () => {
   const user = useSelector(selectCurrentUser) || {};
   const { token, user: { admin } = {} } = user;
@@ -12,7 +12,7 @@ const GroupAnnouncement = () => {
     announcement.sort((a, b) => {
       return new Date(b.createdAt) - new Date(a.createdAt);
     });
-    sliceAnnouncement = announcement.slice(0, 5);
+    sliceAnnouncement = announcement.slice(0, 10);
   }
 
   useEffect(() => {
