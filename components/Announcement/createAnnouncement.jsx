@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
 import { setAnnouncementRedux } from '../../src/store/announcement/ancment.action';
 import { selectAnnouncement } from '../../src/store/announcement/ancment.reselect';
-const CreateAnnouncement = ({ id, type, announcement, setToggleAnnouncement }) => {
+const CreateAnnouncement = ({ id, type, announcement, setToggleAnnouncement, setAnnouncement }) => {
   const announcementB = useSelector(selectAnnouncement);
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
@@ -49,7 +49,7 @@ const CreateAnnouncement = ({ id, type, announcement, setToggleAnnouncement }) =
     }
     try {
       setLoading(true);
-      if (type === 'course announcement') {
+      if (type === 'courseAnnouncement') {
         res = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/${id}/announcements`, {
           method: 'POST',
           headers: {
@@ -75,9 +75,14 @@ const CreateAnnouncement = ({ id, type, announcement, setToggleAnnouncement }) =
       if (res.ok) {
         setLoading(false);
         notify('Announcement added', 'success');
+        if (type === 'course announcement') {
+          setAnnouncement([...announcement, { ...coursesD, id: data.id, createdAt: new Date(), author: user.user.username }]);
+        } else {
+          dispatch(setAnnouncementRedux([...announcementB, { ...coursesD, id: data.id, createdAt: new Date(), author: user.user.username }]));
+        }
+
         setTimeout(() => {
           if (!announcement) return;
-          dispatch(setAnnouncementRedux([...announcement, data]));
           setToggleAnnouncement();
         }, 1000);
         console.log(res);
