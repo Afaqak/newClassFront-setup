@@ -9,7 +9,7 @@ const middlewares = [logger];
 const config = {
   key: 'root',
   storage,
-  whitelist: ['user'],
+  whitelist: ['user', 'courses'],
 };
 //root reducer
 const persistedReducer = persistReducer(config, rootReducer);

@@ -11,15 +11,19 @@ const Participants = ({ id, user }) => {
   useEffect(() => {
     console.count('useEffect');
     const getParticipants = async () => {
-      const res = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/${id}/participants`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${user}`,
-        },
-      });
-      const data = await res.json();
-      setData(data);
+      try {
+        const res = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/${id}/participants`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${user}`,
+          },
+        });
+        const data = await res.json();
+        setData(data);
+      } catch (err) {
+        console.log(err);
+      }
     };
     getParticipants();
   }, []);

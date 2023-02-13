@@ -3,7 +3,9 @@ import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
 import axios from 'axios';
 import { CircularProgress } from '@mui/material';
-const AddParticipant = ({ batch, setIsOpen }) => {
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
+const AddParticipant = ({ batch, setIsOpen, id }) => {
   const user = useSelector(selectCurrentUser);
   const [loading, setLoading] = useState(false);
   const [input, setInput] = useState({ batch: '', program: '', group: '', participant: '' });
@@ -12,7 +14,7 @@ const AddParticipant = ({ batch, setIsOpen }) => {
   const [participants, setParticipants] = useState([]);
 
   const addParticipant = async (e) => {
-    if (Object.values(input).some((item) => item === '')) {
+    if (Object.values(input).every((el) => el === '')) {
       return;
     }
     e.preventDefault();
@@ -20,7 +22,7 @@ const AddParticipant = ({ batch, setIsOpen }) => {
     try {
       console.log({ student: input.participant });
       // setLoading(true);
-      const res = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/${input.participant}/participants`, {
+      const res = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/${id}/participants`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -88,12 +90,12 @@ const AddParticipant = ({ batch, setIsOpen }) => {
         },
       });
       const data = await res.json();
-      console.log(data);
-      setParticipants([...data?.participants, ...data?.admins]);
+      setParticipants(data);
       console.log(participants);
     } catch (err) {
       console.log(err);
     } finally {
+      setLoading(false);
     }
   };
 
@@ -143,9 +145,9 @@ const AddParticipant = ({ batch, setIsOpen }) => {
         >
           <button
             onClick={() => setIsOpen(false)}
-            className='absolute right-7 top-14 pt-1 md:top-7 font-semibold border px-3 py self-center hover:bg-gray-200'
+            className='absolute right-7 text-gray-400 pt-1  font-semibold self-center'
           >
-            {loading ? <CircularProgress size={20} /> : 'X'}
+            {loading ? <CircularProgress size={20} /> : <FontAwesomeIcon icon={faClose} />}
           </button>
           <div className='mb-4'>
             <h1 className='font-semibold text-3xl text-slate-900'>Add Participant</h1>
@@ -154,7 +156,7 @@ const AddParticipant = ({ batch, setIsOpen }) => {
           <div>
             {selectData.map(
               ({ label, name, options, onChange, value }) =>
-                options.length > 0 && (
+                options?.length > 0 && (
                   <>
                     <label className='font-semibold'>{label}</label>
                     <select
@@ -165,7 +167,7 @@ const AddParticipant = ({ batch, setIsOpen }) => {
                     >
                       <option value={`select ${label.toLowerCase()}`}>{`select ${label.toLowerCase()}`}</option>
                       {options.map((item) => (
-                        <option value={item._id}>{value == 'participants' ? item : item[value]}</option>
+                        <option value={item._id}>{value == 'participants' ? item.username : item[value]}</option>
                       ))}
                     </select>
                   </>

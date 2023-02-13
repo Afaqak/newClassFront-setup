@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import AddParticipant from './AddParticipant';
 
-const ParticpantsData = ({ data }) => {
+const ParticpantsData = ({ data, id }) => {
   console.log('dataa', data);
   const [IsOpen, setIsOpen] = useState(false);
   const [batch, setBatch] = useState([]);
   useEffect(() => {
     const getBatches = async () => {
-      const res = await fetch('https://vast-pink-moth-toga.cyclic.app/batches');
-      const data = await res.json();
-      console.log(data);
-      setBatch(data);
+      try {
+        const res = await fetch('https://vast-pink-moth-toga.cyclic.app/batches');
+        const data = await res.json();
+        console.log(data);
+        setBatch(data);
+      } catch (err) {
+        console.log(err);
+      }
     };
     getBatches();
   }, [IsOpen]);
@@ -26,6 +30,7 @@ const ParticpantsData = ({ data }) => {
     <div className='p-4'>
       {IsOpen && (
         <AddParticipant
+          id={id}
           setIsOpen={setIsOpen}
           batch={batch}
         />
