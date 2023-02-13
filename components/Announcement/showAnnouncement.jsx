@@ -46,7 +46,7 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode }) => {
         <div
           className={`
           ${mode === 'groupAnnouncement' ? 'bg-none w-full border-b' : 'bg-blue-50 w-4/5'}
-         dark:bg-gray-800 overflow-hidden  relative 
+         dark:bg-gray-800  relative 
         px-3 py-3 flex flex-col rounded-md`}
         >
           {admin && (
@@ -61,12 +61,12 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode }) => {
             </button>
           )}
           <p
-            className='text-blue-500 text-[0.75rem] font-bold tracking-wider mt-2
+            className='text-blue-500 text-[0.57rem] font-bold tracking-wider mt-2
           '
           >
             {ann?.author}
           </p>
-          <h1 className='text-sm font-semibold '>{ann?.title}</h1>
+          <h1 className='text-xl font-semibold '>{ann?.title}</h1>
           <p
             className='text-gray-600 break-words
           '
