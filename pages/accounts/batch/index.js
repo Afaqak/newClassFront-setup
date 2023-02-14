@@ -39,7 +39,7 @@ const Batches = () => {
       <div className='flex flex-col gap-2 p-3'>
         {batches.map((batch) => (
           <Link
-            href={`/accounts/batch/group?programId=${batchId}&batchId=${batch._id}`}
+            href={`/accounts/batch/group?programId=${batch._id}&batchId=${batchId}`}
             key={batch._id}
             className={` 
               p-2 border-2 border-gray-300 dark:border-gray-700 

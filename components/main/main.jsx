@@ -12,8 +12,9 @@ import CoursesCard from '../courses/coursesCards';
 import AnnouncementsToggler from './announcementsToggler';
 const Main = () => {
   const courses = useSelector(selectCoursesList);
+  //filter courses by semester
+  const newCourses = courses?.filter((course) => course.semester > 5);
 
-  console.log(courses);
   const { token } = useSelector(selectCurrentUser) || {};
   const [loading, setLoading] = useState(false);
   usefetchCourses(token, setLoading);
@@ -64,7 +65,7 @@ const Main = () => {
           >
             <Heading_1 label='Courses' />
             <CoursesTable
-              courses={courses}
+              courses={newCourses}
               noAction={true}
             />
           </div>
