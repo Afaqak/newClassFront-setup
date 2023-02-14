@@ -20,6 +20,7 @@ const Participants = ({ id, user }) => {
           },
         });
         const data = await res.json();
+        console.log('part', data);
         setData(data);
       } catch (err) {
         console.log(err);
@@ -55,6 +56,7 @@ const Participants = ({ id, user }) => {
       >
         {page == 1 && (
           <ParticpantsData
+            setData={setData}
             id={id}
             data={data}
           />

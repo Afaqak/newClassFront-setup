@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AddParticipant from './AddParticipant';
 
-const ParticpantsData = ({ data, id }) => {
+const ParticpantsData = ({ data, id, setData }) => {
   console.log('dataa', data);
   const [IsOpen, setIsOpen] = useState(false);
   const [batch, setBatch] = useState([]);
@@ -19,8 +19,6 @@ const ParticpantsData = ({ data, id }) => {
     getBatches();
   }, [IsOpen]);
 
-  console.log(IsOpen);
-
   const toggleAddParticipant = () => {
     setIsOpen(!IsOpen);
   };
@@ -30,6 +28,7 @@ const ParticpantsData = ({ data, id }) => {
     <div className='p-4'>
       {IsOpen && (
         <AddParticipant
+          setData={setData}
           id={id}
           setIsOpen={setIsOpen}
           batch={batch}
@@ -43,10 +42,11 @@ const ParticpantsData = ({ data, id }) => {
         Add a user
       </button>
       <div>
-        {data &&
-          data.map((users) => {
-            <p key={users._id}>{users._id}</p>;
-          })}
+        {data.map((d) => (
+          <div key={d._id}>
+            <p>{d.participant.username}</p>
+          </div>
+        ))}
       </div>
     </div>
   );

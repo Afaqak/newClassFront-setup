@@ -5,7 +5,7 @@ import axios from 'axios';
 import { CircularProgress } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
-const AddParticipant = ({ batch, setIsOpen, id }) => {
+const AddParticipant = ({ batch, setIsOpen, id, setData }) => {
   const user = useSelector(selectCurrentUser);
   const [loading, setLoading] = useState(false);
   const [input, setInput] = useState({ batch: '', program: '', group: '', participant: '' });
@@ -31,9 +31,11 @@ const AddParticipant = ({ batch, setIsOpen, id }) => {
         body: JSON.stringify({ student: input.participant }),
       });
       console.log('res', res);
+      const data = await res.json();
+      console.log('data', data);
       if (res.ok) {
-        // setParticipants([...participants, input]);
-        setToggle(false);
+        setData(data);
+        setIsOpen(false);
       } else {
       }
     } catch (err) {
