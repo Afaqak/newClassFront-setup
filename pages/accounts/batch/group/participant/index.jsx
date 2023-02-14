@@ -34,15 +34,19 @@ const Participant = () => {
       <Heading_1 label={'Participants'} />
       <p className='text-sm text-gray-500 mb-2 py-2'>All participants in this group</p>
       <div className='flex flex-col gap-2'>
-        {participants.map((p) => (
-          <div
-            key={p._id}
-            className='p-2 border-2 border-gray-300 dark:border-gray-700
+        {!participants.length ? (
+          <div className='text-center text-gray-500'>No participants yet</div>
+        ) : (
+          participants.map((p) => (
+            <div
+              key={p._id}
+              className='p-2 border-2 border-gray-300 dark:border-gray-700
             hover:bg-gray-200 dark:hover:bg-gray-800'
-          >
-            <span className='text-lg cursor-pointer'>{p.username}</span>
-          </div>
-        ))}
+            >
+              <span className='text-lg cursor-pointer'>{p.username}</span>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

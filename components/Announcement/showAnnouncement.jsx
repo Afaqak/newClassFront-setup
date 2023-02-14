@@ -1,20 +1,84 @@
-import React from 'react';
+import React, { useState } from 'react';
+import UpdateAnnouncement from './updateAnnouncement';
 import formatDate from '../../utils/tools';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { CircularProgress } from '@mui/material';
 import { setToggleGroupAnnouncement } from '../../src/store/user/user.actions';
 import { useDispatch } from 'react-redux';
 
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 const ShowAnnouncement = ({ announcements, handleDelete, admin, mode }) => {
+  const [toggleUpdate, setToggleUpdate] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [input, setInput] = useState({
+    title: '',
+    subject: '',
+    _id: '',
+  });
   const dispatch = useDispatch();
+
+  const handleUpdate = (id) => {
+    const announcement = announcements.find((ann) => ann._id === id);
+    setInput({ title: announcement.title, subject: announcement.body, _id: announcement._id });
+    setToggleUpdate(true);
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setInput({ ...input, [name]: value });
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const check = Object.values(input).every((item) => item !== '');
+    let res;
+    if (!check) {
+      notify('Please fill all fields', 'error');
+      return;
+    }
+    try {
+      setLoading(true);
+      res = await fetch(`https://vast-pink-moth-toga.cyclic.app/announcements/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify({ title: input.title, body: input.subject }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        notify(data.message, 'error');
+        return;
+      }
+      notify('Announcement updated successfully', 'success');
+      setToggleUpdate(false);
+    } catch (error) {
+      notify(error.message, 'error');
+      setToggleUpdate(false);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div
       className={`flex relative ${mode === 'groupAnnouncement' && 'bg-white border px-0'}
-      flex-col py-2 gap-2 px-4
+      flex-col py-2 gap-2
     `}
     >
+      {toggleUpdate && (
+        <UpdateAnnouncement
+          type={'update'}
+          handleBackdropClick={() => setToggleUpdate(false)}
+          handleInputChange={handleInputChange}
+          handleSubmit={handleSubmit}
+          setToggleAnnouncement={setToggleUpdate}
+          loading={loading}
+        />
+      )}
+
       {mode === 'groupAnnouncement' && (
         <button
           className='absolute right-4 font-sans cursor-pointer top-12 p md:top-7 font-semibold text-lg  px-3 py self-center text-gray-400 '
@@ -29,14 +93,6 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode }) => {
           />
         </button>
       )}
-
-      <h1
-        className={`md:text-xl px-3 ${mode === 'groupAnnouncement' && 'mt-5'} font-semibold text-gray-900
-
-  dark:text-gray-200 text-lg`}
-      >
-        Announcements
-      </h1>
       {!announcements && (
         <div className='flex justify-center items-center'>
           <CircularProgress />
@@ -57,6 +113,17 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode }) => {
               <FontAwesomeIcon
                 size={20}
                 icon={faTrash}
+              />
+            </button>
+          )}
+          {admin && (
+            <button
+              onClick={() => handleUpdate(ann._id)}
+              className='bg-blue-500 text-white px-2 rounded-md absolute right-14 mt-2'
+            >
+              <FontAwesomeIcon
+                size={20}
+                icon={faEdit}
               />
             </button>
           )}

@@ -40,6 +40,27 @@ const GroupAnnouncement = () => {
     getGroupAnnouncement();
   }, []);
 
+  const handleDeleteAnnouncement = async (idCourse) => {
+    console.log(idCourse, token);
+    try {
+      const res = await fetch(`https://vast-pink-moth-toga.cyclic.app/group/announcements/${idCourse}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await res.json();
+      console.log(data);
+      if (res.ok) {
+        dispatch(setAnnouncementRedux(announcement.filter((item) => item._id !== idCourse)));
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+    }
+  };
+
   // if (!user || !sliceAnnouncement) {
   //   return '';
   // }
@@ -49,6 +70,7 @@ const GroupAnnouncement = () => {
         mode={'groupAnnouncement'}
         announcements={sliceAnnouncement}
         admin={admin}
+        handleDelete={handleDeleteAnnouncement}
       />
     </div>
   );

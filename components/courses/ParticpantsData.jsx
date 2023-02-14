@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import AddParticipant from './AddParticipant';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { useSelector } from 'react-redux';
+import { selectCurrentUser } from '../../src/store/user/user.selector';
 
 const ParticpantsData = ({ data, id, setData }) => {
-  console.log('dataa', data);
+  const user = useSelector(selectCurrentUser);
   const [IsOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [batch, setBatch] = useState([]);
   useEffect(() => {
     const getBatches = async () => {
       try {
         const res = await fetch('https://vast-pink-moth-toga.cyclic.app/batches');
         const data = await res.json();
-        console.log(data);
+
         setBatch(data);
       } catch (err) {
         console.log(err);
@@ -23,7 +28,28 @@ const ParticpantsData = ({ data, id, setData }) => {
     setIsOpen(!IsOpen);
   };
 
-  console.log('d', data);
+  const deleteParticipant = async (id) => {
+    console.log('id', id);
+    try {
+      setLoading(true);
+      const res = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/${id}/participants`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+      const data = await res.json();
+      if (!res.ok) return new Error(data.message);
+      console.log('all participants', data);
+      setData(data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className='p-4'>
       {IsOpen && (
@@ -41,10 +67,22 @@ const ParticpantsData = ({ data, id, setData }) => {
       >
         Add a user
       </button>
-      <div>
+      <div className='mt-4'>
         {data.map((d) => (
-          <div key={d._id}>
+          <div
+            key={d._id}
+            className='flex justify-between items-center p-2 border-b border-gray-200 w-4/5'
+          >
             <p>{d.participant.username}</p>
+            <button
+              className='px-2 py-1 rounded-md bg-blue-500 text-white'
+              onClick={() => deleteParticipant(d._id)}
+            >
+              <FontAwesomeIcon
+                size='md'
+                icon={faTrash}
+              />
+            </button>
           </div>
         ))}
       </div>

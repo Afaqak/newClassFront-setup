@@ -2,7 +2,7 @@ import React from 'react';
 import { CircularProgress } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
-const Form = ({ handleSubmit, handleInputChange, loading, setToggleAnnouncement }) => {
+const Form = ({ handleSubmit, handleInputChange, loading, setToggleAnnouncement, type }) => {
   return (
     <form
       onSubmit={handleSubmit}
@@ -13,7 +13,7 @@ const Form = ({ handleSubmit, handleInputChange, loading, setToggleAnnouncement 
         text-slate-900 mb-2 text-2xl font-semibold
         '
       >
-        Make an announcement
+        {type === 'create' ? 'Create Announcement' : 'Update Announcement'}
       </p>
       <button
         className='absolute right-7 top-2 cursor-pointer pt-1  font-semibold text-xl text-gray-400 px-3 py self-center'

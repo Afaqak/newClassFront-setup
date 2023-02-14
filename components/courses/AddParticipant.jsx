@@ -34,7 +34,7 @@ const AddParticipant = ({ batch, setIsOpen, id, setData }) => {
       const data = await res.json();
       console.log('data', data);
       if (res.ok) {
-        setData(data);
+        console.log('all participants', data);
         setIsOpen(false);
       } else {
       }
@@ -169,7 +169,9 @@ const AddParticipant = ({ batch, setIsOpen, id, setData }) => {
                     >
                       <option value={`select ${label.toLowerCase()}`}>{`select ${label.toLowerCase()}`}</option>
                       {options.map((item) => (
-                        <option value={item._id}>{value == 'participants' ? item.username : item[value]}</option>
+                        <>
+                          <option value={item._id}>{value == 'participants' ? item.username : item[value]}</option>
+                        </>
                       ))}
                     </select>
                   </>

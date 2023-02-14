@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-
 const Labels = ['name', 'teacher', 'credit', 'semester', 'group'];
 const types = ['text', 'text', 'number', 'text', 'text'];
 

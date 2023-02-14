@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
 import { setAnnouncementRedux } from '../../src/store/announcement/ancment.action';
 import { selectAnnouncement } from '../../src/store/announcement/ancment.reselect';
-const CreateAnnouncement = ({ id, type, announcement, setToggleAnnouncement, setAnnouncement }) => {
+const CreateAnnouncement = ({ id, type, announcement, setToggleAnnouncement, setAnnouncement, formType }) => {
   const announcementB = useSelector(selectAnnouncement);
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
@@ -71,14 +71,14 @@ const CreateAnnouncement = ({ id, type, announcement, setToggleAnnouncement, set
 
       console.log(res);
       const data = await res.json();
-      console.log(data);
+      console.log('course', data);
       if (res.ok) {
         setLoading(false);
         notify('Announcement added', 'success');
         if (type === 'course announcement') {
-          setAnnouncement([...announcement, { ...coursesD, id: data.id, createdAt: new Date(), author: user.user.username }]);
+          setAnnouncement([...announcement, { ...coursesD, _id: Date.now().toString(), createdAt: new Date(), author: user.user.username }]);
         } else {
-          dispatch(setAnnouncementRedux([...announcementB, { ...coursesD, body: coursesD.subject, id: data.id, createdAt: new Date(), author: user.user.username }]));
+          dispatch(setAnnouncementRedux([...announcementB, { ...coursesD, body: coursesD.subject, _id: Date.now().toString(), createdAt: new Date(), author: user.user.username }]));
         }
 
         setTimeout(() => {
