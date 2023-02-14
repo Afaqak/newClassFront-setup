@@ -71,7 +71,7 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode }) => {
             className='text-gray-600 break-words
           '
           >
-            {ann.body}
+            {ann?.body}
           </p>
           <p
             className='text-gray-600

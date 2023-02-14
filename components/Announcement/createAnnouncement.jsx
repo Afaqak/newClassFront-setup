@@ -78,7 +78,7 @@ const CreateAnnouncement = ({ id, type, announcement, setToggleAnnouncement, set
         if (type === 'course announcement') {
           setAnnouncement([...announcement, { ...coursesD, id: data.id, createdAt: new Date(), author: user.user.username }]);
         } else {
-          dispatch(setAnnouncementRedux([...announcementB, { ...coursesD, id: data.id, createdAt: new Date(), author: user.user.username }]));
+          dispatch(setAnnouncementRedux([...announcementB, { ...coursesD, body: coursesD.subject, id: data.id, createdAt: new Date(), author: user.user.username }]));
         }
 
         setTimeout(() => {
