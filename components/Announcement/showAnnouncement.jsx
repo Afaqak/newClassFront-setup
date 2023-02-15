@@ -65,7 +65,7 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode }) => {
   return (
     <div
       className={`flex relative ${mode === 'groupAnnouncement' && 'bg-white border px-0'}
-      flex-col py-2 gap-2
+      flex-col py-2 gap-2 h-full
     `}
     >
       {toggleUpdate && (
@@ -79,25 +79,7 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode }) => {
         />
       )}
 
-      {mode === 'groupAnnouncement' && (
-        <button
-          className='absolute right-4 font-sans cursor-pointer top-12 p md:top-7 font-semibold text-lg  px-3 py self-center text-gray-400 '
-          type='button'
-          onClick={() => {
-            dispatch(setToggleGroupAnnouncement(false));
-          }}
-        >
-          <FontAwesomeIcon
-            icon={faClose}
-            size={25}
-          />
-        </button>
-      )}
-      {!announcements && (
-        <div className='flex justify-center items-center'>
-          <CircularProgress />
-        </div>
-      )}
+      {!announcements && <div className='h-screen flex justify-center items-center'></div>}
       {announcements?.map((ann) => (
         <div
           className={`

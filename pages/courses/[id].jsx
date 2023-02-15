@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import CoursesPosts from '../../components/post';
+import CoursesPosts from '../../components/courses/post';
 import CourseLayout from '../../components/courses/layout/CourseLayout';
 import { LinearProgress } from '@mui/material';
 import ParticpantsData from '../../components/courses/ParticpantsData';

@@ -3,8 +3,8 @@ import { DataGrid } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
 import Link from 'next/link';
 import { Button } from '@mui/material';
+import { selectCurrentUser } from '../../src/store/user/user.selector';
 import { useSelector } from 'react-redux';
-import { selectCurrentUser } from '../src/store/user/user.selector';
 import axios from 'axios';
 const CoursesPosts = ({ id, setLoading }) => {
   console.log('post', id);

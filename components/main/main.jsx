@@ -8,8 +8,6 @@ import { selectCoursesList } from '../../src/store/courses/courses.reselect';
 import CoursesTable from '../courses';
 import Heading_1 from '../Heading_1';
 import CoursesCard from '../courses/coursesCards';
-import { selectAnnouncement } from '../../src/store/announcement/ancment.reselect';
-import AnnouncementsToggler from './announcementsToggler';
 import GroupAnnouncement from '../Announcement/GroupAnnouncement';
 const Main = () => {
   const courses = useSelector(selectCoursesList);
@@ -31,7 +29,6 @@ const Main = () => {
          flex flex-col
   `}
       >
-        <AnnouncementsToggler />
         {loading && <LinearProgress />}
         <div className='flex-1 px-4 mt-3'>
           <Heading_1 label='Dashboard' />
