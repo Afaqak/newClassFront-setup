@@ -8,10 +8,12 @@ import { selectCoursesList } from '../../src/store/courses/courses.reselect';
 import CoursesTable from '../courses';
 import Heading_1 from '../Heading_1';
 import CoursesCard from '../courses/coursesCards';
-
+import { selectAnnouncement } from '../../src/store/announcement/ancment.reselect';
 import AnnouncementsToggler from './announcementsToggler';
+import GroupAnnouncement from '../Announcement/GroupAnnouncement';
 const Main = () => {
   const courses = useSelector(selectCoursesList);
+
   //filter courses by semester
   const newCourses = courses?.filter((course) => course.semester > 5);
 
@@ -45,19 +47,14 @@ const Main = () => {
             '
             />
           </div>
-          <div className='insights mt-2 flex flex-col gap-y-3 md:flex-row justify-between gap-x-5 md:gap-x-2'>
+          <div className='insights mt-2 flex flex-col gap-y-3 md:flex-row justify-between gap-x-5 md:gap-x-2 overflow-hidden'>
             <CoursesCard
               color='success'
               colorBg='bg-blue-600'
             />
-            <CoursesCard
-              color='danger'
-              colorBg='bg-blue-600 '
-            />
-            <CoursesCard
-              color='primary'
-              colorBg='bg-blue-600 '
-            />
+            <div className='w-full bg-gray-200 rounded-lg overflow-y-scroll h-52 shadow-md border'>
+              <GroupAnnouncement />
+            </div>
           </div>
           <div
             className='mt-3 
