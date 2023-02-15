@@ -16,6 +16,7 @@ const CoursesPosts = ({ id, setLoading }) => {
   const { semesters } = user || { semesters: null };
   const deleteAll = async () => {
     try {
+      setLoading(true);
       const response = await axios.delete(`https://vast-pink-moth-toga.cyclic.app/courses/${id}/posts`, {
         headers: {
           'Content-Type': 'application/json',
@@ -27,11 +28,12 @@ const CoursesPosts = ({ id, setLoading }) => {
     } catch (err) {
       console.log(err?.response);
       console.log(err?.response?.data);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    setLoading(true);
     var _id;
     if (semesters && semesters[0] && Array.isArray(semesters[0].courses)) {
       [_id] = semesters[0].courses;
@@ -39,6 +41,7 @@ const CoursesPosts = ({ id, setLoading }) => {
     }
     const handleReq = async () => {
       try {
+        setLoading(true);
         const response = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/${id}/posts`, {
           headers: {
             'Content-Type': 'application/json',
@@ -75,7 +78,7 @@ const CoursesPosts = ({ id, setLoading }) => {
       headerName: 'Action',
       width: 150,
       renderCell: (params) => (
-        <Link href={`/courses/${params.row.id}`}>
+        <Link href={`/courses/checkpost?courseId=${id}&postId=${params.id}`}>
           <Button
             variant='contained'
             color='primary'
@@ -85,7 +88,6 @@ const CoursesPosts = ({ id, setLoading }) => {
         </Link>
       ),
     },
-    { field: 'id', headerName: 'ID', width: 200 },
     { field: 'title', headerName: 'Title', width: 150 },
     { field: 'text', headerName: 'Text', width: 200 },
     { field: 'date', headerName: 'date', width: 200 },
@@ -131,6 +133,7 @@ const CoursesPosts = ({ id, setLoading }) => {
         sx={{
           padding: '0 1rem',
           height: '70vh',
+          width: '80%',
           marginTop: '3vh',
           '& .MuiDataGrid-root': {
             backgroundColor: 'white',

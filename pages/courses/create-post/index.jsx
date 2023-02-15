@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { selectCurrentUser } from '../../../src/store/user/user.selector';
 import { useState } from 'react';
-
 const initialValues = {
   title: '',
   text: '',
@@ -103,6 +102,13 @@ const Post = () => {
           '& >div': { gridColumn: isNonMobile ? undefined : 'span 4' },
         }}
       >
+        <p
+          className='text-gray-600 cursor-pointer dark:text-gray-400 hover:text-blue-500'
+          onClick={() => router.back()}
+        >
+          {' '}
+          Back{' '}
+        </p>
         <h1 className='text-4xl font-semibold tracking-wide text-slate-900'>Create Post</h1>
         <form
           onSubmit={addFile}
