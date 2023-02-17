@@ -12,7 +12,7 @@ import axios from 'axios';
 import { notify } from '../utils/tools';
 import { checkUserData } from '../utils/tools';
 import { LinearProgress } from '@mui/material';
-
+import { MontserratFont } from '../utils/fonts';
 const loginStyles = {
   inputStyle: 'focus:outline-none bg-gray-100 border-2 border-gray-300 w-full shadow-md px-2 py-2',
   labelStyle: 'absolute top-2 left-3 transition-all duration-300 pointer-events-none z-10',
@@ -67,10 +67,8 @@ const SignIn = () => {
         initial='hidden'
         animate='show'
         exit='exit'
-        className='
-    h-[95vh] w-screen dark:bg-gray-900
-    '
-      >
+        className={`
+    h-[95vh] w-screen dark:bg-gray-900 ${MontserratFont.className}`} >
         {loading && <LinearProgress />}
         <div className=' flex w-screen flex-col items-center justify-center h-[80vh]'>
           <h1 className='text-4xl font-bold text-gray-600 dark:text-gray-300'>

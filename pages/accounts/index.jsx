@@ -4,6 +4,7 @@ import withAuth from '../../components/withAuth';
 import Heading_1 from '../../components/Heading_1';
 import { FetchTypeGet } from '../../utils/fetch/fetchtypeget';
 import { useSelector } from 'react-redux';
+import { MontserratFont } from '../../utils/fonts';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
 import UserInfo_card from '../../components/user accounts/UserInfo_card';
 
@@ -33,7 +34,7 @@ const Accounts = () => {
   };
 
   return (
-    <div className='dark:bg-gray-900 min-h-[95vh] font-sans '>
+    <div className={`dark:bg-gray-900 min-h-[95vh] ${MontserratFont.className} `}>
       {toggle && (
         <UserInfo_card
           id={id}
@@ -41,13 +42,13 @@ const Accounts = () => {
         />
       )}
       {admin && teacher && (
-        <div className='px-4 mt-2'>
+        <div className='p-4'>
           <Heading_1 label='Batches' />
           <p className='text-sm text-gray-500 mb-2 py-3'>List of all sessions</p>
           <div className='gap-2 flex flex-col py-3'>
             {data.map((user) => (
               <Link
-                href={`accounts/batch?batchId=${user._id}`}
+                href={`accounts/batch?batchId=${user._id}&session=${user.session}`}
                 key={user._id}
                 className={` 
                   p-2 border-2 border-gray-300 dark:border-gray-700 
@@ -62,7 +63,7 @@ const Accounts = () => {
       )}
 
       {admin && !teacher && (
-        <div className='mt-5 px-4'>
+        <div className='p-4'>
           <Heading_1 label='Accounts' />
           <p className='text-sm text-gray-500 mb-2'>List of all accounts</p>
           <div

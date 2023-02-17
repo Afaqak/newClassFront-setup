@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { usefetchCourses } from '../../src/customHooks/fetchCoures';
 import { LinearProgress } from '@mui/material';
 import { selectCoursesList } from '../../src/store/courses/courses.reselect';
+import { MontserratFont } from '../../utils/fonts';
 import CoursesTable from '../courses';
 import Heading_1 from '../Heading_1';
 import CoursesCard from '../courses/coursesCards';
@@ -24,9 +25,9 @@ const Main = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, transition: { duration: 0.3 } }}
         exit={{ opacity: 0, transition: { duration: 0.3 } }}
-        className={`h-screen font-sans
+        className={`h-screen
         w-full relative bg-white 
-         flex flex-col
+         flex flex-col ${MontserratFont.className}
   `}
       >
         {loading && <LinearProgress />}

@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../../../../src/store/user/user.selector';
 import { useRouter } from 'next/router';
 import Heading_1 from '../../../../../components/Heading_1';
+import { MontserratFont } from '../../../../../utils/fonts';
 import UserInfo_card from '../../../../../components/user accounts/UserInfo_card';
 const Participant = () => {
   const router = useRouter();
@@ -38,7 +39,7 @@ const Participant = () => {
   };
 
   return (
-    <div className='p-4'>
+    <div className={`p-4 ${MontserratFont.className}`}>
       {toggle && (
         <UserInfo_card
           id={id}

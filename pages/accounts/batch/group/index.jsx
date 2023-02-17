@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../../../src/store/user/user.selector';
 import { useEffect } from 'react';
+import { MontserratFont } from '../../../../utils/fonts';
 import Link from 'next/link';
 const groups = () => {
   const userData = useSelector(selectCurrentUser);
@@ -34,10 +35,10 @@ const groups = () => {
 
   return (
     <div
-      className='min-h-screen font-sans mt-5
-w-full relative bg-white 
+      className={`min-h-screen font-sans mt-5
+w-full relative bg-white ${MontserratFont.className}
 flex flex-col dark:bg-gray-900 
-'
+`}
     >
       <div className='flex flex-col '>
         <h1 className='text-4xl font-semibold px-3 py-1'>Groups</h1>
