@@ -3,12 +3,63 @@ import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
+import { notify } from '../../utils/tools';
 import { CircularProgress, Checkbox } from '@mui/material';
 
 const UserInfo_card = ({ id, setToggle }) => {
-  const dropShadowref = useRef();
+  const [loading, setLoading] = useState(false);
   const [userInfo, setUserInfo] = useState({});
   const { token, user } = useSelector(selectCurrentUser);
+
+  const handleTeacherChange = async (id, value) => {
+    try {
+      setLoading(true);
+      let res = await fetch(`https://vast-pink-moth-toga.cyclic.app/accounts/MarkTeacher/${id} `, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ teacher: value }),
+      });
+      const data = await res.json();
+      console.log(data, 'data');
+      // const newBatches = batches.map((batchInfo) => (batchInfo._id === data._id ? data : batchInfo));
+      setUserInfo({ ...userInfo, teacher: value });
+      notify('changed status');
+    } catch (err) {
+      notify(err.message, 'error');
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleValidChange = async (id, value) => {
+    try {
+      setLoading(true);
+      let res = await fetch(`https://vast-pink-moth-toga.cyclic.app/accounts/changeValidity/${id} `, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ valid: value }),
+      });
+      const data = await res.json();
+      setUserInfo({ ...userInfo, valid: value });
+      console.log(data, 'data');
+      // const newBatches = batches.map((batchInfo) => (batchInfo._id === data._id ? data : batchInfo));
+      // userInfo(newBatches);
+      notify('changed status');
+    } catch (err) {
+      notify(err.message, 'error');
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     const getUserInfo = async () => {
       try {
@@ -49,23 +100,17 @@ const UserInfo_card = ({ id, setToggle }) => {
     },
     {
       label: `Role`,
-      value: userInfo.admin ? "Admin" : "Student"
+      value: userInfo.admin ? 'Admin' : 'Student',
     },
     {
-      label: "Validity",
-      value: userInfo?.valid ? "Valid" : "Not-Valid"
+      label: 'Validity',
+      value: userInfo?.valid ? 'Valid' : 'Not-Valid',
     },
     {
-      label: "Teacher",
-      value: userInfo?.teacher ? "true" : "false"
-    }
+      label: 'Teacher',
+      value: userInfo?.teacher ? 'true' : 'false',
+    },
   ];
-  const handleValidityChange = (id, value) => {
-
-  }
-  const handleTeacherChange = (id, value) => {
-
-  }
 
   return (
     <div className=''>
@@ -90,7 +135,6 @@ const UserInfo_card = ({ id, setToggle }) => {
             <div className='grid grid-cols-2 gap-3 sm:grid-cols-2'>
               {userInfoData.map((data) => (
                 <div
-                  ref={dropShadowref}
                   key={data.label}
                   className='flex flex-col gap-2'
                 >
@@ -101,15 +145,21 @@ const UserInfo_card = ({ id, setToggle }) => {
               <div>
                 <h2 className='text-lg font-bold text-blue-500'>validate student</h2>
                 <div className='flex'>
-                  <div className="flex flex-row items-center ">
+                  <div className='flex flex-row items-center '>
                     <Checkbox
-
+                      disabled={userInfo.teacher || loading}
+                      checked={userInfo.teacher}
+                      onChange={(e) => handleTeacherChange(userInfo._id, e.target.checked)}
                     />
-                    <p className="text-sm ">Teacher</p>
+                    <p className='text-sm '>Teacher</p>
                   </div>
-                  <div className="flex flex-row items-center">
-                    <Checkbox />
-                    <p className="text-sm ">Valid</p>
+                  <div className='flex flex-row items-center'>
+                    <Checkbox
+                      disabled={loading}
+                      onChange={(e) => handleValidChange(userInfo._id, e.target.checked)}
+                      checked={userInfo.valid}
+                    />
+                    <p className='text-sm '>Valid</p>
                   </div>
                 </div>
               </div>
