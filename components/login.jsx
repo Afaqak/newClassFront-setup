@@ -6,7 +6,7 @@ import checkError from '../utils/errorChecker';
 import { setCurrentUser } from '../src/store/user/user.actions';
 import FormInput from './FormInput';
 import { Toaster } from 'react-hot-toast';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { pageAnimation } from '../utils/animations/animations';
 import axios from 'axios';
 import { notify } from '../utils/tools';
@@ -61,7 +61,7 @@ const SignIn = () => {
   };
 
   return (
-    <AnimatePresence exitBeforeEnter>
+    <>
       <motion.div
         variants={pageAnimation}
         initial='hidden'
@@ -145,7 +145,7 @@ const SignIn = () => {
         </div>
       </motion.div>
       <Toaster />
-    </AnimatePresence>
+    </>
   );
 };
 
