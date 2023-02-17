@@ -49,7 +49,7 @@ const CreateAnnouncement = ({ id, type, announcement, setToggleAnnouncement, set
     }
     try {
       setLoading(true);
-      if (type === 'courseAnnouncement') {
+      if (type === 'course announcement') {
         res = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/${id}/announcements`, {
           method: 'POST',
           headers: {
@@ -76,7 +76,7 @@ const CreateAnnouncement = ({ id, type, announcement, setToggleAnnouncement, set
         setLoading(false);
         notify('Announcement added', 'success');
         if (type === 'course announcement') {
-          setAnnouncement([...announcement, { ...coursesD, _id: Date.now().toString(), createdAt: new Date(), author: user.user.username }]);
+          setAnnouncement([...announcement, { ...coursesD, _id: Date.now().toString(), body: coursesD.subject, createdAt: new Date(), author: user.user.username }]);
         } else {
           dispatch(setAnnouncementRedux([...announcementB, { ...coursesD, body: coursesD.subject, _id: Date.now().toString(), createdAt: new Date(), author: user.user.username }]));
         }

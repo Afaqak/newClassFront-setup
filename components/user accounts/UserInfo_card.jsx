@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Checkbox } from '@mui/material';
 
 const UserInfo_card = ({ id, setToggle }) => {
   const dropShadowref = useRef();
@@ -40,7 +40,6 @@ const UserInfo_card = ({ id, setToggle }) => {
     { label: 'Firstname', value: userInfo?.firstname },
     { label: 'Lastname', value: userInfo.lastname },
     { label: 'Username', value: userInfo?.username },
-    { label: 'Email', value: userInfo?.email },
     { label: 'Batch', value: userInfo?.batch },
     { label: 'Program', value: userInfo?.program },
     { label: 'Group', value: userInfo?.group },
@@ -48,7 +47,25 @@ const UserInfo_card = ({ id, setToggle }) => {
       label: 'Semesters',
       value: userInfo?.semesters?.map((s) => s.semester).join(', '),
     },
+    {
+      label: `Role`,
+      value: userInfo.admin ? "Admin" : "Student"
+    },
+    {
+      label: "Validity",
+      value: userInfo?.valid ? "Valid" : "Not-Valid"
+    },
+    {
+      label: "Teacher",
+      value: userInfo?.teacher ? "true" : "false"
+    }
   ];
+  const handleValidityChange = (id, value) => {
+
+  }
+  const handleTeacherChange = (id, value) => {
+
+  }
 
   return (
     <div className=''>
@@ -58,6 +75,7 @@ const UserInfo_card = ({ id, setToggle }) => {
       >
         {Object.keys(userInfo).length > 0 ? (
           <div
+            key={userInfo._id}
             onClick={(e) => e.stopPropagation()}
             className='bg-white rounded-lg border-2 border-blue-500 shadow-lg p-8 w-full sm:max-w-2xl'
           >
@@ -69,7 +87,7 @@ const UserInfo_card = ({ id, setToggle }) => {
                 className='text-blue-500 cursor-pointer'
               />
             </div>
-            <div className='grid grid-cols-1 gap-6 sm:grid-cols-2'>
+            <div className='grid grid-cols-2 gap-3 sm:grid-cols-2'>
               {userInfoData.map((data) => (
                 <div
                   ref={dropShadowref}
@@ -80,6 +98,21 @@ const UserInfo_card = ({ id, setToggle }) => {
                   <div className='text-lg'>{data.value}</div>
                 </div>
               ))}
+              <div>
+                <h2 className='text-lg font-bold text-blue-500'>validate student</h2>
+                <div className='flex'>
+                  <div className="flex flex-row items-center ">
+                    <Checkbox
+
+                    />
+                    <p className="text-sm ">Teacher</p>
+                  </div>
+                  <div className="flex flex-row items-center">
+                    <Checkbox />
+                    <p className="text-sm ">Valid</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         ) : (

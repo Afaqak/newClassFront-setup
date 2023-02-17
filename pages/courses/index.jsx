@@ -8,6 +8,7 @@ import { notify } from '../../utils/tools';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
 import { selectCoursesList } from '../../src/store/courses/courses.reselect';
 import { setCoursesData } from '../../src/store/courses/courses.action';
+import { MontserratFont } from '../../utils/fonts';
 import CoursesTable from '../../components/courses';
 import Heading_1 from '../../components/Heading_1';
 import Form from '../../components/courses/Form';
@@ -159,7 +160,7 @@ const Courses = () => {
 
   return (
     <motion.div
-      className=''
+      className={`${MontserratFont.className}`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transition: { duration: 0.7, ease: 'easeInOut' } }}
       exit={{ opacity: 0, transition: { duration: 0.7 } }}

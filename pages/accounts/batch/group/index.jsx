@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../../../src/store/user/user.selector';
 import { useEffect } from 'react';
 import { MontserratFont } from '../../../../utils/fonts';
+import withAuth from '../../../../components/withAuth';
 import Link from 'next/link';
 const groups = () => {
   const userData = useSelector(selectCurrentUser);
@@ -72,4 +73,4 @@ flex flex-col dark:bg-gray-900
 //   };
 // }
 
-export default groups;
+export default withAuth(groups);

@@ -8,6 +8,7 @@ import { notify } from '../../../utils/tools';
 import { FetchTypeGet } from '../../../utils/fetch/fetchtypeget';
 import { selectCurrentUser } from '../../../src/store/user/user.selector';
 import { MontserratFont } from '../../../utils/fonts';
+import withAuth from '../../../components/withAuth';
 
 const Batches = () => {
   const router = useRouter();
@@ -30,7 +31,7 @@ const Batches = () => {
       const data = await res.json()
       const newBatches = batches.map(batchInfo => batchInfo._id === data._id ? data : batchInfo);
       setBatches(newBatches)
-      notify("changed user status")
+      notify("changed status")
     } catch (err) {
       notify(err.message, 'error')
       console.log(err);
@@ -54,7 +55,7 @@ const Batches = () => {
       const data = await res.json()
       const newBatches = batches.map(batchInfo => batchInfo._id === data._id ? data : batchInfo);
       setBatches(newBatches)
-      notify("user user status")
+      notify("changed status")
     } catch (err) {
       notify(err.message, 'error')
       console.log(err)
@@ -139,4 +140,4 @@ const Batches = () => {
 
 };
 
-export default Batches;
+export default withAuth(Batches);

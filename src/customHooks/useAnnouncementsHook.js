@@ -11,7 +11,6 @@ const useAnnouncementsHook = (setAnnouncement, setLoading, id, token) => {
           },
         });
         const data = await res.json();
-        console.log(data);
         setLoading(false);
         setAnnouncement(data);
       } catch (error) {

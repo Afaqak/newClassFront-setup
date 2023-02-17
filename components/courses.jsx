@@ -39,7 +39,7 @@ const CoursesTable = ({ courses, deleteCourse, toggleUpdateCourse, loading, noAc
         {courses?.map((item) => (
           <tr
             key={item?._id}
-            className='bg-white text-center
+            className='bg-white text-center cursor-pointer
                   hover:bg-gray-100 dark:hover:bg-gray-200
                   '
           >

@@ -3,11 +3,8 @@ import UpdateAnnouncement from './updateAnnouncement';
 import formatDate from '../../utils/tools';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
-import { CircularProgress } from '@mui/material';
-import { setToggleGroupAnnouncement } from '../../src/store/user/user.actions';
 import { useDispatch } from 'react-redux';
 
-import { faClose } from '@fortawesome/free-solid-svg-icons';
 const ShowAnnouncement = ({ announcements, handleDelete, admin, mode }) => {
   const [toggleUpdate, setToggleUpdate] = useState(false);
   const [loading, setLoading] = useState(false);
