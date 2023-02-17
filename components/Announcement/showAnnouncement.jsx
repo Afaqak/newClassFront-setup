@@ -3,7 +3,7 @@ import UpdateAnnouncement from './updateAnnouncement';
 import formatDate from '../../utils/tools';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
-import { useDispatch } from 'react-redux';
+import { notify } from '../../utils/tools';
 
 const ShowAnnouncement = ({ announcements, handleDelete, admin, mode }) => {
   const [toggleUpdate, setToggleUpdate] = useState(false);
@@ -13,12 +13,12 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode }) => {
     subject: '',
     _id: '',
   });
-  const dispatch = useDispatch();
 
   const handleUpdate = (id) => {
     const announcement = announcements.find((ann) => ann._id === id);
-    setInput({ title: announcement.title, subject: announcement.body, _id: announcement._id });
+    console.log(announcement);
     setToggleUpdate(true);
+    setInput({ title: announcement.title, subject: announcement.body, _id: announcement._id });
   };
 
   const handleInputChange = (event) => {
@@ -67,7 +67,7 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode }) => {
     >
       {toggleUpdate && (
         <UpdateAnnouncement
-          type={'update'}
+          type={'create'}
           handleBackdropClick={() => setToggleUpdate(false)}
           handleInputChange={handleInputChange}
           handleSubmit={handleSubmit}

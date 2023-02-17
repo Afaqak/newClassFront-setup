@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { Toaster } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
+import Heading_1 from '../../../components/Heading_1';
 import { Checkbox, LinearProgress } from '@mui/material';
 import { notify } from '../../../utils/tools';
 import { FetchTypeGet } from '../../../utils/fetch/fetchtypeget';
@@ -67,11 +68,10 @@ const Batches = () => {
       try {
         setLoading(true);
         const res = await FetchTypeGet(`https://vast-pink-moth-toga.cyclic.app/batches/${batchId}/programs`, token);
-
         setBatches(res);
       } catch (err) {
-        notify(err.message, 'error');
         console.log(err);
+        notify(err.message, 'error');
       } finally {
         setLoading(false);
       }
@@ -85,14 +85,12 @@ const Batches = () => {
       {loading && <LinearProgress />}
       {session === 'teacher' ? (
         <div className='p-4'>
-          <h1 className='text-4xl font-semibold px-3'>students</h1>
-          <p className='text-sm text-gray-500 mb-2 px-3 py-2'>List of all students</p>
+          <Heading_1 label='students' />
+          <p className='text-sm text-gray-600 mb-2 px-3 py-2'>List of all students</p>
           {batches.map((userinfo) => (
-            <div className='bg-gray-100 mb-2 border-l-4 border-r-4 border-blue-400 text-gray-800 p-2 rounded-lg'>
+            <div className='bg-gray-100 mb-3 border-l-4 border-r-4 border-blue-400 text-gray-800 p-2 rounded-lg'>
               <p className='text-xl font-bold'>{userinfo.email}</p>
-              <div className='flex flex-row items-center'>
-                <p className='text-sm ml-2'>{user.admin ? 'admin' : 'student'}</p>
-              </div>
+              <div className='flex flex-row items-center'></div>
               <div className='flex flex-row items-center mt-2'>
                 <Checkbox
                   onClick={(e) => {
@@ -119,10 +117,10 @@ const Batches = () => {
       ) : (
         <div className='p-4'>
           <div className='flex flex-col'>
-            <h1 className='text-4xl font-semibold px-3 py-1'>programs</h1>
-            <p className='text-sm text-gray-500 mb-2 px-3 py-2'>List of all programs</p>
+            <Heading_1 label='programs' />
+            <p className='text-sm text-gray-500 mb-2 py-2'>List of all programs</p>
           </div>
-          <div className='flex flex-col gap-2 p-3'>
+          <div className='flex flex-col gap-2 py-3'>
             {batches.map((batch) => (
               <Link
                 href={`/accounts/batch/group?programId=${batch._id}&batchId=${batchId}`}

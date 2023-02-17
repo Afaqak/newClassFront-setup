@@ -4,6 +4,7 @@ const INITIAL_STATE = {
   currentUser: null,
   toggleAnnouncement: false,
   toggleGroupAnnouncement: false,
+  toggleUserInfo: false,
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -22,6 +23,11 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         toggleGroupAnnouncement: action.payload,
+      };
+    case UserActionTypes.TOGGLE_USER_INFO:
+      return {
+        ...state,
+        toggleUserInfo: action.payload,
       };
     default:
       return state;

@@ -62,6 +62,7 @@ const Participants = ({ id, user }) => {
         )}
         {page === 2 && (
           <CoursesPosts
+            loading={loading}
             id={id}
             setLoading={setLoading}
           />

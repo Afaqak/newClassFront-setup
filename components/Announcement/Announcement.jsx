@@ -33,8 +33,7 @@ const Announcement = ({ id, setLoading }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      const data = await res.json();
-      console.log(data);
+
       if (res.ok) {
         setLoading(false);
         setAnnouncement(announcement.filter((item) => item._id !== idCourse));

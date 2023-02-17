@@ -13,14 +13,14 @@ const Form = ({ handleSubmit, handleInputChange, loading, setToggleAnnouncement,
         text-slate-900 mb-2 text-2xl font-semibold
         '
       >
-        {type === 'create' ? 'Create Announcement' : 'Update Announcement'}
+        {type === 'create' ? 'update' : 'create'} announcement
       </p>
       <button
         className='absolute right-7 top-2 cursor-pointer pt-1  font-semibold text-xl text-gray-400 px-3 py self-center'
         type='button'
         onClick={() => {
           console.log('clicked');
-          setToggleAnnouncement();
+          setToggleAnnouncement(false);
         }}
       >
         {loading ? (
@@ -63,6 +63,10 @@ const Form = ({ handleSubmit, handleInputChange, loading, setToggleAnnouncement,
             className='w-full px-3 mb-2 py-2 text-slate-700 border-b  focus:outline-none border-slate-300 rounded-sm focus:border-blue-500'
           />
           <button
+            onClick={(e) => {
+              console.log('clicked');
+              handleSubmit(e);
+            }}
             type='submit'
             className='bg-blue-500 text-white px-4 py-1 rounded-md mt-2'
           >

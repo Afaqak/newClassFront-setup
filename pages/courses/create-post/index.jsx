@@ -4,8 +4,11 @@ import { toast } from 'react-hot-toast';
 import { Toaster } from 'react-hot-toast';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useRouter } from 'next/router';
+import Heading_1 from '../../../components/Heading_1';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { selectCurrentUser } from '../../../src/store/user/user.selector';
 import { useState } from 'react';
 const initialValues = {
@@ -102,14 +105,13 @@ const Post = () => {
           '& >div': { gridColumn: isNonMobile ? undefined : 'span 4' },
         }}
       >
-        <p
-          className='text-gray-600 cursor-pointer dark:text-gray-400 hover:text-blue-500'
+        <button
           onClick={() => router.back()}
+          className='flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full mb-2'
         >
-          {' '}
-          Back{' '}
-        </p>
-        <h1 className='text-4xl font-semibold tracking-wide text-slate-900'>Create Post</h1>
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>
+        <Heading_1 label='Create Post' />
         <form
           onSubmit={addFile}
           className='flex flex-col space-y-2'

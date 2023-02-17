@@ -7,3 +7,5 @@ export const selectCurrentUser = createSelector([selectUser], (user) => user.cur
 export const selectToggleAnnouncement = createSelector([selectUser], (user) => user.toggleAnnouncement);
 
 export const selectToggleGroupAnnouncement = createSelector([selectUser], (user) => user.toggleGroupAnnouncement);
+
+export const selectToggleUserInfo = createSelector([selectUser], (user) => user.toggleUserInfo);

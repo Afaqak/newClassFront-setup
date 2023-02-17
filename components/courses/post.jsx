@@ -76,7 +76,7 @@ const CoursesPosts = ({ id, setLoading }) => {
     {
       field: 'action',
       headerName: 'Action',
-      width: 150,
+      width: 200,
       renderCell: (params) => (
         <Link href={`/courses/checkpost?courseId=${id}&postId=${params.id}`}>
           <Button
@@ -88,9 +88,43 @@ const CoursesPosts = ({ id, setLoading }) => {
         </Link>
       ),
     },
-    { field: 'title', headerName: 'Title', width: 150 },
-    { field: 'text', headerName: 'Text', width: 200 },
-    { field: 'date', headerName: 'date', width: 200 },
+    { field: 'title', headerName: 'Title', width: 170, editable: true },
+    { field: 'text', headerName: 'Text', width: 170 },
+    { field: 'date', headerName: 'date', width: 170 },
+    {
+      field: 'delete',
+      headerName: 'Delete',
+      width: 200,
+      renderCell: (params) => (
+        <Button
+          variant='contained'
+          color='primary'
+          onClick={async () => {
+            console.log(params.id, id);
+            try {
+              const response = await axios.delete(`https://vast-pink-moth-toga.cyclic.app/courses/${id}/posts/${params.id}`, {
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${token}`,
+                },
+              });
+              const { data } = response;
+              console.log(data);
+              if (data) {
+                setPostDetails(postDetails.filter((post) => post.id !== params.id));
+              }
+            } catch (err) {
+              console.log(err?.response);
+              console.log(err?.response?.data);
+            } finally {
+              setLoading(false);
+            }
+          }}
+        >
+          Delete
+        </Button>
+      ),
+    },
   ];
 
   const columns2 = useMemo(() => columns, [columns]);
@@ -133,7 +167,7 @@ const CoursesPosts = ({ id, setLoading }) => {
         sx={{
           padding: '0 1rem',
           height: '70vh',
-          width: '80%',
+          width: '90%',
           marginTop: '3vh',
           '& .MuiDataGrid-root': {
             backgroundColor: 'white',
@@ -182,6 +216,9 @@ const CoursesPosts = ({ id, setLoading }) => {
           rows={postDetails}
           columns={columns2}
           pageSize={7}
+          onEditCellPropsChange={(params) => {
+            console.log('cell', params);
+          }}
         />
       </Box>
     </div>

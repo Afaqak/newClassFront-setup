@@ -3,7 +3,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import { titleAnimation } from '../utils/animations/animations';
-import { Abril_Fatface_Font } from '../utils/fonts';
+import { Galindo_Font } from '../utils/fonts';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 const Header = () => {
@@ -33,7 +33,7 @@ const Header = () => {
         initial='hidden'
         animate='show'
         className={`text-3xl font-medium  first-letter:
-            dark:text-gray-200 text-gray-800 ${Abril_Fatface_Font.className}
+            dark:text-gray-200 text-gray-800 ${Galindo_Font.className}
             tracking-wider `}
       >
         Blink.

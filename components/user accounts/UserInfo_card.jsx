@@ -6,10 +6,10 @@ import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { notify } from '../../utils/tools';
 import { CircularProgress, Checkbox } from '@mui/material';
 
-const UserInfo_card = ({ id, setToggle }) => {
+const UserInfo_card = ({ id, setToggle, mode }) => {
   const [loading, setLoading] = useState(false);
   const [userInfo, setUserInfo] = useState({});
-  const { token, user } = useSelector(selectCurrentUser);
+  const { token, user } = useSelector(selectCurrentUser) || {};
 
   const handleTeacherChange = async (id, value) => {
     try {
@@ -89,7 +89,7 @@ const UserInfo_card = ({ id, setToggle }) => {
 
   const userInfoData = [
     { label: 'Firstname', value: userInfo?.firstname },
-    { label: 'Lastname', value: userInfo.lastname },
+    { label: 'Lastname', value: userInfo?.lastname },
     { label: 'Username', value: userInfo?.username },
     { label: 'Batch', value: userInfo?.batch },
     { label: 'Program', value: userInfo?.program },
@@ -100,7 +100,7 @@ const UserInfo_card = ({ id, setToggle }) => {
     },
     {
       label: `Role`,
-      value: userInfo.admin ? 'Admin' : 'Student',
+      value: userInfo?.admin ? 'Admin' : 'Student',
     },
     {
       label: 'Validity',
@@ -135,33 +135,39 @@ const UserInfo_card = ({ id, setToggle }) => {
             <div className='grid grid-cols-2 gap-3 sm:grid-cols-2'>
               {userInfoData.map((data) => (
                 <div
-                  key={data.label}
+                  key={data?.label}
                   className='flex flex-col gap-2'
                 >
-                  <div className='text-lg font-bold text-blue-500'>{data.label}</div>
-                  <div className='text-lg'>{data.value}</div>
+                  <div className='text-lg font-bold text-blue-500'>{data?.label}</div>
+                  <div className='text-lg'>{data?.value}</div>
                 </div>
               ))}
               <div>
-                <h2 className='text-lg font-bold text-blue-500'>validate student</h2>
-                <div className='flex'>
-                  <div className='flex flex-row items-center '>
-                    <Checkbox
-                      disabled={userInfo.teacher || loading}
-                      checked={userInfo.teacher}
-                      onChange={(e) => handleTeacherChange(userInfo._id, e.target.checked)}
-                    />
-                    <p className='text-sm '>Teacher</p>
-                  </div>
-                  <div className='flex flex-row items-center'>
-                    <Checkbox
-                      disabled={loading}
-                      onChange={(e) => handleValidChange(userInfo._id, e.target.checked)}
-                      checked={userInfo.valid}
-                    />
-                    <p className='text-sm '>Valid</p>
-                  </div>
-                </div>
+                {mode === 'userinfo' ? (
+                  <></>
+                ) : (
+                  <>
+                    <h2 className='text-lg font-bold text-blue-500'>validate student</h2>
+                    <div className='flex'>
+                      <div className='flex flex-row items-center '>
+                        <Checkbox
+                          disabled={userInfo?.teacher || loading}
+                          checked={userInfo?.teacher}
+                          onChange={(e) => handleTeacherChange(userInfo?._id, e.target.checked)}
+                        />
+                        <p className='text-sm '>Teacher</p>
+                      </div>
+                      <div className='flex flex-row items-center'>
+                        <Checkbox
+                          disabled={loading}
+                          onChange={(e) => handleValidChange(userInfo?._id, e.target.checked)}
+                          checked={userInfo?.valid}
+                        />
+                        <p className='text-sm '>Valid</p>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </div>

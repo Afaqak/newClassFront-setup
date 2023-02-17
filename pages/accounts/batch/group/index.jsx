@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../../../src/store/user/user.selector';
 import { useEffect } from 'react';
+import Heading_1 from '../../../../components/Heading_1';
 import { MontserratFont } from '../../../../utils/fonts';
 import withAuth from '../../../../components/withAuth';
 import Link from 'next/link';
@@ -36,16 +37,16 @@ const groups = () => {
 
   return (
     <div
-      className={`min-h-screen font-sans mt-5
+      className={`min-h-screen font-sans p-4
 w-full relative bg-white ${MontserratFont.className}
 flex flex-col dark:bg-gray-900 
 `}
     >
       <div className='flex flex-col '>
-        <h1 className='text-4xl font-semibold px-3 py-1'>Groups</h1>
-        <p className='text-sm text-gray-500 mb-2 px-3 py-2'>All groups in this program</p>
+        <Heading_1 label='Groups' />
+        <p className='text-sm text-gray-500 mb-2 py-2'>All groups in this program</p>
       </div>
-      <div className='flex flex-col gap-2 p-3'>
+      <div className='flex flex-col gap-2'>
         {groups.map((g) => (
           <Link
             href={`/accounts/batch/group/participant?programId=${programId}&batchId=${batchId}&groupId=${g._id}`}

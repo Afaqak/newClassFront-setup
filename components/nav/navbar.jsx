@@ -5,14 +5,17 @@ import { useRouter } from 'next/router';
 import { setCoursesData } from '../../src/store/courses/courses.action';
 import { useDispatch } from 'react-redux';
 import { setToggleAnnouncement } from '../../src/store/user/user.actions';
-import { selectCurrentUser } from '../../src/store/user/user.selector';
-import { selectToggleAnnouncement } from '../../src/store/user/user.selector';
+import { selectToggleAnnouncement, selectToggleUserInfo, selectCurrentUser } from '../../src/store/user/user.selector';
 import { setCurrentUser } from '../../src/store/user/user.actions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOutAlt, faUserCircle, faUserGroup, faBookOpen, faClipboard, faBroadcastTower } from '@fortawesome/free-solid-svg-icons';
+import { setToggleUserInfo } from '../../src/store/user/user.actions';
+import { faSignOutAlt, faUserGroup, faBookOpen, faClipboard, faBroadcastTower } from '@fortawesome/free-solid-svg-icons';
+import Image from 'next/image';
 
 const Navbar = () => {
   const router = useRouter();
+  const toggleUserInfo = useSelector(selectToggleUserInfo);
+  console.log('toggleUserInfo', toggleUserInfo);
   const toggleAnnouncement = useSelector(selectToggleAnnouncement);
   const [activeLink, setActiveLink] = React.useState(router.pathname);
   const dispatch = useDispatch();
@@ -48,21 +51,30 @@ const Navbar = () => {
     '
       >
         <div
-          className='hidden flex-col px-2 py-2 md:flex mb-2 
+          className='hidden px-2 py-2 md:flex mb-2 space-x-2
             border-b 
           '
         >
-          <h2 className='text-[0.67rem] text-slate-600'>{user?.admin ? <span className='text-[#404145] font-bold'>Admin</span> : <span className='text-gray-600 font-bold'>User</span>}</h2>
-          <h2 className='font-bold text-blue-500 text-2xl uppercase'>
-            {user?.username}
-            <FontAwesomeIcon
-              onClick={() => router.push('/account')}
-              size='lg'
-              className='ml-2 text-gray-500 cursor-pointer '
-              icon={faUserCircle}
+          <div>
+            <h2 className='text-[0.67rem] text-slate-600'>{user?.admin ? <span className='text-[#404145] font-bold'>Admin</span> : <span className='text-gray-600 font-bold'>User</span>}</h2>
+            <h2 className='text-[1rem] tracking-wider text-slate-600'>{user?.username}</h2>
+          </div>
+          <div
+            className='
+            rounded-full w-10 h-10 bg-gray-200 cursor-pointer flex items-center justify-center
+          '
+          >
+            <Image
+              onClick={() => dispatch(setToggleUserInfo(!toggleUserInfo))}
+              src={'/user8.png'}
+              width={50}
+              height={50}
+              className='
+            '
             />
-          </h2>
+          </div>
         </div>
+
         <div
           className={`${NavStyles.linkContainer} cursor-pointer
             -space-y-2 sm:space-y-2 text-md flex flex-col justify-center 

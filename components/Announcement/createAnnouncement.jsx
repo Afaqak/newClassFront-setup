@@ -4,6 +4,7 @@ import { notify } from '../../utils/tools';
 import { useSelector } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
+import { FetchTypeGet } from '../../utils/fetch/fetchtypeget';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
 import { setAnnouncementRedux } from '../../src/store/announcement/ancment.action';
 import { selectAnnouncement } from '../../src/store/announcement/ancment.reselect';
@@ -71,14 +72,16 @@ const CreateAnnouncement = ({ id, type, announcement, setToggleAnnouncement, set
 
       console.log(res);
       const data = await res.json();
-      console.log('course', data);
+      console.log(data, 'resCreateAnnouncement');
       if (res.ok) {
         setLoading(false);
         notify('Announcement added', 'success');
         if (type === 'course announcement') {
-          setAnnouncement([...announcement, { ...coursesD, _id: Date.now().toString(), body: coursesD.subject, createdAt: new Date(), author: user.user.username }]);
+          const data = await FetchTypeGet(`https://vast-pink-moth-toga.cyclic.app/courses/${id}/announcements`, user.token);
+          setAnnouncement(data);
         } else {
-          dispatch(setAnnouncementRedux([...announcementB, { ...coursesD, body: coursesD.subject, _id: Date.now().toString(), createdAt: new Date(), author: user.user.username }]));
+          const data = await FetchTypeGet(`https://vast-pink-moth-toga.cyclic.app/groups/announcements`, user.token);
+          dispatch(setAnnouncementRedux(data));
         }
 
         setTimeout(() => {

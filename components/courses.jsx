@@ -15,14 +15,14 @@ const CoursesTable = ({ courses, deleteCourse, toggleUpdateCourse, loading, noAc
             '
     >
       <thead
-        className=' border-b-2 bg-slate-900 text-gray-100
+        className=' border-b-2 bg-slate-900 text-white 
                border-gray-200'
       >
         <tr>
           {tableHead.map((item) => (
             <th
               key={item}
-              className={`w-20 p-3 text-sm font-semibold
+              className={`w-20 p-3 text-[0.8rem] font-semibold
                        uppercase text-center
                       tracking-wide 
                       ${item === 'Action' && !user?.user.admin && 'hidden'}
