@@ -1,22 +1,45 @@
-import React from 'react';
-import useFetchUsers from '../../src/customHooks/useFetchUsers.h';
-import { LinearProgress } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import withAuth from '../../components/withAuth';
 import Heading_1 from '../../components/Heading_1';
 import { FetchTypeGet } from '../../utils/fetch/fetchtypeget';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
+import UserInfo_card from '../../components/user accounts/UserInfo_card';
 
-const Accounts = ({ id, data }) => {
-  const user = useSelector(selectCurrentUser)
+const Accounts = () => {
+  const user = useSelector(selectCurrentUser);
   const { admin, teacher } = user.user || {};
-  console.log('serversideId', id, data)
+  const [data, setData] = useState([]);
+  const [toggle, setToggle] = useState(false);
+  const [id, setId] = useState('');
+
+  useEffect(() => {
+    const getAccounts = async () => {
+      try {
+        const data = await FetchTypeGet('https://vast-pink-moth-toga.cyclic.app/accounts', user.token);
+        console.log(data);
+        setData(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getAccounts();
+  }, []);
+
+  const setToggleAndId = (id) => {
+    setToggle(!toggle);
+    setId(id);
+  };
 
   return (
     <div className='dark:bg-gray-900 min-h-[95vh] font-sans '>
-      {/* {loading && <LinearProgress />} */}
-
+      {toggle && (
+        <UserInfo_card
+          id={id}
+          setToggle={setToggle}
+        />
+      )}
       {admin && teacher && (
         <div className='px-4 mt-2'>
           <Heading_1 label='Batches' />
@@ -49,6 +72,7 @@ const Accounts = ({ id, data }) => {
           >
             {data.map((user) => (
               <UserProfile
+                setToggleAndId={setToggleAndId}
                 key={user.id}
                 user={user}
               />
@@ -62,20 +86,7 @@ const Accounts = ({ id, data }) => {
 
 export default withAuth(Accounts);
 
-export async function getServerSideProps(context) {
-  console.log('context.query: ', context.query)
-  const { id } = context.query
-  const data = await FetchTypeGet('https://vast-pink-moth-toga.cyclic.app/accounts', id);
-
-  return {
-    props: {
-      data,
-      id
-    }
-  }
-}
-
-const UserProfile = ({ user }) => {
+const UserProfile = ({ user, setToggleAndId }) => {
   return (
     <div
       className='relative flex flex-col font-sans bg-gray-50
@@ -109,9 +120,12 @@ const UserProfile = ({ user }) => {
           <div className=''>{user.admin ? <p className='font-bold'>Admin</p> : <p className='font-bold'>User</p>}</div>
         </div>
         <div className='w-full'>
-          <Link href={`/accounts/${user._id}`}>
-            <button className='hover:bg-slate-200 text-center border mt-2 w-full dark:border-gray-800 text-gray-500 text-lg p-1 hover:dark:bg-gray-700 '>View More</button>
-          </Link>
+          <button
+            onClick={() => setToggleAndId(user._id)}
+            className='hover:bg-slate-200 cursor-pointer text-center border mt-2 w-full dark:border-gray-800 text-gray-500 text-lg p-1 hover:dark:bg-gray-700 '
+          >
+            View More
+          </button>
         </div>
       </div>
     </div>
