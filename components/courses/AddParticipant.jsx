@@ -30,14 +30,21 @@ const AddParticipant = ({ batch, setIsOpen, id, setData }) => {
         },
         body: JSON.stringify({ student: input.participant }),
       });
-      console.log('res', res);
-      const data = await res.json();
-      console.log('data', data);
+      console.log('res', res)
       if (res.ok) {
+        const res = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/${id}/participants`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
+        const data = await res.json();
+        setData(data);
         console.log('all participants', data);
         setIsOpen(false);
-      } else {
       }
+
     } catch (err) {
       console.log(err);
     } finally {

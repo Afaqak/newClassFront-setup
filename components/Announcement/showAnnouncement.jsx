@@ -77,16 +77,6 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode, courseId, 
       flex-col py-2 gap-2 h-full
     `}
     >
-      {/* {toggleUpdate && (
-        <UpdateAnnouncement
-          type={'create'}
-          handleBackdropClick={() => setToggleUpdate(false)}
-          handleInputChange={handleInputChange}
-          handleSubmit={handleSubmit}
-          setToggleAnnouncement={setToggleUpdate}
-          loading={loading}
-        />
-      )} */}
 
       {
         toggleUpdate && (
@@ -102,7 +92,7 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode, courseId, 
 
       }
 
-      {!announcements && <div className='h-screen flex justify-center items-center'></div>}
+
       {announcements?.map((ann) => (
         <div
           className={`

@@ -21,7 +21,7 @@ const GroupAnnouncement = () => {
     console.log('GROUP ANNOUNCEMENT');
     const getGroupAnnouncement = async () => {
       try {
-        const res = await fetch('https://vast-pink-moth-toga.cyclic.app//groups/announcements', {
+        const res = await fetch('https://vast-pink-moth-toga.cyclic.app/groups/announcements', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -43,7 +43,7 @@ const GroupAnnouncement = () => {
   const handleDeleteAnnouncement = async (idCourse) => {
     console.log(idCourse, token);
     try {
-      const res = await fetch(`https://vast-pink-moth-toga.cyclic.app/group/announcements/${idCourse}`, {
+      const res = await fetch(`https://vast-pink-moth-toga.cyclic.app/groups/announcements/${idCourse}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ const GroupAnnouncement = () => {
         },
       });
       const data = await res.json();
-      console.log(data);
+      console.log(res);
       if (res.ok) {
         dispatch(setAnnouncementRedux(announcement.filter((item) => item._id !== idCourse)));
       }
