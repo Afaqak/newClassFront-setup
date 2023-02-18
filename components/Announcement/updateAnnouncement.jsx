@@ -13,7 +13,6 @@ const UpdateAnnouncement = ({ type, loading, handleBackdropClick, handleInputCha
           setToggleAnnouncement={setToggleAnnouncement}
         />
       </div>
-      <Toaster />
     </div>
   );
 };

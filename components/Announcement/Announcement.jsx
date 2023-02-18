@@ -65,6 +65,8 @@ const Announcement = ({ id, setLoading }) => {
       </button>
       <div>
         <ShowAnnouncement
+          courseId={id}
+          setAnnouncement={setAnnouncement}
           mode={'courseAnnouncement'}
           announcements={slicedAnnouncement}
           handleDelete={handleDeleteAnnouncement}

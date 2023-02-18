@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import UpdateAnnouncement from './updateAnnouncement';
 import formatDate from '../../utils/tools';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { notify } from '../../utils/tools';
-
-const ShowAnnouncement = ({ announcements, handleDelete, admin, mode }) => {
+import Form from './Form'
+import { Toaster } from 'react-hot-toast';
+import { selectCurrentUser } from '../../src/store/user/user.selector'
+import { useSelector } from 'react-redux';
+const ShowAnnouncement = ({ announcements, handleDelete, admin, mode, courseId, setAnnouncement }) => {
+  const user = useSelector(selectCurrentUser)
   const [toggleUpdate, setToggleUpdate] = useState(false);
   const [loading, setLoading] = useState(false);
   const [input, setInput] = useState({
@@ -15,6 +18,7 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode }) => {
   });
 
   const handleUpdate = (id) => {
+    console.log(input, courseId, user);
     const announcement = announcements.find((ann) => ann._id === id);
     console.log(announcement);
     setToggleUpdate(true);
@@ -26,29 +30,37 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode }) => {
     setInput({ ...input, [name]: value });
   };
 
-  const handleSubmit = async (event) => {
+  const handleUpdateSubmit = async (event) => {
     event.preventDefault();
     const check = Object.values(input).every((item) => item !== '');
-    let res;
     if (!check) {
       notify('Please fill all fields', 'error');
       return;
     }
+
+
     try {
       setLoading(true);
-      res = await fetch(`https://vast-pink-moth-toga.cyclic.app/announcements/${id}`, {
+      let res = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/${courseId}/announcements/${input._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${user.token}`,
         },
-        body: JSON.stringify({ title: input.title, body: input.subject }),
+        body: JSON.stringify({ title: input.title, subject: input.subject }),
       });
       const data = await res.json();
+
+      const newAnn = announcements.map(ann => (
+        ann._id === input._id ? data : ann
+      ))
+
       if (!res.ok) {
         notify(data.message, 'error');
         return;
       }
+      setAnnouncement(newAnn)
+
       notify('Announcement updated successfully', 'success');
       setToggleUpdate(false);
     } catch (error) {
@@ -65,7 +77,7 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode }) => {
       flex-col py-2 gap-2 h-full
     `}
     >
-      {toggleUpdate && (
+      {/* {toggleUpdate && (
         <UpdateAnnouncement
           type={'create'}
           handleBackdropClick={() => setToggleUpdate(false)}
@@ -74,7 +86,21 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode }) => {
           setToggleAnnouncement={setToggleUpdate}
           loading={loading}
         />
-      )}
+      )} */}
+
+      {
+        toggleUpdate && (
+          <UpdateAnnouncement
+            type={'update'}
+            handleInputChange={handleInputChange}
+            handleSubmit={handleUpdateSubmit}
+            loading={loading}
+            input={input}
+            setToggleUpdate={setToggleUpdate}
+          />
+        )
+
+      }
 
       {!announcements && <div className='h-screen flex justify-center items-center'></div>}
       {announcements?.map((ann) => (
@@ -128,9 +154,21 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode }) => {
           </p>
         </div>
       ))}
+      <Toaster />
     </div>
   );
 };
 //todo changing
 
 export default ShowAnnouncement;
+
+
+const UpdateAnnouncement = ({ type, handleInputChange, handleSubmit, loading, input, setToggleUpdate }) => {
+  return (
+    <div className='fixed z-50 left-0 top-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center'>
+      <Form handleInputChange={handleInputChange} type={type} handleSubmit={handleSubmit} loading={loading}
+        setToggleAnnouncement={setToggleUpdate} input={input} />
+    </div >
+  );
+};
+

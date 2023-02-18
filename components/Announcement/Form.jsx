@@ -2,7 +2,7 @@ import React from 'react';
 import { CircularProgress } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
-const Form = ({ handleSubmit, handleInputChange, loading, setToggleAnnouncement, type }) => {
+const Form = ({ handleSubmit, handleInputChange, loading, setToggleAnnouncement, type, input }) => {
   return (
     <form
       onSubmit={handleSubmit}
@@ -45,6 +45,7 @@ const Form = ({ handleSubmit, handleInputChange, loading, setToggleAnnouncement,
             onChange={handleInputChange}
             className='w-2/3 px-3 mb-2 py-2 text-slate-700 border-b  focus:outline-none border-slate-300 rounded-sm focus:border-blue-500'
             type='text'
+            value={input.title}
             name='title'
             id='title'
           />
@@ -59,6 +60,7 @@ const Form = ({ handleSubmit, handleInputChange, loading, setToggleAnnouncement,
           <input
             type='text'
             name='subject'
+            value={input.s}
             onChange={handleInputChange}
             className='w-full px-3 mb-2 py-2 text-slate-700 border-b  focus:outline-none border-slate-300 rounded-sm focus:border-blue-500'
           />
