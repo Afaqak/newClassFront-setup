@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../../../src/store/user/user.selector';
 import { useEffect } from 'react';
 import Heading_1 from '../../../../components/Heading_1';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { MontserratFont } from '../../../../utils/fonts';
 import withAuth from '../../../../components/withAuth';
 import Link from 'next/link';
@@ -37,11 +39,16 @@ const groups = () => {
 
   return (
     <div
-      className={`min-h-screen font-sans p-4
+      className={`min-h-screen font-sans px-4 py-2
 w-full relative bg-white ${MontserratFont.className}
 flex flex-col dark:bg-gray-900 
-`}
-    >
+`}>
+      <button
+        onClick={() => router.back()}
+        className='flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full my-4'
+      >
+        <FontAwesomeIcon icon={faArrowLeft} />
+      </button>
       <div className='flex flex-col '>
         <Heading_1 label='Groups' />
         <p className='text-sm text-gray-500 mb-2 py-2'>All groups in this program</p>

@@ -6,6 +6,8 @@ import Link from 'next/link';
 import Heading_1 from '../../../components/Heading_1';
 import { Checkbox, LinearProgress } from '@mui/material';
 import { notify } from '../../../utils/tools';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FetchTypeGet } from '../../../utils/fetch/fetchtypeget';
 import { selectCurrentUser } from '../../../src/store/user/user.selector';
 import { MontserratFont } from '../../../utils/fonts';
@@ -15,7 +17,7 @@ const Batches = () => {
   const router = useRouter();
   const { batchId, session } = router.query;
   const [loading, setLoading] = useState(false);
-  const { token, user } = useSelector(selectCurrentUser);
+  const { token } = useSelector(selectCurrentUser);
   const [batches, setBatches] = useState([]);
 
   const handleTeacherChange = async (id, value) => {
@@ -83,8 +85,14 @@ const Batches = () => {
   return (
     <div className={`min-h-screen w-full relative bg-white flex flex-col dark:bg-gray-900 ${MontserratFont.className}`}>
       {loading && <LinearProgress />}
+      <button
+        onClick={() => router.back()}
+        className='flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full mx-4 my-4'
+      >
+        <FontAwesomeIcon icon={faArrowLeft} />
+      </button>
       {session === 'teacher' ? (
-        <div className='p-4'>
+        <div className='px-4'>
           <Heading_1 label='students' />
           <p className='text-sm text-gray-600 mb-2 px-3 py-2'>List of all students</p>
           {batches.map((userinfo) => (
@@ -115,7 +123,7 @@ const Batches = () => {
           ))}
         </div>
       ) : (
-        <div className='p-4'>
+        <div className='px-4'>
           <div className='flex flex-col'>
             <Heading_1 label='programs' />
             <p className='text-sm text-gray-500 mb-2 py-2'>List of all programs</p>

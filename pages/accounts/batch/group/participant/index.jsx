@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../../../../src/store/user/user.selector';
 import { useRouter } from 'next/router';
 import Heading_1 from '../../../../../components/Heading_1';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { MontserratFont } from '../../../../../utils/fonts';
 import UserInfo_card from '../../../../../components/user accounts/UserInfo_card';
 const Participant = () => {
@@ -39,13 +41,19 @@ const Participant = () => {
   };
 
   return (
-    <div className={`p-4 ${MontserratFont.className}`}>
+    <div className={`py-2 px-4 ${MontserratFont.className}`}>
       {toggle && (
         <UserInfo_card
           id={id}
           setToggle={setToggle}
         />
       )}
+      <button
+        onClick={() => router.back()}
+        className='flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full my-4'
+      >
+        <FontAwesomeIcon icon={faArrowLeft} />
+      </button>
       <Heading_1 label={'Participants'} />
       <p className='text-sm text-gray-500 mb-2 py-2'>All participants in this group</p>
       <div className='flex flex-col gap-2'>
