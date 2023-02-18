@@ -3,12 +3,12 @@ import formatDate from '../../utils/tools';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { notify } from '../../utils/tools';
-import Form from './Form'
+import Form from './Form';
 import { Toaster } from 'react-hot-toast';
-import { selectCurrentUser } from '../../src/store/user/user.selector'
+import { selectCurrentUser } from '../../src/store/user/user.selector';
 import { useSelector } from 'react-redux';
 const ShowAnnouncement = ({ announcements, handleDelete, admin, mode, courseId, setAnnouncement }) => {
-  const user = useSelector(selectCurrentUser)
+  const user = useSelector(selectCurrentUser);
   const [toggleUpdate, setToggleUpdate] = useState(false);
   const [loading, setLoading] = useState(false);
   const [input, setInput] = useState({
@@ -38,7 +38,6 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode, courseId, 
       return;
     }
 
-
     try {
       setLoading(true);
       let res = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/${courseId}/announcements/${input._id}`, {
@@ -51,15 +50,13 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode, courseId, 
       });
       const data = await res.json();
 
-      const newAnn = announcements.map(ann => (
-        ann._id === input._id ? data : ann
-      ))
+      const newAnn = announcements.map((ann) => (ann._id === input._id ? data : ann));
 
       if (!res.ok) {
         notify(data.message, 'error');
         return;
       }
-      setAnnouncement(newAnn)
+      setAnnouncement(newAnn);
 
       notify('Announcement updated successfully', 'success');
       setToggleUpdate(false);
@@ -77,30 +74,16 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode, courseId, 
       flex-col py-2 gap-2 h-full
     `}
     >
-      {/* {toggleUpdate && (
+      {toggleUpdate && (
         <UpdateAnnouncement
-          type={'create'}
-          handleBackdropClick={() => setToggleUpdate(false)}
+          type={'update'}
           handleInputChange={handleInputChange}
-          handleSubmit={handleSubmit}
-          setToggleAnnouncement={setToggleUpdate}
+          handleSubmit={handleUpdateSubmit}
           loading={loading}
+          input={input}
+          setToggleUpdate={setToggleUpdate}
         />
-      )} */}
-
-      {
-        toggleUpdate && (
-          <UpdateAnnouncement
-            type={'update'}
-            handleInputChange={handleInputChange}
-            handleSubmit={handleUpdateSubmit}
-            loading={loading}
-            input={input}
-            setToggleUpdate={setToggleUpdate}
-          />
-        )
-
-      }
+      )}
 
       {!announcements && <div className='h-screen flex justify-center items-center'></div>}
       {announcements?.map((ann) => (
@@ -162,13 +145,17 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode, courseId, 
 
 export default ShowAnnouncement;
 
-
 const UpdateAnnouncement = ({ type, handleInputChange, handleSubmit, loading, input, setToggleUpdate }) => {
   return (
     <div className='fixed z-50 left-0 top-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center'>
-      <Form handleInputChange={handleInputChange} type={type} handleSubmit={handleSubmit} loading={loading}
-        setToggleAnnouncement={setToggleUpdate} input={input} />
-    </div >
+      <Form
+        handleInputChange={handleInputChange}
+        type={type}
+        handleSubmit={handleSubmit}
+        loading={loading}
+        setToggleAnnouncement={setToggleUpdate}
+        input={input}
+      />
+    </div>
   );
 };
-

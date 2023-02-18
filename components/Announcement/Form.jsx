@@ -13,7 +13,7 @@ const Form = ({ handleSubmit, handleInputChange, loading, setToggleAnnouncement,
         text-slate-900 mb-2 text-2xl font-semibold
         '
       >
-        {type === 'create' ? 'update' : 'create'} announcement
+        {type === 'update' ? 'update' : 'create'} announcement
       </p>
       <button
         className='absolute right-7 top-2 cursor-pointer pt-1  font-semibold text-xl text-gray-400 px-3 py self-center'
@@ -45,7 +45,7 @@ const Form = ({ handleSubmit, handleInputChange, loading, setToggleAnnouncement,
             onChange={handleInputChange}
             className='w-2/3 px-3 mb-2 py-2 text-slate-700 border-b  focus:outline-none border-slate-300 rounded-sm focus:border-blue-500'
             type='text'
-            value={input.title}
+            value={input?.title}
             name='title'
             id='title'
           />
@@ -60,7 +60,7 @@ const Form = ({ handleSubmit, handleInputChange, loading, setToggleAnnouncement,
           <input
             type='text'
             name='subject'
-            value={input.s}
+            value={input?.subject}
             onChange={handleInputChange}
             className='w-full px-3 mb-2 py-2 text-slate-700 border-b  focus:outline-none border-slate-300 rounded-sm focus:border-blue-500'
           />
