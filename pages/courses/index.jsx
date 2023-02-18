@@ -166,13 +166,13 @@ const Courses = () => {
       exit={{ opacity: 0, transition: { duration: 0.7 } }}
     >
       {loading && <LinearProgress />}
-      <div className='p-4 bg-white min-h-screen dark:bg-gray-900'>
+      <div className='p-4 bg-white min-h-screen '>
         <Heading_1 label='Courses' />
-        <p className='text-slate-800 dark:text-slate-700 block mb-4'>Welcome to your courses page</p>
+        <p className='text-slate-800  block mb-4'>Welcome to your courses page</p>
         {checkButton()}
 
         {toggle && (
-          <div className=' dark:bg-gray-900 rounded-lg mb-4 w-1/2'>
+          <div className='  rounded-lg mb-4 w-1/2'>
             <Form
               handleInputChange={handleInputChange}
               addCourse={addCourse}

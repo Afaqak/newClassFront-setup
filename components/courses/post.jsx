@@ -133,7 +133,7 @@ const CoursesPosts = ({ id, setLoading }) => {
     return '';
   }
   return (
-    <div className='h-screen bg-gray-50 dark:bg-gray-900'>
+    <div className='h-screen bg-gray-50 '>
       <div className='px-4'>
         <Link href={`/courses/create-post?courseId=${id}`}>
           <Button

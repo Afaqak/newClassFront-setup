@@ -46,7 +46,7 @@ const Announcement = ({ id, setLoading }) => {
   };
 
   return (
-    <div className='px-4 py-3 mb-8 bg-white  dark:bg-gray-800'>
+    <div className='px-4 py-3 mb-8 bg-white'>
       {toggleAnnouncement && (
         <CreateAnnouncement
           type='course announcement'

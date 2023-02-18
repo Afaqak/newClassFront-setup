@@ -12,11 +12,11 @@ const UserAccount = ({ userData, user }) => {
   };
 
   return (
-    <div className=' min-h-screen dark:bg-gray-900'>
+    <div className=' min-h-screen '>
       <div className='font-sans'>
         {' '}
-        <h1 className='text-3xl font-semibold text-gray-900 dark:text-gray-50 tracking-wide'>User Account</h1>
-        <p className='text-slate-800 dark:text-slate-700 block mb-6'>checkout your account details</p>
+        <h1 className='text-3xl font-semibold text-gray-900 tracking-wide'>User Account</h1>
+        <p className='text-slate-800  block mb-6'>checkout your account details</p>
         <div>
           <div
             className='
@@ -34,14 +34,14 @@ const UserAccount = ({ userData, user }) => {
             </div>
             <div className='section_2 p-5 mt-2 '>
               <div className='flex flex-col'>
-                <p className='text-slate-800 font-bold dark:text-slate-700 block mb-4'>
+                <p className='text-slate-800 font-bold block mb-4'>
                   Username:
                   <span className='ml-2 text-slate-700 font-medium '>
                     {user.username}
                     {tagAsigner(user.admin, userData.teacher)}
                   </span>
                 </p>
-                <p className='text-slate-800 font-bold dark:text-slate-700 block mb-4'>
+                <p className='text-slate-800 font-bold block mb-4'>
                   Email:{' '}
                   <span
                     className='ml-2 
@@ -53,7 +53,7 @@ const UserAccount = ({ userData, user }) => {
                 </p>
                 <p
                   className='text-slate-800 font-bold 
-                 dark:text-slate-700 block mb-4'
+                 block mb-4'
                 >
                   Batch:{' '}
                   <span
@@ -64,7 +64,7 @@ const UserAccount = ({ userData, user }) => {
                     {user.batch}
                   </span>
                 </p>
-                <p className='text-slate-800 font-bold dark:text-slate-700 block mb-4'>
+                <p className='text-slate-800 font-bold  block mb-4'>
                   Program:{' '}
                   <span
                     className='ml-2 
@@ -74,7 +74,7 @@ const UserAccount = ({ userData, user }) => {
                     {user.program}
                   </span>
                 </p>
-                <p className='text-slate-800 font-bold dark:text-slate-700 block mb-4'>
+                <p className='text-slate-800 font-bold  block mb-4'>
                   Group:{' '}
                   <span
                     className='ml-2
@@ -84,7 +84,7 @@ const UserAccount = ({ userData, user }) => {
                     {user.group}
                   </span>
                 </p>
-                <p className='text-slate-800 font-bold dark:text-slate-700 block mb-4'>
+                <p className='text-slate-800 font-bold block mb-4'>
                   Semesters:{' '}
                   <span
                     className='ml-2
@@ -94,7 +94,7 @@ const UserAccount = ({ userData, user }) => {
                     {user?.semesters?.length}
                   </span>
                 </p>
-                <p className='text-slate-800 font-bold dark:text-slate-700 block mb-4'>
+                <p className='text-slate-800 font-bold block mb-4'>
                   Valid:{' '}
                   <span
                     className='ml-2

@@ -46,7 +46,7 @@ const Navbar = () => {
     <nav className='hidden sm:block'>
       <div
         className='text-gray-600 mt-14 sm:min-h-[100vh] p-2 w-[5rem] md:w-[14rem] 
-      shadow-md bg-white border dark:border-blue-500 m-2 sm:m-0 
+      shadow-md bg-white border  m-2 sm:m-0 
        transition-all duration-300 ease-in-out
     '
       >

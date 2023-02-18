@@ -35,7 +35,7 @@ const Participants = ({ id, user }) => {
     <div
       className='min-h-screen font-sans
       w-full relative bg-white 
-      flex flex-col dark:bg-gray-900 
+      flex flex-col 
     '
     >
       {loading && <LinearProgress />}
@@ -43,7 +43,7 @@ const Participants = ({ id, user }) => {
       <div className='px-4 mt-4'>
         <p
           className='text-gray-500 
-        dark:text-gray-400'
+       '
         >
           This is the courses feed page
         </p>

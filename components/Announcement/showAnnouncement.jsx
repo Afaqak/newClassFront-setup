@@ -74,8 +74,6 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode, courseId, 
       flex-col py-2 gap-2 h-full
     `}
     >
-
-
       {toggleUpdate && (
         <UpdateAnnouncement
           type={'update'}
@@ -87,12 +85,11 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode, courseId, 
         />
       )}
 
-
       {announcements?.map((ann) => (
         <div
           className={`
           ${mode === 'groupAnnouncement' ? 'bg-none w-full border-b' : 'bg-blue-50 w-4/5'}
-         dark:bg-gray-800  relative 
+         relative 
         px-3 py-3 flex flex-col rounded-md`}
         >
           {admin && (

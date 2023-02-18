@@ -68,10 +68,11 @@ const SignIn = () => {
         animate='show'
         exit='exit'
         className={`
-    h-[95vh] w-screen dark:bg-gray-900 ${MontserratFont.className}`} >
+    h-[95vh] w-screen  ${MontserratFont.className}`}
+      >
         {loading && <LinearProgress />}
         <div className=' flex w-screen flex-col items-center justify-center h-[80vh]'>
-          <h1 className='text-4xl font-bold text-gray-600 dark:text-gray-300'>
+          <h1 className='text-4xl font-bold text-gray-600 '>
             <p
               className='mb-4
           text-slate-700 font-semibold text-3xl font-sans tracking-wide
@@ -87,7 +88,7 @@ const SignIn = () => {
             }}
             className='form-signin space-y-3
             w-[90%] sm:w-[60%] md:w-[40%] lg:w-[30%]
-            text-gray-600 dark:text-gray-300
+            text-gray-600 
       '
           >
             <FormInput

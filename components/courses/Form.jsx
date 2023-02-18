@@ -27,7 +27,7 @@ const Form = ({ handleInputChange, addCourse, updateCourse, formType }) => {
             type={types[i]}
             name={label}
             id={label}
-            className='border-2 dark:bg-gray-50 border-gray-300 dark:text-gray-900 p-1 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent'
+            className='border-2 border-gray-300 p-1 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent'
           />
         </div>
       ))}

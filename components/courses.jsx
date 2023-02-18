@@ -40,7 +40,7 @@ const CoursesTable = ({ courses, deleteCourse, toggleUpdateCourse, loading, noAc
           <tr
             key={item?._id}
             className='bg-white text-center cursor-pointer
-                  hover:bg-gray-100 dark:hover:bg-gray-200
+                  hover:bg-gray-100 
                   '
           >
             <td
@@ -69,7 +69,7 @@ const CoursesTable = ({ courses, deleteCourse, toggleUpdateCourse, loading, noAc
               {item?.teacher}
             </td>
             <td
-              className={`p-3 text-sm dark:text-gray-900 text-gray-700
+              className={`p-3 text-sm  text-gray-700
                       whitespace-nowrap`}
             >
               {item?.credit}

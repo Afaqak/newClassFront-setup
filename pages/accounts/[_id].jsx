@@ -59,7 +59,7 @@ const SingleUser = ({ id }) => {
   };
 
   return (
-    <div className='p-4 min-h-screen bg-gray-50 dark:bg-gray-900'>
+    <div className='p-4 min-h-screen bg-gray-50'>
       <UserAccount user={user} />
     </div>
   );

@@ -83,7 +83,7 @@ const Batches = () => {
 
   console.log(batches);
   return (
-    <div className={`min-h-screen w-full relative bg-white flex flex-col dark:bg-gray-900 ${MontserratFont.className}`}>
+    <div className={`min-h-screen w-full relative bg-white flex flex-col  ${MontserratFont.className}`}>
       {loading && <LinearProgress />}
       <button
         onClick={() => router.back()}
@@ -133,7 +133,7 @@ const Batches = () => {
               <Link
                 href={`/accounts/batch/group?programId=${batch._id}&batchId=${batchId}`}
                 key={batch._id}
-                className={`p-2 border-2 border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-800`}
+                className={`p-2 border-2 border-gray-300  hover:bg-gray-200 `}
               >
                 <span className='text-lg cursor-pointer'>{batch.program}</span>
               </Link>

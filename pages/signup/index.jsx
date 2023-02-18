@@ -149,7 +149,7 @@ const SignUp = () => {
       animate='show'
       exit='exit'
       className='
-    h-[100vh] w-screen dark:bg-gray-900
+    h-[100vh] w-screen 
     '
     >
       {loading && <LinearProgress />}
@@ -168,7 +168,7 @@ const SignUp = () => {
           }}
           className='form-signin space-y-3
         w-[90%] sm:w-[60%] md:w-[40%] lg:w-[30%]
-        text-gray-600 dark:text-gray-300
+        text-gray-600 
       '
         >
           {inputFields.map((inputField) => (

@@ -41,8 +41,9 @@ const groups = () => {
     <div
       className={`min-h-screen font-sans px-4 py-2
 w-full relative bg-white ${MontserratFont.className}
-flex flex-col dark:bg-gray-900 
-`}>
+flex flex-col 
+`}
+    >
       <button
         onClick={() => router.back()}
         className='flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full my-4'
@@ -58,8 +59,8 @@ flex flex-col dark:bg-gray-900
           <Link
             href={`/accounts/batch/group/participant?programId=${programId}&batchId=${batchId}&groupId=${g._id}`}
             key={g.id}
-            className='p-2 border-2 border-gray-300 dark:border-gray-700 
-          hover:bg-gray-200 dark:hover:bg-gray-800'
+            className='p-2 border-2 border-gray-300 
+          hover:bg-gray-200 '
           >
             <span className='text-lg cursor-pointer'>{g.group}</span>
           </Link>

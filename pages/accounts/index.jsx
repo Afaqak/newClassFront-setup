@@ -34,7 +34,7 @@ const Accounts = () => {
   };
 
   return (
-    <div className={`dark:bg-gray-900 min-h-[95vh] ${MontserratFont.className} `}>
+    <div className={` min-h-[95vh] ${MontserratFont.className} `}>
       {toggle && (
         <UserInfo_card
           id={id}
@@ -51,8 +51,8 @@ const Accounts = () => {
                 href={`accounts/batch?batchId=${user._id}&session=${user.session}`}
                 key={user._id}
                 className={` 
-                  p-2 border-2 border-gray-300 dark:border-gray-700 
-                  hover:bg-gray-200 dark:hover:bg-gray-800
+                  p-2 border-2 border-gray-300 
+                  hover:bg-gray-200 
                 `}
               >
                 <span className='text-lg cursor-pointer'>{user.session}</span>
@@ -92,12 +92,11 @@ const UserProfile = ({ user, setToggleAndId }) => {
     <div
       className='relative flex flex-col font-sans bg-gray-50
     bg-opacity-80
-    dark:bg-gray-900
+  
     '
     >
       <div
-        className='dark:bg-[#0a101d] shadow-lg p-2 pb-2 justify-center items-center
-      flex font-sans bg-gray-50 dark:border-gray-700 border 
+        className=' bg-gray-50  border 
 
       w-full  user__image--path'
       >
@@ -111,7 +110,7 @@ const UserProfile = ({ user, setToggleAndId }) => {
 
       <div
         className='flex  font-sans border-b-2 border-blue-500
-     shadow-lg p-2 dark:bg-gray-900 flex-col bg-slate-100  
+     shadow-lg p-2  flex-col bg-slate-100  
       '
       >
         <div className='flex flex-col'>
@@ -123,7 +122,7 @@ const UserProfile = ({ user, setToggleAndId }) => {
         <div className='w-full'>
           <button
             onClick={() => setToggleAndId(user._id)}
-            className='hover:bg-slate-200 cursor-pointer text-center border mt-2 w-full dark:border-gray-800 text-gray-500 text-lg p-1 hover:dark:bg-gray-700 '
+            className='hover:bg-slate-200 cursor-pointer text-center border mt-2 w-full  text-gray-500 text-lg p-1  '
           >
             View More
           </button>

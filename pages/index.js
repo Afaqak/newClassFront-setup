@@ -28,7 +28,7 @@ export default function Home() {
         <>
           <main
             className=' 
-          min-h-screen flex flex-col-reverse sm:flex-col lg:flex-row dark:bg-gray-900 overflow-x-hidden
+          min-h-screen flex flex-col-reverse sm:flex-col lg:flex-row  overflow-x-hidden
   '
           >
             {user ? (

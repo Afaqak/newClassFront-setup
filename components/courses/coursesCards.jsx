@@ -4,7 +4,7 @@ const CoursesCard = ({ colorBg }) => {
   return (
     <div
       className='courses h-52
-    border border-colorlight dark:bg-colorlight dark:text-white'
+    border border-colorlight'
     >
       <span className={`${colorBg} p-2 text-white`}>library_books</span>
       <div

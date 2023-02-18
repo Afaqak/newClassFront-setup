@@ -64,8 +64,8 @@ const Participant = () => {
             <div
               onClick={() => setToggleAndId(p._id)}
               key={p._id}
-              className='p-2 border-2 border-gray-300 dark:border-gray-700
-            hover:bg-gray-200 dark:hover:bg-gray-800'
+              className='p-2 border-2 border-gray-300 
+            hover:bg-gray-200 '
             >
               <span className='text-lg cursor-pointer'>{p.username}</span>
             </div>

@@ -35,7 +35,7 @@ const Main = () => {
           <Heading_1 label='Dashboard' />
           <div
             className=' inline-block mt-4 shadow-md rounded-lg p-2 bg-gray-200 
-        dark:bg-gray-800 dark:text-white mb-2
+       mb-2
         '
           >
             <input
