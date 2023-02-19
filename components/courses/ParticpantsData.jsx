@@ -28,21 +28,18 @@ const ParticpantsData = ({ data, id, setData }) => {
     setIsOpen(!IsOpen);
   };
 
-  const deleteParticipant = async (id) => {
-    console.log('id', id);
+  const deleteParticipant = async (cid) => {
+    console.log('id', id, 'cid', cid);
     try {
       setLoading(true);
-      const res = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/${id}/participants`, {
+      const res = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/${id}/participants/${cid}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${user.token}`,
         },
       });
-      const data = await res.json();
-      if (!res.ok) return new Error(data.message);
-      console.log('all participants', data);
-      setData(data);
+      console.log(res);
     } catch (err) {
       console.log(err);
     } finally {
@@ -68,23 +65,27 @@ const ParticpantsData = ({ data, id, setData }) => {
         Add a user
       </button>
       <div className='mt-4'>
-        {data.map((d) => (
-          <div
-            key={d._id}
-            className='flex justify-between items-center p-2 border-b border-gray-200 w-4/5'
-          >
-            <p>{d.participant.username}</p>
-            <button
-              className='px-2 py-1 rounded-md bg-blue-500 text-white'
-              onClick={() => deleteParticipant(d._id)}
+        {!data.length ? (
+          <p className='text-gray-500'>No participants yet</p>
+        ) : (
+          data.map((d) => (
+            <div
+              key={d._id}
+              className='flex justify-between items-center p-2 border-b border-gray-200 w-4/5'
             >
-              <FontAwesomeIcon
-                size='md'
-                icon={faTrash}
-              />
-            </button>
-          </div>
-        ))}
+              <p>{d.participant.username}</p>
+              <button
+                className='px-2 py-1 rounded-md bg-blue-500 text-white'
+                onClick={() => deleteParticipant(d._id)}
+              >
+                <FontAwesomeIcon
+                  size='md'
+                  icon={faTrash}
+                />
+              </button>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

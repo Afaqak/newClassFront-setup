@@ -1,4 +1,4 @@
-import { Montserrat, Galindo } from '@next/font/google';
+import { Montserrat, Galindo, Inter } from '@next/font/google';
 
 export const MontserratFont = Montserrat({
   subsets: ['latin'],
@@ -6,6 +6,11 @@ export const MontserratFont = Montserrat({
 });
 
 export const Galindo_Font = Galindo({
+  subsets: ['latin'],
+  weight: ['400'],
+});
+
+export const Inter_Font = Inter({
   subsets: ['latin'],
   weight: ['400'],
 });

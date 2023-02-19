@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import formatDate from '../../utils/tools';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { notify } from '../../utils/tools';
 import Form from './Form';
 import { Toaster } from 'react-hot-toast';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
 import { useSelector } from 'react-redux';
+
 const ShowAnnouncement = ({ announcements, handleDelete, admin, mode, courseId, setAnnouncement }) => {
   const user = useSelector(selectCurrentUser);
   const [toggleUpdate, setToggleUpdate] = useState(false);

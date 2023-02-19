@@ -4,10 +4,17 @@ import CourseLayout from '../../components/courses/layout/CourseLayout';
 import { LinearProgress } from '@mui/material';
 import ParticpantsData from '../../components/courses/ParticpantsData';
 import withAuth from '../../components/withAuth';
+import { selectPostPage } from '../../src/store/post/post.selector';
 import Announcement from '../../components/Announcement/Announcement';
+import { useSelector } from 'react-redux';
 
 const Participants = ({ id, user }) => {
+  const postPage = useSelector(selectPostPage);
+
+  console.log(postPage);
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     console.count('useEffect');
     const getParticipants = async () => {
@@ -27,9 +34,6 @@ const Participants = ({ id, user }) => {
     };
     getParticipants();
   }, []);
-  const [loading, setLoading] = useState(false);
-
-  const [page, setPage] = useState(1);
 
   return (
     <div
@@ -49,25 +53,24 @@ const Participants = ({ id, user }) => {
         </p>
       </div>
       <CourseLayout
-        setPage={setPage}
-        page={page}
+        page={postPage}
         id={id}
       >
-        {page == 1 && (
+        {postPage == 1 && (
           <ParticpantsData
             setData={setData}
             id={id}
             data={data}
           />
         )}
-        {page === 2 && (
+        {postPage == 2 && (
           <CoursesPosts
             loading={loading}
             id={id}
             setLoading={setLoading}
           />
         )}
-        {page === 3 && (
+        {postPage === 3 && (
           <Announcement
             id={id}
             setLoading={setLoading}

@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Button, LinearProgress, TextField } from '@mui/material';
-import { toast } from 'react-hot-toast';
-import { Toaster } from 'react-hot-toast';
+import { toast, Toaster } from 'react-hot-toast';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useRouter } from 'next/router';
 import Heading_1 from '../../../components/Heading_1';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { selectCurrentUser } from '../../../src/store/user/user.selector';
-import { useState } from 'react';
+
+import { setPost } from '../../../src/store/post/post.action';
+
 const initialValues = {
   title: '',
   text: '',
@@ -33,7 +34,7 @@ const checkFile = (details) => {
 const Post = () => {
   const router = useRouter();
   const { courseId } = router.query;
-
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [postDetails, setPostDetails] = React.useState(initialValues);
   const [file, setFile] = React.useState(null);
@@ -106,7 +107,10 @@ const Post = () => {
         }}
       >
         <button
-          onClick={() => router.back()}
+          onClick={() => {
+            router.back();
+            dispatch(setPost(2));
+          }}
           className='flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full mb-2'
         >
           <FontAwesomeIcon icon={faArrowLeft} />

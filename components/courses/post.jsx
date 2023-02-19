@@ -50,7 +50,7 @@ const CoursesPosts = ({ id, setLoading }) => {
         });
 
         const data = await response.json();
-        console.log(data);
+        console.log('post', data);
         if (data) {
           setPostDetails(
             data.map((post) => {
