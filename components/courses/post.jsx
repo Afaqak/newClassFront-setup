@@ -1,11 +1,10 @@
-import React, { useEffect, useMemo } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import Box from '@mui/material/Box';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { Button } from '@mui/material';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+
 const CoursesPosts = ({ id, setLoading }) => {
   console.log('post', id);
   const [postDetails, setPostDetails] = React.useState([]);
@@ -72,62 +71,42 @@ const CoursesPosts = ({ id, setLoading }) => {
     handleReq();
   }, [user, semesters]);
 
-  const columns = [
-    {
-      field: 'action',
-      headerName: 'Action',
-      width: 200,
-      renderCell: (params) => (
-        <Link href={`/courses/checkpost?courseId=${id}&postId=${params.id}`}>
-          <Button
-            variant='contained'
-            color='primary'
-          >
-            View
-          </Button>
-        </Link>
-      ),
-    },
-    { field: 'title', headerName: 'Title', width: 170, editable: true },
-    { field: 'text', headerName: 'Text', width: 170 },
-    { field: 'date', headerName: 'date', width: 170 },
-    {
-      field: 'delete',
-      headerName: 'Delete',
-      width: 200,
-      renderCell: (params) => (
-        <Button
-          variant='contained'
-          color='primary'
-          onClick={async () => {
-            console.log(params.id, id);
-            try {
-              const response = await axios.delete(`https://vast-pink-moth-toga.cyclic.app/courses/${id}/posts/${params.id}`, {
-                headers: {
-                  'Content-Type': 'application/json',
-                  Authorization: `Bearer ${token}`,
-                },
-              });
-              const { data } = response;
-              console.log(data);
-              if (data) {
-                setPostDetails(postDetails.filter((post) => post.id !== params.id));
-              }
-            } catch (err) {
-              console.log(err?.response);
-              console.log(err?.response?.data);
-            } finally {
-              setLoading(false);
-            }
-          }}
-        >
-          Delete
-        </Button>
-      ),
-    },
-  ];
+  // <Link href={`/courses/checkpost?courseId=${id}&postId=${params.id}`}>
+  //   <Button
+  //     variant='contained'
+  //     color='primary'
+  //   >
+  //     View
+  //   </Button>
+  // </Link>
 
-  const columns2 = useMemo(() => columns, [columns]);
+  // <Button
+  //   variant='contained'
+  //   color='primary'
+  //   onClick={async () => {
+  //     console.log(params.id, id);
+  //     try {
+  //       const response = await axios.delete(`https://vast-pink-moth-toga.cyclic.app/courses/${id}/posts/${params.id}`, {
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       });
+  //       const { data } = response;
+  //       console.log(data);
+  //       if (data) {
+  //         setPostDetails(postDetails.filter((post) => post.id !== params.id));
+  //       }
+  //     } catch (err) {
+  //       console.log(err?.response);
+  //       console.log(err?.response?.data);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }}
+  // >
+  //   Delete
+  // </Button>
 
   if (!user) {
     return '';
@@ -162,65 +141,6 @@ const CoursesPosts = ({ id, setLoading }) => {
           </Button>
         )}
       </div>
-
-      <Box
-        sx={{
-          padding: '0 1rem',
-          height: '70vh',
-          width: '90%',
-          marginTop: '3vh',
-          '& .MuiDataGrid-root': {
-            backgroundColor: 'white',
-          },
-
-          '& .MuiDataGrid-columnsContainer': {
-            backgroundColor: '#F9FAFB',
-          },
-          '& .MuiDataGrid-columnHeader': {
-            backgroundColor: '#eee',
-          },
-          '& .MuiDataGrid-columnHeaderTitle': {
-            color: '#6B7280',
-            fontWeight: 'bold',
-            textTransform: 'uppercase',
-            fontSize: '14px',
-          },
-          '& .MuiDataGrid-columnHeaderTitleContainer, .MuiDataGrid-cell': {
-            borderBottom: '1px solid #E5E7EB',
-          },
-
-          '& .MuiDataGrid-cell:focus-within': {
-            outline: 'none',
-          },
-          //footer
-          '& .MuiDataGrid-footer': {
-            backgroundColor: '#363949',
-          },
-          '& .MuiDataGrid-footerContainer': {
-            backgroundColor: '#eee',
-            color: '#6B7280',
-            fontSize: '14px',
-            fontWeight: 'normal',
-          },
-          //row elemets color
-          '& .MuiDataGrid-row .MuiDataGrid-cell': {
-            color: '#6B7280',
-          },
-          //cursor pointer
-          '& .MuiDataGrid-cell': {
-            cursor: 'pointer',
-          },
-        }}
-      >
-        <DataGrid
-          rows={postDetails}
-          columns={columns2}
-          pageSize={7}
-          onEditCellPropsChange={(params) => {
-            console.log('cell', params);
-          }}
-        />
-      </Box>
     </div>
   );
 };
