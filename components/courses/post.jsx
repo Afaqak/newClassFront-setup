@@ -141,6 +141,21 @@ const CoursesPosts = ({ id, setLoading }) => {
           </Button>
         )}
       </div>
+      {postDetails.length > 0 ? (
+        <div className='flex flex-col items-center justify-center px-4'>
+          {postDetails.map((post) => (
+            <div className='w-full bg-white rounded-lg shadow-xl p-6 my-4'>
+              <div className='flex justify-between items-center'>
+                <span className='font-light text-gray-600'>{post.title}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className='flex flex-col items-center justify-center'>
+          <h1 className='text-2xl font-bold text-gray-600'>No Posts Found</h1>
+        </div>
+      )}
     </div>
   );
 };
