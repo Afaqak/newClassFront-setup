@@ -70,7 +70,7 @@ const Post = () => {
     if (Object.keys(error).length === 0) {
       setLoading(true);
       const formData = new FormData();
-      formData.append('phile', file);
+      formData.append('phile', file[0]);
       formData.append('title', postDetails.title);
       formData.append('text', postDetails.text);
 
