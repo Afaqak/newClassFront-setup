@@ -56,8 +56,8 @@ const CoursesPosts = ({ id, setLoading }) => {
               return {
                 id: post._id,
                 title: post.title,
-                text: post.text,
-                date: new Date().toLocaleDateString(),
+                author: post.author,
+                updatedAt: post.updatedAt,
               };
             })
           );
@@ -112,7 +112,7 @@ const CoursesPosts = ({ id, setLoading }) => {
     return '';
   }
   return (
-    <div className='h-screen bg-gray-50 '>
+    <div className='h-screen bg-white'>
       <div className='px-4'>
         <Link href={`/courses/create-post?courseId=${id}`}>
           <Button
@@ -142,12 +142,24 @@ const CoursesPosts = ({ id, setLoading }) => {
         )}
       </div>
       {postDetails.length > 0 ? (
-        <div className='flex flex-col items-center justify-center px-4'>
+        <div className='flex flex-col  px-4'>
           {postDetails.map((post) => (
-            <div className='w-full bg-white rounded-lg shadow-xl p-6 my-4'>
-              <div className='flex justify-between items-center'>
-                <span className='font-light text-gray-600'>{post.title}</span>
+            <div className='w-full bg-white rounded-lg shadow-sm border-b border-blue-100 p-6 my-4 font-sans'>
+              <div className='flex justify-between'>
+                <div className='flex-1'>
+                  <h1 className='text-3xl font-bold text-gray-900'>{post.title}</h1>
+                  <p className='text-base text-gray-500 pt-2'>
+                    <span className='font-bold'>Author:</span> {post.author}
+                  </p>
+                </div>
+                <div className='flex-none flex items-center'>
+                  <Link href={`/courses/checkpost?courseId=${id}&postId=${post.id}`}>
+                    <button className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mr-2'>View</button>
+                  </Link>
+                  <button className='bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded'>Delete</button>
+                </div>
               </div>
+              <span className='text-sm text-gray-400 mt-4 block'>{post.updatedAt}</span>
             </div>
           ))}
         </div>
