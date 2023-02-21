@@ -86,6 +86,10 @@ const Post = () => {
         setLoading(false);
         console.log(res);
         notifySucces('Posted !');
+        setTimeout(() => {
+          router.back();
+          dispatch(setPost(2));
+        }, 1000);
       } catch (err) {
         setLoading(false);
         console.log(err.response);

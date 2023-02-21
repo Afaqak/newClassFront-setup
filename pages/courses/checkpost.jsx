@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
 import axios from 'axios';
+import Link from 'next/link';
 
 const CheckPost = () => {
   const [postDetails, setPostDetails] = useState({});
@@ -63,22 +64,17 @@ const CheckPost = () => {
           </div>
           <div class='mt-4 space-y-2'>
             <h2 class='text-lg font-medium text-gray-700'>Attached files:</h2>
-            {/* <ul class='list-disc pl-6 space-y-1'>
-              {postDetails?.files
-                .map((file, index) => (
-                  <li class='text-base font-normal text-gray-600'>
-                    <a
-                      href='${file.url}'
-                      target='_blank'
-                      rel='noopener noreferrer'
-                      class='hover:text-blue-500'
-                    >
-                      ${file.name}
-                    </a>
-                  </li>
-                ))
-                .join('')}
-            </ul> */}
+          </div>
+          <div class='flex flex-col'>
+            {postDetails.files &&
+              postDetails.files.map((file, i) => (
+                <Link
+                  href={file.secure_url}
+                  class='text-base font-normal block text-gray-500 cursor-pointer'
+                >
+                  {i + 1} {file.original_filename}
+                </Link>
+              ))}
           </div>
           <button class='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600'>Modify Post</button>
         </div>

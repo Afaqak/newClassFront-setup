@@ -83,33 +83,33 @@ const CoursesPosts = ({ id, setLoading }) => {
   //   </Button>
   // </Link>
 
-  // <Button
-  //   variant='contained'
-  //   color='primary'
-  //   onClick={async () => {
-  //     console.log(params.id, id);
-  //     try {
-  //       const response = await axios.delete(`https://vast-pink-moth-toga.cyclic.app/courses/${id}/posts/${params.id}`, {
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       });
-  //       const { data } = response;
-  //       console.log(data);
-  //       if (data) {
-  //         setPostDetails(postDetails.filter((post) => post.id !== params.id));
-  //       }
-  //     } catch (err) {
-  //       console.log(err?.response);
-  //       console.log(err?.response?.data);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   }}
-  // >
-  //   Delete
-  // </Button>
+  <Button
+    variant='contained'
+    color='primary'
+    onClick={async () => {
+      console.log(params.id, id);
+      try {
+        const response = await axios.delete(`https://vast-pink-moth-toga.cyclic.app/courses/${id}/posts/${params.id}`, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const { data } = response;
+        console.log(data);
+        if (data) {
+          setPostDetails(postDetails.filter((post) => post.id !== params.id));
+        }
+      } catch (err) {
+        console.log(err?.response);
+        console.log(err?.response?.data);
+      } finally {
+        setLoading(false);
+      }
+    }}
+  >
+    Delete
+  </Button>;
 
   if (!user) {
     return '';
@@ -175,6 +175,26 @@ const CoursesPosts = ({ id, setLoading }) => {
                         sx={{ color: '#ffffff', backgroundColor: '#F87171', '&:hover': { backgroundColor: '#F87171' } }}
                         onClick={async () => {
                           console.log(post.id, id);
+                          try {
+                            setLoading(true);
+                            const response = await axios.delete(`https://vast-pink-moth-toga.cyclic.app/courses/${id}/posts/${post.id}`, {
+                              headers: {
+                                'Content-Type': 'application/json',
+                                Authorization: `Bearer ${token}`,
+                              },
+                            });
+
+                            const res = response;
+                            console.log(res);
+                            if (res.status === 200) {
+                              setPostDetails(postDetails.filter((pst) => pst.id !== post.id));
+                            }
+                          } catch (err) {
+                            console.log(err?.response);
+                            console.log(err?.response?.data);
+                          } finally {
+                            setLoading(false);
+                          }
                         }}
                       >
                         Delete
