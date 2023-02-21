@@ -50,6 +50,9 @@ const CoursesPosts = ({ id, setLoading }) => {
 
         const data = await response.json();
         console.log('post', data);
+        data.sort((a, b) => {
+          return new Date(b.updatedAt) - new Date(a.updatedAt);
+        });
         if (data) {
           setPostDetails(
             data.map((post) => {
@@ -112,7 +115,7 @@ const CoursesPosts = ({ id, setLoading }) => {
     return '';
   }
   return (
-    <div className='h-screen bg-white'>
+    <div className='min-h-screen bg-white'>
       <div className='px-4'>
         <Link href={`/courses/create-post?courseId=${id}`}>
           <Button
@@ -142,24 +145,45 @@ const CoursesPosts = ({ id, setLoading }) => {
         )}
       </div>
       {postDetails.length > 0 ? (
-        <div className='flex flex-col  px-4'>
+        <div className='flex flex-col  px-4  font-sans'>
           {postDetails.map((post) => (
-            <div className='w-full bg-white rounded-lg shadow-sm border-b border-blue-100 p-6 my-4 font-sans'>
-              <div className='flex justify-between'>
-                <div className='flex-1'>
-                  <h1 className='text-3xl font-bold text-gray-900'>{post.title}</h1>
-                  <p className='text-base text-gray-500 pt-2'>
-                    <span className='font-bold'>Author:</span> {post.author}
-                  </p>
-                </div>
-                <div className='flex-none flex items-center'>
-                  <Link href={`/courses/checkpost?courseId=${id}&postId=${post.id}`}>
-                    <button className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mr-2'>View</button>
-                  </Link>
-                  <button className='bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded'>Delete</button>
+            <div
+              key={post.id}
+              className='my-4 bg-white rounded-md border border-gray-200 shadow-md'
+            >
+              <p className='text-sm font-medium text-gray-600 py-3 px-4 bg-gray-100 tracking-wider'>{post.author}</p>
+              <div className='bg-blue-100 px-4 py-3 border-b border-gray-200'>
+                <div className='flex justify-between items-center'>
+                  <div className='flex-1'>
+                    <h2 className='text-xl font-bold text-blue-900 py-4'>{post.title}</h2>
+                  </div>
+                  <div className='flex-none flex space-x-2'>
+                    <Link href={`/courses/checkpost?courseId=${id}&postId=${post.id}`}>
+                      <Button
+                        variant='contained'
+                        color='primary'
+                        size='small'
+                      >
+                        View
+                      </Button>
+                    </Link>
+                    {user.admin && (
+                      <Button
+                        variant='contained'
+                        color='secondary'
+                        size='small'
+                        sx={{ color: '#ffffff', backgroundColor: '#F87171', '&:hover': { backgroundColor: '#F87171' } }}
+                        onClick={async () => {
+                          console.log(post.id, id);
+                        }}
+                      >
+                        Delete
+                      </Button>
+                    )}
+                  </div>
                 </div>
               </div>
-              <span className='text-sm text-gray-400 mt-4 block'>{post.updatedAt}</span>
+              <span className='text-sm text-gray-500 mt-2 px-4'>{new Date(post.updatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
             </div>
           ))}
         </div>
@@ -173,3 +197,40 @@ const CoursesPosts = ({ id, setLoading }) => {
 };
 
 export default CoursesPosts;
+{
+  /* <div className='my-4 shadow-md rounded-lg overflow-hidden'>
+<div className='bg-gray-100 p-4'>
+  <p className='text-base font-medium text-gray-500 mb-2'>{post.author}</p>
+  <h2 className='text-3xl font-bold text-gray-900 mb-2'>{post.title}</h2>
+  <span className='text-sm text-gray-400 block'>{new Date(post.updatedAt).toDateString()}</span>
+</div>
+<div className='bg-sky-50 p-4'>
+  <div className='flex justify-between items-center'>
+    <div>
+      <Link href={`/courses/checkpost?courseId=${id}&postId=${post.id}`}>
+        <Button
+          variant='contained'
+          color='primary'
+        >
+          View
+        </Button>
+      </Link>
+    </div>
+    <div>
+      {user.admin && (
+        <Button
+          variant='contained'
+          color='primary'
+          sx={{ color: '#ffffff', backgroundColor: '#F87171', '&:hover': { backgroundColor: '#F87171' } }}
+          onClick={async () => {
+            console.log(post.id, id);
+          }}
+        >
+          Delete
+        </Button>
+      )}
+    </div>
+  </div>
+</div>
+</div> */
+}

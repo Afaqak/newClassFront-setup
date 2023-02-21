@@ -71,13 +71,10 @@ const Post = () => {
       setLoading(true);
       const formData = new FormData();
       for (let i = 0; i < file.length; i++) {
-        formData.append('files[]', file[i]);
+        formData.append('phile', file[i]);
       }
       formData.append('title', postDetails.title);
       formData.append('text', postDetails.text);
-      for (const key of formData.entries()) {
-        console.log(key[0] + ', ' + key[1]);
-      }
 
       try {
         const res = await axios.post(`https://vast-pink-moth-toga.cyclic.app/courses/${courseId}/posts`, formData, {
