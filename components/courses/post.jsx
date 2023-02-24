@@ -147,54 +147,32 @@ const CoursesPosts = ({ id, setLoading }) => {
       {postDetails.length > 0 ? (
         <div className='flex flex-col  px-4  font-sans'>
           {postDetails.map((post) => (
-            <div
-              key={post.id}
-              className='my-4 bg-white rounded-md border border-gray-200 shadow-md'
-            >
-              <p className='text-sm font-medium text-gray-600 py-3 px-4 bg-gray-100 tracking-wider'>{post.author}</p>
-              <div className='bg-blue-100 px-4 py-3 border-b border-gray-200'>
+            <div className='my-4 shadow-md rounded-lg overflow-hidden'>
+              <div className='bg-gray-100 p-4'>
+                <p className='text-base font-medium text-gray-500 mb-2'>{post.author}</p>
+                <h2 className='text-3xl font-bold text-gray-900 mb-2'>{post.title}</h2>
+                <span className='text-sm text-gray-400 block'>{new Date(post.updatedAt).toDateString()}</span>
+              </div>
+              <div className='bg-sky-50 p-4'>
                 <div className='flex justify-between items-center'>
-                  <div className='flex-1'>
-                    <h2 className='text-xl font-bold text-blue-900 py-4'>{post.title}</h2>
-                  </div>
-                  <div className='flex-none flex space-x-2'>
+                  <div>
                     <Link href={`/courses/checkpost?courseId=${id}&postId=${post.id}`}>
                       <Button
                         variant='contained'
                         color='primary'
-                        size='small'
                       >
                         View
                       </Button>
                     </Link>
+                  </div>
+                  <div>
                     {user.admin && (
                       <Button
                         variant='contained'
-                        color='secondary'
-                        size='small'
+                        color='primary'
                         sx={{ color: '#ffffff', backgroundColor: '#F87171', '&:hover': { backgroundColor: '#F87171' } }}
                         onClick={async () => {
                           console.log(post.id, id);
-                          try {
-                            setLoading(true);
-                            const response = await axios.delete(`https://vast-pink-moth-toga.cyclic.app/courses/${id}/posts/${post.id}`, {
-                              headers: {
-                                'Content-Type': 'application/json',
-                                Authorization: `Bearer ${token}`,
-                              },
-                            });
-
-                            const res = response;
-                            console.log(res);
-                            if (res.status === 200) {
-                              setPostDetails(postDetails.filter((pst) => pst.id !== post.id));
-                            }
-                          } catch (err) {
-                            console.log(err?.response);
-                            console.log(err?.response?.data);
-                          } finally {
-                            setLoading(false);
-                          }
                         }}
                       >
                         Delete
@@ -203,7 +181,6 @@ const CoursesPosts = ({ id, setLoading }) => {
                   </div>
                 </div>
               </div>
-              <span className='text-sm text-gray-500 mt-2 px-4'>{new Date(post.updatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
             </div>
           ))}
         </div>
@@ -217,40 +194,3 @@ const CoursesPosts = ({ id, setLoading }) => {
 };
 
 export default CoursesPosts;
-{
-  /* <div className='my-4 shadow-md rounded-lg overflow-hidden'>
-<div className='bg-gray-100 p-4'>
-  <p className='text-base font-medium text-gray-500 mb-2'>{post.author}</p>
-  <h2 className='text-3xl font-bold text-gray-900 mb-2'>{post.title}</h2>
-  <span className='text-sm text-gray-400 block'>{new Date(post.updatedAt).toDateString()}</span>
-</div>
-<div className='bg-sky-50 p-4'>
-  <div className='flex justify-between items-center'>
-    <div>
-      <Link href={`/courses/checkpost?courseId=${id}&postId=${post.id}`}>
-        <Button
-          variant='contained'
-          color='primary'
-        >
-          View
-        </Button>
-      </Link>
-    </div>
-    <div>
-      {user.admin && (
-        <Button
-          variant='contained'
-          color='primary'
-          sx={{ color: '#ffffff', backgroundColor: '#F87171', '&:hover': { backgroundColor: '#F87171' } }}
-          onClick={async () => {
-            console.log(post.id, id);
-          }}
-        >
-          Delete
-        </Button>
-      )}
-    </div>
-  </div>
-</div>
-</div> */
-}

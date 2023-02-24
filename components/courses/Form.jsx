@@ -27,7 +27,7 @@ const Form = ({ handleInputChange, addCourse, updateCourse, formType }) => {
             type={types[i]}
             name={label}
             id={label}
-            className='border-2 border-gray-300 p-1 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent'
+            className='border-2 border-gray-300 p-1 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent'
           />
         </div>
       ))}
@@ -35,7 +35,7 @@ const Form = ({ handleInputChange, addCourse, updateCourse, formType }) => {
       <motion.button
         whileTap={{ opacity: 0.5 }}
         whileHover={{ scale: 1.05 }}
-        className='bg-blue-500 text-white py-1 px-3 rounded-lg'
+        className='bg-slate-900 text-white py-1 px-3 rounded-lg'
       >
         {formType === 'add' ? 'Add Course' : 'Update Course'}
       </motion.button>

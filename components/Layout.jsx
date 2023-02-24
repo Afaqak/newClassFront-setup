@@ -11,31 +11,8 @@ import UserInfo_card from './user accounts/UserInfo_card';
 const Layout = ({ children }) => {
   const toggleAnnoucement = useSelector(selectToggleAnnouncement);
   const toggleUserInfo = useSelector(selectToggleUserInfo);
-  const { token, user } = useSelector(selectCurrentUser) || {};
+  const { user } = useSelector(selectCurrentUser) || {};
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    console.count('layout');
-    const checkIsAuth = async () => {
-      try {
-        const res = await fetch('https://vast-pink-moth-toga.cyclic.app/isAuth', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        console.log('resAuth', res);
-        if (!res.ok) {
-          dispatch(setCurrentUser(null));
-          return;
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    checkIsAuth();
-  }, []);
 
   return (
     <div className='flex min-h-screen'>

@@ -22,7 +22,7 @@ const Header = () => {
   return (
     <header
       className={`header flex justify-between 
-        px-4 py-2 bg-white 
+        px-4 py-2 bg-white
         border-b-2 border-blue-500 
         rounded-sm text-white p-2 shadow-md items-center
         w-full`}

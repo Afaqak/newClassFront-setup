@@ -87,54 +87,27 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode, courseId, 
       )}
 
       {announcements?.map((ann) => (
-        <div
-          className={`
-          ${mode === 'groupAnnouncement' ? 'bg-none w-full border-b' : 'bg-blue-50 w-4/5'}
-         relative 
-        px-3 py-3 flex flex-col rounded-md`}
-        >
+        <div className='bg-gray-50 border rounded-md shadow-sm px-4 py-3'>
           {admin && (
-            <button
-              onClick={() => handleDelete(ann._id)}
-              className='bg-red-500 text-white px-2 rounded-md absolute right-5 mt-2'
-            >
-              <FontAwesomeIcon
-                size={20}
-                icon={faTrash}
-              />
-            </button>
+            <div className='flex justify-end mb-2'>
+              <button
+                className='text-gray-400 hover:text-red-500 focus:outline-none mr-2'
+                onClick={() => handleDelete(ann._id)}
+              >
+                <FontAwesomeIcon icon={faTrash} />
+              </button>
+              <button
+                className='text-gray-400 hover:text-blue-500 focus:outline-none'
+                onClick={() => handleUpdate(ann._id)}
+              >
+                <FontAwesomeIcon icon={faEdit} />
+              </button>
+            </div>
           )}
-          {admin && (
-            <button
-              onClick={() => handleUpdate(ann._id)}
-              className='bg-blue-500 text-white px-2 rounded-md absolute right-14 mt-2'
-            >
-              <FontAwesomeIcon
-                size={20}
-                icon={faEdit}
-              />
-            </button>
-          )}
-          <p
-            className='text-blue-500 text-[0.57rem] font-bold tracking-wider mt-2
-          '
-          >
-            {ann?.author}
-          </p>
-          <h1 className='text-xl font-semibold '>{ann?.title}</h1>
-          <p
-            className='text-gray-600 break-words
-          '
-          >
-            {ann?.body}
-          </p>
-          <p
-            className='text-gray-600
-            flex justify-end text-[0.65rem] font-semibold
-          '
-          >
-            {formatDate(ann?.createdAt)}
-          </p>
+          <p className='text-gray-600 text-xs font-medium mb-1'>{ann?.author}</p>
+          <h1 className='text-lg font-semibold mb-2'>{ann?.title}</h1>
+          <p className='text-gray-600 mb-2'>{ann?.body}</p>
+          <p className='text-gray-400 text-xs font-semibold text-right'>{formatDate(ann?.createdAt)}</p>
         </div>
       ))}
       <Toaster />

@@ -34,7 +34,7 @@ const Navbar = () => {
         onClick={() => setActiveLink('/accounts')}
         href={`/accounts?id=${token}`}
         label='Accounts'
-        className={`${NavStyles.flexDex} ${activeLink === '/accounts' ? 'bg-blue-600 text-white' : ''}`}
+        className={`${NavStyles.flexDex} ${activeLink === '/accounts' ? 'bg-slate-900 text-white' : ''}`}
         icon={faUserGroup}
       />
     ) : (
@@ -85,7 +85,7 @@ const Navbar = () => {
             onClick={() => setActiveLink('/')}
             href='/'
             icon={faClipboard}
-            className={`${NavStyles.flexDex} mt-2 md:0 ${activeLink === '/' ? 'bg-blue-600 text-white' : ''}`}
+            className={`${NavStyles.flexDex} mt-2 md:0 ${activeLink === '/' ? 'bg-slate-900 text-white' : ''}`}
             label='Dashboard'
           />
           {showUser()}
@@ -93,11 +93,11 @@ const Navbar = () => {
             onClick={() => setActiveLink('/courses')}
             icon={faBookOpen}
             href='/courses'
-            className={`${NavStyles.flexDex} ml-1 md:ml-0 ${activeLink === '/courses' ? 'bg-blue-600 text-white' : ''}`}
+            className={`${NavStyles.flexDex} ml-1 md:ml-0 ${activeLink === '/courses' ? 'bg-slate-900 text-white' : ''}`}
             label='Courses'
           />
           <div
-            className={`${NavStyles.flexDex} ml-1 md:ml-0 ${activeLink === '/broadcast' ? 'bg-blue-600 text-white' : ''}`}
+            className={`${NavStyles.flexDex} ml-1 md:ml-0 ${activeLink === '/broadcast' ? 'bg-slate-900 text-white' : ''}`}
             onClick={() => {
               dispatch(setToggleAnnouncement(!toggleAnnouncement));
               setActiveLink('/broadcast');

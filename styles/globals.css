@@ -17,7 +17,7 @@
     }
 
     .link:hover{
-        @apply text-blue-500 md:bg-gray-200 bg-none 
+        @apply text-slate-900 md:bg-gray-200 bg-none 
     }
     .logout{
         @apply text-danger
