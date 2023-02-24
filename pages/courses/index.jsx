@@ -149,7 +149,7 @@ const Courses = () => {
           onClick={toggleAddCourse}
           whileTap={{ opacity: 0.5 }}
           whileHover={{ translateY: -2 }}
-          className={`bg-slate-800 
+          className={`bg-green-500 hover:bg-green-600
         text-white py-1 px-3 rounded-lg mt-2 mb-3`}
         >
           {toggle ? 'Close' : 'Add Course'}

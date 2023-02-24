@@ -46,7 +46,7 @@ const Announcement = ({ id, setLoading }) => {
   };
 
   return (
-    <div className='px-4 py-3 mb-8 bg-white'>
+    <div className='px-4 py-2 mb-8 bg-white'>
       {toggleAnnouncement && (
         <CreateAnnouncement
           type='course announcement'
@@ -58,7 +58,7 @@ const Announcement = ({ id, setLoading }) => {
         />
       )}
       <button
-        className='bg-blue-500 text-white px-4 py-1 rounded-md mt-2'
+        className='bg-green-500 text-white px-4 py-1 rounded-md mt-2'
         onClick={() => setToggleAnnouncement(!toggleAnnouncement)}
       >
         Announce!

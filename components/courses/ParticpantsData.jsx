@@ -60,7 +60,7 @@ const ParticpantsData = ({ data, id, setData }) => {
 
       <button
         onClick={toggleAddParticipant}
-        className='px-4 py-1 rounded-md bg-slate-500 text-white'
+        className='px-4 py-1 rounded-md bg-green-500 text-white'
       >
         Add a user
       </button>
