@@ -25,7 +25,7 @@ const Main = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, transition: { duration: 0.3 } }}
         exit={{ opacity: 0, transition: { duration: 0.3 } }}
-        className={`h-screen
+        className={`
         w-full relative bg-white 
          flex flex-col ${MontserratFont.className}
   `}
@@ -43,6 +43,7 @@ const Main = () => {
               className='
             bg-transparent h-5 px-5 pr-10 rounded-lg text-sm focus:outline-none
             '
+              value={new Date().toLocaleDateString()}
             />
           </div>
           <div className='insights mt-2 flex flex-col gap-y-3 md:flex-row justify-between gap-x-5 md:gap-x-2 overflow-hidden'>

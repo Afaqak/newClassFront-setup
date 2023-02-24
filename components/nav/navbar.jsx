@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { setToggleUserInfo } from '../../src/store/user/user.actions';
 import { faSignOutAlt, faUserGroup, faBookOpen, faClipboard, faBroadcastTower } from '@fortawesome/free-solid-svg-icons';
 import Image from 'next/image';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
   const router = useRouter();
@@ -85,7 +86,7 @@ const Navbar = () => {
             onClick={() => setActiveLink('/')}
             href='/'
             icon={faClipboard}
-            className={`${NavStyles.flexDex} mt-2 md:0 ${activeLink === '/' ? 'bg-slate-900 text-white' : ''}`}
+            className={`${NavStyles.flexDex} mt-2 ml-1 md:0 ${activeLink === '/' ? 'bg-slate-900 text-white' : ''}`}
             label='Dashboard'
           />
           {showUser()}
@@ -130,9 +131,80 @@ const Navbar = () => {
     </nav>
   );
 };
-
-export default Navbar;
-
+const NavPhone = ({ toggle }) => {
+  return (
+    <AnimatePresence initial={false}>
+      <motion.nav
+        animate={{
+          clipPath: toggle ? 'circle(100% at 100% 60%)' : 'circle(80% at 250% 50%)',
+          scale: toggle ? 1 : 1.1,
+          transition: {
+            duration: 0.5,
+            ease: 'easeInOut',
+            delay: 0.2,
+            damping: 10,
+          },
+        }}
+        exit={{
+          clipPath: 'circle(0% at 100% 0)',
+          transition: {
+            duration: 0.5,
+            ease: 'easeInOut',
+          },
+        }}
+        className='sm:hidden clip_nav fixed right-0 z-[1000] top-0 font-serif bg-green-100'
+      >
+        <div className='text-gray-600 h-screen p-2 w-[18rem] rounded-md shadow-md mt-4  m-2 sm:m-0 transition-all duration-300 ease-in-out'>
+          <div className='flex flex-col space-y-1 mt-5 px-4'>
+            <p className='text-gray-600 font-bold text-sm border-b border-gray-800 pb-2'>navigation</p>
+          </div>
+          <motion.ul
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+            className='flex flex-col space-y-4 mt-5 p-4'
+          >
+            <motion.li
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ x: toggle ? 0 : -20, opacity: toggle ? 1 : 0 }}
+              exit={{ x: -20, opacity: 0 }}
+              transition={{ delay: 0.2, duration: 0.5, ease: 'easeInOut' }}
+              className='text-gray-400 font-bold text-2xl'
+            >
+              Dashboard
+            </motion.li>
+            <motion.li
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: toggle ? 0 : -20, opacity: toggle ? 1 : 0 }}
+              exit={{ y: -20, opacity: 0 }}
+              transition={{ delay: 0.4, duration: 0.5, ease: 'easeInOut' }}
+              className='text-gray-400 font-bold text-2xl'
+            >
+              Courses
+            </motion.li>
+            <motion.li
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: toggle ? 0 : -20, opacity: toggle ? 1 : 0 }}
+              exit={{ y: -20, opacity: 0 }}
+              transition={{ delay: 0.6, duration: 0.5, ease: 'easeInOut' }}
+              className='text-gray-400 font-bold text-2xl'
+            >
+              Announcements
+            </motion.li>
+            <motion.li
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: toggle ? 0 : -20, opacity: toggle ? 1 : 0 }}
+              exit={{ y: -20, opacity: 0 }}
+              transition={{ delay: 0.8, duration: 0.5, ease: 'easeInOut' }}
+              className='text-gray-400 font-bold text-2xl'
+            >
+              Accounts
+            </motion.li>
+          </motion.ul>
+        </div>
+      </motion.nav>
+    </AnimatePresence>
+  );
+};
+export { Navbar, NavPhone };
 const NavStyles = {
   flexDex: `link flex space-x-2 p-3 w-full`,
   linkContainer: `space-y-4 sm:space-y-4 flex flex-col justify-center
