@@ -60,7 +60,7 @@ const ParticpantsData = ({ data, id, setData }) => {
 
       <button
         onClick={toggleAddParticipant}
-        className='px-4 py-1 rounded-md bg-blue-500 text-white'
+        className='px-4 py-1 rounded-md bg-slate-500 text-white'
       >
         Add a user
       </button>
@@ -71,11 +71,11 @@ const ParticpantsData = ({ data, id, setData }) => {
           data.map((d) => (
             <div
               key={d._id}
-              className='flex justify-between items-center p-2 border-b border-gray-200 w-4/5'
+              className='flex justify-between items-center py-3 px-2 border-b border-gray-200 w-4/5'
             >
               <p>{d.participant.username}</p>
               <button
-                className='px-2 py-1 rounded-md bg-blue-500 text-white'
+                className='px-2  rounded-md bg-gray-200 hover:bg-gray-300'
                 onClick={() => deleteParticipant(d._id)}
               >
                 <FontAwesomeIcon

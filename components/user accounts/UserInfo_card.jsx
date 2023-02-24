@@ -122,10 +122,10 @@ const UserInfo_card = ({ id, setToggle, mode }) => {
           <div
             key={userInfo._id}
             onClick={(e) => e.stopPropagation()}
-            className='bg-white rounded-lg border-2 border-blue-500 shadow-lg p-8 w-full sm:max-w-2xl'
+            className='bg-white rounded-lg border-2 border-slate-900 shadow-lg p-8 w-full sm:max-w-2xl'
           >
             <div className='flex justify-between border-b mb-4 pb-1'>
-              <h2 className='text-lg font-bold text-blue-500 '>Account Details</h2>
+              <h2 className='text-xl font-bold text-slate-900 '>Account Details</h2>
               <FontAwesomeIcon
                 onClick={handleClose}
                 icon={faClose}
@@ -138,7 +138,7 @@ const UserInfo_card = ({ id, setToggle, mode }) => {
                   key={data?.label}
                   className='flex flex-col gap-2'
                 >
-                  <div className='text-lg font-bold text-blue-500'>{data?.label}</div>
+                  <div className='text-lg font-bold text-gray-500'>{data?.label}</div>
                   <div className='text-lg'>{data?.value}</div>
                 </div>
               ))}
@@ -147,7 +147,7 @@ const UserInfo_card = ({ id, setToggle, mode }) => {
                   <></>
                 ) : (
                   <>
-                    <h2 className='text-lg font-bold text-blue-500'>validate student</h2>
+                    <h2 className='text-lg font-bold text-slate-900'>validate student</h2>
                     <div className='flex'>
                       <div className='flex flex-row items-center '>
                         <Checkbox

@@ -3,10 +3,10 @@ import React from 'react';
 const CoursesCard = ({ colorBg }) => {
   return (
     <div
-      className='courses h-52
+      className='courses h-52 font-sans
     border border-colorlight'
     >
-      <span className={`${colorBg} p-2 text-white`}>library_books</span>
+      <span className={`bg-slate-900 p-2 text-white`}>students</span>
       <div
         className='
     border-b border-colorlight

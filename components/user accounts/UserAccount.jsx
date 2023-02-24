@@ -23,7 +23,7 @@ const UserAccount = ({ userData, user }) => {
           w-[60%] md:w-[80%] sm:w-[70%]
           bg-[#e2f2ff] border flex flex-col md:flex-row items-center rounded-lg shadow-lg p-4'
           >
-            <div className='bg-blue-500'>
+            <div className='bg-slate-900'>
               <Image
                 alt='user'
                 className='w-[40%] sm:w-[70%] md:w-[100%]'
