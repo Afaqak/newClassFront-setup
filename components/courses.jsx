@@ -76,7 +76,7 @@ const CoursesTable = ({ courses, deleteCourse, toggleUpdateCourse, loading, noAc
       </table>
       {courses?.map((item) => (
         <div
-          className='grid grid-cols-1 gap-4 md:hidden mb-4 mt-4
+          className='grid grid-cols-1 gap-4 md:hidden mb-4 mt-4 p-4
            
         '
         >
