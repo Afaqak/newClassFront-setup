@@ -156,7 +156,7 @@ const NavPhone = ({ toggle }) => {
       >
         <div className='text-gray-600 h-screen p-2 w-[18rem] rounded-md shadow-md mt-4  m-2 sm:m-0 transition-all duration-300 ease-in-out'>
           <div className='flex flex-col space-y-1 mt-5 px-4'>
-            <p className='text-gray-600 font-bold text-sm border-b border-gray-800 pb-2'>navigation</p>
+            <p className='text-gray-400 tracking-wider text-sm border-b border-gray-300 pb-2'>navigation</p>
           </div>
           <motion.ul
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
@@ -167,7 +167,7 @@ const NavPhone = ({ toggle }) => {
               animate={{ x: toggle ? 0 : -20, opacity: toggle ? 1 : 0 }}
               exit={{ x: -20, opacity: 0 }}
               transition={{ delay: 0.2, duration: 0.5, ease: 'easeInOut' }}
-              className='text-gray-400 font-bold text-2xl'
+              className='text-gray-800 font-bold text-2xl tracking-wider'
             >
               Dashboard
             </motion.li>
@@ -176,7 +176,7 @@ const NavPhone = ({ toggle }) => {
               animate={{ y: toggle ? 0 : -20, opacity: toggle ? 1 : 0 }}
               exit={{ y: -20, opacity: 0 }}
               transition={{ delay: 0.4, duration: 0.5, ease: 'easeInOut' }}
-              className='text-gray-400 font-bold text-2xl'
+              className='text-gray-800 font-bold text-2xl tracking-wider'
             >
               Courses
             </motion.li>
@@ -185,7 +185,7 @@ const NavPhone = ({ toggle }) => {
               animate={{ y: toggle ? 0 : -20, opacity: toggle ? 1 : 0 }}
               exit={{ y: -20, opacity: 0 }}
               transition={{ delay: 0.6, duration: 0.5, ease: 'easeInOut' }}
-              className='text-gray-400 font-bold text-2xl'
+              className='text-gray-800 font-bold text-2xl tracking-wider'
             >
               Announcements
             </motion.li>
@@ -194,7 +194,7 @@ const NavPhone = ({ toggle }) => {
               animate={{ y: toggle ? 0 : -20, opacity: toggle ? 1 : 0 }}
               exit={{ y: -20, opacity: 0 }}
               transition={{ delay: 0.8, duration: 0.5, ease: 'easeInOut' }}
-              className='text-gray-400 font-bold text-2xl'
+              className='text-gray-800 font-bold text-2xl tracking-wider'
             >
               Accounts
             </motion.li>
