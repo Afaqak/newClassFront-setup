@@ -105,7 +105,11 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode, courseId, 
                 className='text-gray-400 hover:text-green-500 focus:outline-none'
                 onClick={() => handleUpdate(ann._id)}
               >
-                <FontAwesomeIcon icon={faEdit} />
+                <Image
+                  src='/svgs/icons8-edit.gif'
+                  width={20}
+                  height={20}
+                />
               </button>
             </div>
           )}
