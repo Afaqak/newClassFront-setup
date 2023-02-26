@@ -4,7 +4,6 @@ import { selectCurrentUser } from '../../src/store/user/user.selector';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { notify } from '../../utils/tools';
-import { CircularProgress, Checkbox } from '@mui/material';
 
 const UserInfo_card = ({ id, setToggle, mode }) => {
   const [loading, setLoading] = useState(false);
@@ -150,19 +149,31 @@ const UserInfo_card = ({ id, setToggle, mode }) => {
                     <h2 className='text-lg font-bold text-slate-900'>validate student</h2>
                     <div className='flex'>
                       <div className='flex flex-row items-center '>
-                        <Checkbox
+                        <input
                           disabled={userInfo?.teacher || loading}
                           checked={userInfo?.teacher}
                           onChange={(e) => handleTeacherChange(userInfo?._id, e.target.checked)}
+                          type='checkbox'
                         />
+                        {/* <Checkbox
+                          disabled={userInfo?.teacher || loading}
+                          checked={userInfo?.teacher}
+                          onChange={(e) => handleTeacherChange(userInfo?._id, e.target.checked)}
+                        /> */}
                         <p className='text-sm '>Teacher</p>
                       </div>
                       <div className='flex flex-row items-center'>
-                        <Checkbox
+                        <input
+                          disabled={userInfo?.teacher || loading}
+                          checked={userInfo?.valid}
+                          onChange={(e) => handleValidChange(userInfo?._id, e.target.checked)}
+                          type='checkbox'
+                        />
+                        {/* <Checkbox
                           disabled={loading}
                           onChange={(e) => handleValidChange(userInfo?._id, e.target.checked)}
                           checked={userInfo?.valid}
-                        />
+                        /> */}
                         <p className='text-sm '>Valid</p>
                       </div>
                     </div>
@@ -172,7 +183,8 @@ const UserInfo_card = ({ id, setToggle, mode }) => {
             </div>
           </div>
         ) : (
-          <CircularProgress color='primary' />
+          // <CircularProgress color='primary' />
+          <></>
         )}
       </div>
     </div>

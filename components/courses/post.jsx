@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import Link from 'next/link';
-import { Button } from '@mui/material';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
@@ -83,9 +82,9 @@ const CoursesPosts = ({ id, setLoading }) => {
   //   </Button>
   // </Link>
 
-  <Button
-    variant='contained'
-    color='primary'
+  <button
+    className='border border-slate-500 hover:bg-slate-900 hover:text-white transition duration-300 py-1 px-5 rounded-md mt-3 ml-3'
+    type='button'
     onClick={async () => {
       console.log(params.id, id);
       try {
@@ -109,7 +108,7 @@ const CoursesPosts = ({ id, setLoading }) => {
     }}
   >
     Delete
-  </Button>;
+  </button>;
 
   if (!user) {
     return '';
@@ -119,7 +118,7 @@ const CoursesPosts = ({ id, setLoading }) => {
       <div className='px-4'>
         <Link href={`/courses/create-post?courseId=${id}`}>
           <button
-            className='bg-green-500 hover:bg-green-600 transition duration-300
+            className='bg-purple-500 hover:bg-purple-600 transition duration-300
             text-white py-1 px-3 rounded-md mt-3'
             type='button'
           >

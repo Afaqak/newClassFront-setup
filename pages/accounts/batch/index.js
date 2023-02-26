@@ -4,7 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import Heading_1 from '../../../components/Heading_1';
-import { Checkbox, LinearProgress } from '@mui/material';
+
 import { notify } from '../../../utils/tools';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
@@ -84,7 +84,7 @@ const Batches = () => {
   console.log(batches);
   return (
     <div className={`min-h-screen w-full relative bg-white flex flex-col  ${MontserratFont.className}`}>
-      {loading && <LinearProgress />}
+      {/* {loading && <LinearProgress />} */}
       <button
         onClick={() => router.back()}
         className='flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full mx-4 my-4'
@@ -100,17 +100,19 @@ const Batches = () => {
               <p className='text-xl font-bold'>{userinfo.email}</p>
               <div className='flex flex-row items-center'></div>
               <div className='flex flex-row items-center mt-2'>
-                <Checkbox
-                  onClick={(e) => {
-                    handleTeacherChange(userinfo._id, e.target.checked);
-                  }}
+                <input
+                  type='checkbox'
                   checked={userinfo.teacher}
                   disabled={userinfo.teacher || loading}
+                  onChange={(e) => {
+                    handleTeacherChange(userinfo._id, e.target.checked);
+                  }}
                 />
                 <p className='text-sm ml-2'>Teacher</p>
               </div>
               <div className='flex flex-row items-center'>
-                <Checkbox
+                <input
+                  type='checkbox'
                   checked={userinfo.valid}
                   disabled={loading}
                   onChange={(e) => {

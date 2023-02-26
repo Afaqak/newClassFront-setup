@@ -1,5 +1,5 @@
 import React from 'react';
-import { CircularProgress } from '@mui/material';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 const Form = ({ handleSubmit, handleInputChange, loading, setToggleAnnouncement, type, input }) => {
@@ -24,7 +24,7 @@ const Form = ({ handleSubmit, handleInputChange, loading, setToggleAnnouncement,
         }}
       >
         {loading ? (
-          <CircularProgress size={20} />
+          <h1>Loading...</h1>
         ) : (
           <FontAwesomeIcon
             icon={faClose}

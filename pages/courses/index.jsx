@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
 import { motion } from 'framer-motion';
-import { LinearProgress } from '@mui/material';
 import withAuth from '../../components/withAuth';
 import { notify } from '../../utils/tools';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
@@ -149,7 +148,7 @@ const Courses = () => {
           onClick={toggleAddCourse}
           whileTap={{ opacity: 0.5 }}
           whileHover={{ translateY: -2 }}
-          className={`bg-green-500 hover:bg-green-600
+          className={`bg-purple-500 hover:bg-purple-600
         text-white py-1 px-3 rounded-lg mt-2 mb-3`}
         >
           {toggle ? 'Close' : 'Add Course'}
@@ -165,7 +164,7 @@ const Courses = () => {
       animate={{ opacity: 1, transition: { duration: 0.7, ease: 'easeInOut' } }}
       exit={{ opacity: 0, transition: { duration: 0.7 } }}
     >
-      {loading && <LinearProgress />}
+      {/* {loading && <LinearProgress />} */}
       <div className='p-4 bg-white min-h-screen '>
         <Heading_1 label='Courses' />
         <p className='text-slate-800  block mb-4'>Welcome to your courses page</p>

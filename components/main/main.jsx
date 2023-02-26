@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
 import { motion, AnimatePresence } from 'framer-motion';
 import { usefetchCourses } from '../../src/customHooks/fetchCoures';
-import { LinearProgress } from '@mui/material';
 import { selectCoursesList } from '../../src/store/courses/courses.reselect';
 import { MontserratFont } from '../../utils/fonts';
 import CoursesTable from '../courses';
@@ -30,7 +29,7 @@ const Main = () => {
          flex flex-col ${MontserratFont.className}
   `}
       >
-        {loading && <LinearProgress color='success' />}
+        {/* {loading && <LinearProgress color='success' />} */}
         <div className='flex-1 px-4 mt-3'>
           <Heading_1 label='Dashboard' />
           <div

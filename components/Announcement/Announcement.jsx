@@ -58,7 +58,7 @@ const Announcement = ({ id, setLoading }) => {
         />
       )}
       <button
-        className='bg-green-500 text-white px-4 py-1 rounded-md mt-2'
+        className='bg-purple-500 text-white px-4 py-1 rounded-md mt-2 hover:bg-purple-600'
         onClick={() => setToggleAnnouncement(!toggleAnnouncement)}
       >
         Announce!

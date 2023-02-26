@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import CoursesPosts from '../../components/courses/post';
 import CourseLayout from '../../components/courses/layout/CourseLayout';
-import { LinearProgress } from '@mui/material';
 import ParticpantsData from '../../components/courses/ParticpantsData';
 import withAuth from '../../components/withAuth';
 import { selectPostPage } from '../../src/store/post/post.selector';
@@ -42,7 +41,7 @@ const Participants = ({ id, user }) => {
       flex flex-col 
     '
     >
-      {loading && <LinearProgress />}
+      {/* {loading && <LinearProgress />} */}
 
       <div className='px-4 mt-4'>
         <p

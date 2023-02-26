@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Box, Button, LinearProgress, TextField } from '@mui/material';
+
 import { toast, Toaster } from 'react-hot-toast';
-import useMediaQuery from '@mui/material/useMediaQuery';
+
 import { useRouter } from 'next/router';
 import Heading_1 from '../../../components/Heading_1';
 import { useSelector, useDispatch } from 'react-redux';
@@ -39,7 +39,7 @@ const Post = () => {
   const [postDetails, setPostDetails] = React.useState(initialValues);
   const [file, setFile] = React.useState(null);
   const notifySucces = (message) => toast.success(message);
-  const isNonMobile = useMediaQuery('(min-width:600px)');
+
   const { token, user } = useSelector(selectCurrentUser) || {
     token: null,
     user: null,
@@ -102,16 +102,8 @@ const Post = () => {
 
   return (
     <div className='h-[100vh] bg-white '>
-      {loading && <LinearProgress />}
-      <Box
-        padding='1rem'
-        display='grid'
-        gap='20px'
-        gridTemplateColumns='repeat(1, minmax(0,1fr))'
-        sx={{
-          '& >div': { gridColumn: isNonMobile ? undefined : 'span 4' },
-        }}
-      >
+      {/* {loading && <LinearProgress />} */}
+      <div className='p-4 flex flex-col space-y-3'>
         <button
           onClick={() => {
             router.back();
@@ -127,30 +119,22 @@ const Post = () => {
           className='flex flex-col space-y-2'
         >
           <div className='md:w-[60%] w-full'>
-            <TextField
-              className={`bg-gray-50`}
-              sx={{
-                gridColumn: 'span 2',
-              }}
-              onChange={handleChange}
-              fullWidth
-              variant='filled'
-              label='Title'
+            <input
+              type='text'
               name='title'
-            />
+              onChange={handleChange}
+              class='w-full px-4 py-2 focus:outline-none border-b-2 border-gray-300 focus:border-slate-500 dark:border-gray-700 dark:focus:border-slate-500 dark:bg-gray-800 dark:text-gray-300 bg-gray-100'
+              placeholder='Enter text here'
+            ></input>
           </div>
           <div className='md:w-[70%] w-full'>
-            <TextField
-              className={`bg-gray-50`}
-              sx={{
-                gridColumn: 'span 2',
-              }}
-              onChange={handleChange}
-              fullWidth
-              variant='filled'
-              label='Text'
+            <input
+              type='text'
               name='text'
-            />
+              onChange={handleChange}
+              class='w-full px-4 py-2 focus:outline-none border-b-2 border-gray-300 focus:border-slate-500 dark:border-gray-700 dark:focus:border-slate-500 dark:bg-gray-800 dark:text-gray-300 bg-gray-100'
+              placeholder='Enter text here'
+            ></input>
           </div>
           <div>
             <div className='flex flex-col '>
@@ -182,27 +166,17 @@ const Post = () => {
                     <span className='text-gray-600 dark:text-gray-400'>{f.name}</span>
                   </div>
                 ))}
-              {file && (
-                <Button
-                  className='w-[100px]'
-                  onClick={() => {
-                    setFile(null);
-                  }}
-                  variant='outlined'
-                >
-                  remove
-                </Button>
-              )}
+              {file && <button className='bg-purple-500 hover:bg-purple-600 text-white py-1 px-5 rounded'>Upload</button>}
             </div>
           </div>
           <div
             className=' mt-2
           '
           >
-            <button className='bg-green-500 hover:bg-green-600 text-white py-1 px-5 rounded'>Create Post</button>
+            <button className='bg-purple-500 hover:bg-purple-600 text-white py-1 px-5 rounded'>Create Post</button>
           </div>
         </form>
-      </Box>
+      </div>
       <Toaster />
     </div>
   );

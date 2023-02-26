@@ -2,14 +2,13 @@ import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { Typography, FormControlLabel, Checkbox } from '@mui/material';
 import FormInput from '../../components/FormInput';
 import { notify } from '../../utils/tools';
 import checkError from '../../utils/errorChecker';
 import { motion } from 'framer-motion';
 import { pageAnimation } from '../../utils/animations/animations';
 import { Toaster } from 'react-hot-toast';
-import LinearProgress from '@mui/material/LinearProgress';
+
 import axios from 'axios';
 
 const loginStyles = {
@@ -152,7 +151,7 @@ const SignUp = () => {
     h-[100vh] w-screen 
     '
     >
-      {loading && <LinearProgress />}
+      {/* {loading && <LinearProgress />} */}
       <div className='h-[95vh] w-full flex flex-col items-center justify-center'>
         <p
           className='mb-4
@@ -264,34 +263,34 @@ const SignUp = () => {
             )}
           </div>
 
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={teacher}
-                disabled={loading}
-                onChange={(e) => {
-                  setTeacher(e.target.checked);
-                  if (e.target.checked) {
-                    setUserData({
-                      ...userData,
-                      batch: 'teacher',
-                      program: 'teacher',
-                      group: 'teacher',
-                    });
-                  }
+          <form className='flex flex-col space-y-3'>
+            <input
+              className={`${loginStyles.inputStyle}`}
+              type='checkbox'
+              disabled={loading}
+              checked={teacher}
+              onChange={(e) => {
+                setTeacher(e.target.checked);
+                if (e.target.checked) {
                   setUserData({
                     ...userData,
-                    batch: e.target.checked ? 'teacher' : '',
-                    program: e.target.checked ? 'teacher' : '',
-                    group: e.target.checked ? 'teacher' : '',
+                    batch: 'teacher',
+                    program: 'teacher',
+                    group: 'teacher',
                   });
-                }}
-                name='teacher'
-                color='primary'
-              />
-            }
-            label='Teacher'
-          />
+                }
+                setUserData({
+                  ...userData,
+                  batch: e.target.checked ? 'teacher' : '',
+                  program: e.target.checked ? 'teacher' : '',
+                  group: e.target.checked ? 'teacher' : '',
+                });
+              }}
+              name='teacher'
+              color='primary'
+            />
+            <label className='text-gray-500'>Are you a teacher?</label>
+          </form>
 
           <div>
             <motion.button

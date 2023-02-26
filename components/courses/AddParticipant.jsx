@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
 import axios from 'axios';
-import { CircularProgress } from '@mui/material';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 const AddParticipant = ({ batch, setIsOpen, id, setData }) => {
@@ -30,7 +30,7 @@ const AddParticipant = ({ batch, setIsOpen, id, setData }) => {
         },
         body: JSON.stringify({ student: input.participant }),
       });
-      console.log('res', res)
+      console.log('res', res);
       if (res.ok) {
         const res = await fetch(`https://vast-pink-moth-toga.cyclic.app/courses/${id}/participants`, {
           method: 'GET',
@@ -44,7 +44,6 @@ const AddParticipant = ({ batch, setIsOpen, id, setData }) => {
         console.log('all participants', data);
         setIsOpen(false);
       }
-
     } catch (err) {
       console.log(err);
     } finally {
@@ -156,7 +155,7 @@ const AddParticipant = ({ batch, setIsOpen, id, setData }) => {
             onClick={() => setIsOpen(false)}
             className='absolute right-7 text-gray-400 pt-1  font-semibold self-center'
           >
-            {loading ? <CircularProgress size={20} /> : <FontAwesomeIcon icon={faClose} />}
+            {loading ? <h1>loading...</h1> : <FontAwesomeIcon icon={faClose} />}
           </button>
           <div className='mb-4'>
             <h1 className='font-semibold text-3xl text-slate-900'>Add Participant</h1>
