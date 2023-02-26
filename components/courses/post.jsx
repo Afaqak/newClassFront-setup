@@ -118,65 +118,60 @@ const CoursesPosts = ({ id, setLoading }) => {
     <div className='min-h-screen bg-white'>
       <div className='px-4'>
         <Link href={`/courses/create-post?courseId=${id}`}>
-          <Button
-            onClick={() => setLoading(true)}
-            sx={{ marginTop: '3vh' }}
-            variant='contained'
-            color='primary'
+          <button
+            className='bg-green-500 hover:bg-green-600 transition duration-300
+            text-white py-1 px-3 rounded-md mt-3'
+            type='button'
           >
             Create Post
-          </Button>
+          </button>
         </Link>
         {user.admin && (
-          <Button
+          <button
+            className='border border-slate-900 hover:bg-slate-900 hover:text-white transition duration-300
+            py-1 px-3 rounded-md mt-3 ml-3
+            '
+            type='button'
             onClick={deleteAll}
-            sx={{
-              marginTop: '3vh',
-              marginLeft: '2vh',
-              backgroundColor: '#F87171',
-              '&:hover': {
-                backgroundColor: '#F87171',
-              },
-            }}
-            variant='contained'
           >
             Delete All
-          </Button>
+          </button>
         )}
       </div>
       {postDetails.length > 0 ? (
         <div className='flex flex-col  px-4  font-sans'>
           {postDetails.map((post) => (
             <div className='my-4 shadow-md rounded-lg overflow-hidden'>
-              <div className='bg-gray-100 p-4'>
+              <div className='bg-slate-200 p-4'>
                 <p className='text-base font-medium text-gray-500 mb-2'>{post.author}</p>
                 <h2 className='text-3xl font-bold text-gray-900 mb-2'>{post.title}</h2>
                 <span className='text-sm text-gray-400 block'>{new Date(post.updatedAt).toDateString()}</span>
               </div>
-              <div className='bg-sky-50 p-4'>
+              <div className='bg-slate-50 p-4'>
                 <div className='flex justify-between items-center'>
                   <div>
                     <Link href={`/courses/checkpost?courseId=${id}&postId=${post.id}`}>
-                      <Button
-                        variant='contained'
-                        color='primary'
+                      <button
+                        className='bg-gray-500 hover:bg-gray-600 transition duration-300 text-white py-1 px-5 rounded-md mt-3'
+                        type='button'
                       >
                         View
-                      </Button>
+                      </button>
                     </Link>
                   </div>
                   <div>
                     {user.admin && (
-                      <Button
-                        variant='contained'
-                        color='primary'
-                        sx={{ color: '#ffffff', backgroundColor: '#F87171', '&:hover': { backgroundColor: '#F87171' } }}
+                      <button
+                        className='border border-slate-500 hover:bg-slate-900 hover:text-white transition duration-300
+                        py-1 px-5 rounded-md mt-3 ml-3
+                        '
+                        type='button'
                         onClick={async () => {
                           console.log(post.id, id);
                         }}
                       >
                         Delete
-                      </Button>
+                      </button>
                     )}
                   </div>
                 </div>

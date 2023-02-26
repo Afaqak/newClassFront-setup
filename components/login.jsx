@@ -14,8 +14,8 @@ import { checkUserData } from '../utils/tools';
 import { LinearProgress } from '@mui/material';
 import { MontserratFont } from '../utils/fonts';
 const loginStyles = {
-  inputStyle: 'focus:outline-none bg-gray-100 border-2 border-gray-300 w-full shadow-md px-2 py-2',
-  labelStyle: 'absolute top-2 left-3 transition-all duration-300 pointer-events-none z-10',
+  inputStyle: 'focus:outline-none bg-gray-100 border-2 border-gray-300 w-full shadow-md px-2 py-2 rounded-lg ',
+  labelStyle: 'absolute top-3 left-3 transition-all duration-50 pointer-events-none z-10 text-gray-500 text-sm ',
 };
 
 const SignIn = () => {
@@ -86,7 +86,7 @@ const SignIn = () => {
               e.preventDefault();
               localSignIn();
             }}
-            className='form-signin space-y-3
+            className='form-signin space-y-4
             w-[90%] sm:w-[60%] md:w-[40%] lg:w-[30%]
             text-gray-600 
       '
@@ -124,17 +124,17 @@ const SignIn = () => {
               type='submit'
               whileHover={{ scale: 0.98 }}
               whileTap={{ translateY: 2, scale: 0.98 }}
-              className={`bg-blue-500 text-white w-full py-3 rounded-md ${loading && 'animate-pulse'}`}
+              className={`bg-green-500 text-white w-full py-2 rounded-lg ${loading && 'animate-pulse'}`}
             >
               Sign In
             </motion.button>
 
             <div className='flex justify-center items-center mt-3'>
-              <p className='text-slate-700 font-semibold text-sm'>
+              <p className='text-slate-700  text-sm'>
                 Don't have an account?{' '}
                 <Link
                   href='/signup'
-                  className='text-blue-500 hover:text-blue-600'
+                  className='text-green-500  text-sm hover:text-green-700'
                 >
                   Sign Up
                 </Link>

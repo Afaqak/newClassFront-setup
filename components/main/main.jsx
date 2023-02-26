@@ -30,7 +30,7 @@ const Main = () => {
          flex flex-col ${MontserratFont.className}
   `}
       >
-        {loading && <LinearProgress />}
+        {loading && <LinearProgress color='success' />}
         <div className='flex-1 px-4 mt-3'>
           <Heading_1 label='Dashboard' />
           <div

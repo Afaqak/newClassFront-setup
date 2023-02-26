@@ -199,12 +199,7 @@ const Post = () => {
             className=' mt-2
           '
           >
-            <Button
-              type='submit'
-              variant='contained'
-            >
-              Create Post
-            </Button>
+            <button className='bg-green-500 hover:bg-green-600 text-white py-1 px-5 rounded'>Create Post</button>
           </div>
         </form>
       </Box>

@@ -23,7 +23,7 @@ const Header = () => {
     <header
       className={`header flex justify-between 
         px-4 py-2 bg-white
-        border-b-2 border-blue-500 
+        border-b-2 border-green-500
         rounded-sm text-white p-2 shadow-md items-center
         w-full`}
       // ${darkMode ? 'bg-slate-900' : 'bg-white'}

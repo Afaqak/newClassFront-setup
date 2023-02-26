@@ -61,9 +61,7 @@
         .btn-2{
             
         }
-        .form-signin input:focus ~ label{
-            @apply -top-3 left-3 bg-blue-500 text-white px-1
-        }
+     
         .icon-announcement{
             clip-path: polygon(0 29%, 0% 100%, 64% 63%);
         }
