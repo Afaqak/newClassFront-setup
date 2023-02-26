@@ -7,8 +7,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
 import axios from 'axios';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
-
+import Image from 'next/image';
 const CheckPost = () => {
   const [postDetails, setPostDetails] = useState({});
   const { token } = useSelector(selectCurrentUser) || {
@@ -38,7 +39,7 @@ const CheckPost = () => {
     handleReq();
   }, []);
   return (
-    <div className={`p-4 ${MontserratFont.className}`}>
+    <div className={`p-4 ${MontserratFont.className} tracking-wider`}>
       <button
         onClick={() => router.back()}
         className='flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full mb-2'
@@ -48,35 +49,62 @@ const CheckPost = () => {
       <Heading_1 label='Check Post' />
       <p className='text-sm text-gray-600'>displaying post details</p>
       {postDetails && (
-        <div class='flex flex-col items-center justify-center mt-10 space-y-4'>
-          <h1 class='text-2xl font-bold text-center text-gray-800'>{postDetails.author}</h1>
-          <div class='flex flex-row items-center space-x-4'>
-            <p class='text-base font-normal text-gray-600'>text:</p>
-            <p class='text-base font-normal text-gray-500'>{postDetails.text}</p>
+        <div
+          className='grid grid-cols-1 gap-4 mt-4
+          
+       '
+        >
+          <div
+            onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}
+            className='bg-gray-100 p-4  shadow-lg hover:bg-gray-200 transition duration-300 ease-in-out cursor-pointer'
+          >
+            <div className='flex items-center justify-between mb-4'>
+              <div className='text-lg font-medium text-purple-500'>{postDetails?.author}</div>
+            </div>
+            <div className='grid grid-cols-2 gap-4 text-sm mb-4'>
+              <div>
+                <div className='text-gray-400'>title:</div>
+                <div className='font-medium'>{postDetails?.title}</div>
+              </div>
+              <div>
+                <div>
+                  <div className='text-gray-400'>description:</div>
+                  <div className='font-medium'>{postDetails?.text}</div>
+                </div>
+              </div>
+            </div>
+            <div className='grid grid-cols-2 gap-4 text-sm mb-4'>
+              <div>
+                <div className='text-gray-400'>created at:</div>
+                <div className='font-medium'>{postDetails?.createdAt}</div>
+              </div>
+              <div>
+                <div className='text-gray-400'>updated at:</div>
+                <div className='font-medium'>{postDetails?.updatedAt}</div>
+              </div>
+            </div>
+            {postDetails?.files?.map((file) => (
+              <div
+                key={file?.secure_url}
+                className='grid grid-cols-2 gap-4 text-sm mb-4'
+              >
+                <div>
+                  <div className='text-gray-400'>file name:</div>
+                  <div>{file?.original_filename}</div>
+                </div>
+                <div>
+                  <div className='text-gray-400'>file url:</div>
+                  <Link href={file?.secure_url}>
+                    <Image
+                      src='/svgs/icons8-external-link.svg'
+                      width={30}
+                      height={20}
+                    />
+                  </Link>
+                </div>
+              </div>
+            ))}
           </div>
-          <div class='flex flex-row items-center space-x-4'>
-            <p class='text-base font-normal text-gray-600'>Created at:</p>
-            <p class='text-base font-normal text-gray-500'>{postDetails.createdAt}</p>
-          </div>
-          <div class='flex flex-row items-center space-x-4'>
-            <p class='text-base font-normal text-gray-600'>Updated at:</p>
-            <p class='text-base font-normal text-gray-500'>{postDetails.updatedAt}</p>
-          </div>
-          <div class='mt-4 space-y-2'>
-            <h2 class='text-lg font-medium text-gray-700'>Attached files:</h2>
-          </div>
-          <div class='flex flex-col'>
-            {postDetails.files &&
-              postDetails.files.map((file, i) => (
-                <Link
-                  href={file.secure_url}
-                  class='text-base font-normal block text-gray-500 cursor-pointer'
-                >
-                  {i + 1} {file.original_filename}
-                </Link>
-              ))}
-          </div>
-          <button class='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600'>Modify Post</button>
         </div>
       )}
     </div>

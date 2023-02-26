@@ -15,7 +15,7 @@ import { checkUserData } from '../utils/tools';
 import { MontserratFont } from '../utils/fonts';
 const loginStyles = {
   inputStyle: 'focus:outline-none bg-gray-100 border-2 border-gray-300 w-full shadow-md px-2 py-2 rounded-lg ',
-  labelStyle: 'absolute top-3 left-3 transition-all duration-50 pointer-events-none z-10 text-gray-500 text-sm ',
+  labelStyle: 'absolute top-3 left-3 pointer-events-none z-10 text-gray-500 text-sm ',
 };
 
 const SignIn = () => {

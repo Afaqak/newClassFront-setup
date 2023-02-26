@@ -13,7 +13,7 @@ import axios from 'axios';
 
 const loginStyles = {
   inputStyle: 'focus:outline-none border-2 border-gray-300 w-full shadow-md px-2 py-2',
-  labelStyle: 'absolute top-2 left-3 transition-all duration-300 pointer-events-none z-10',
+  labelStyle: 'absolute top-2 left-3 pointer-events-none z-10',
 };
 
 const SignUp = () => {
@@ -53,6 +53,7 @@ const SignUp = () => {
   };
 
   const submitForm = async () => {
+    console.log(userData);
     const error = checkError(userData, 'signup');
     console.log(error);
     if (Object.keys(error).length === 0) {
@@ -195,7 +196,7 @@ const SignUp = () => {
               />
             ) : (
               <select
-                className={`shadow appearance-none border border-blue-500 rounded block py-2 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
+                className={`shadow appearance-none border border-purple-500 rounded block py-2 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
                 onChange={handleYearChange}
               >
                 <option value={null}>Select Batch</option>
@@ -263,9 +264,9 @@ const SignUp = () => {
             )}
           </div>
 
-          <form className='flex flex-col space-y-3'>
+          <form className='flex flex-row items-center space-x-2'>
             <input
-              className={`${loginStyles.inputStyle}`}
+              className='w-4 h-4 '
               type='checkbox'
               disabled={loading}
               checked={teacher}
@@ -298,7 +299,7 @@ const SignUp = () => {
               disabled={loading}
               whileHover={{ scale: 0.98 }}
               whileTap={{ translateY: 2, scale: 0.98 }}
-              className={`bg-blue-500 text-white w-full py-3 rounded-md ${loading && 'animate-pulse'}`}
+              className={`bg-purple-500 text-white w-full py-3 rounded-md ${loading && 'animate-pulse'}`}
             >
               {loading ? 'Loading...' : 'Sign Up'}
             </motion.button>
@@ -307,7 +308,7 @@ const SignUp = () => {
                 Have an account?{' '}
                 <Link
                   href='/'
-                  className='text-blue-500'
+                  className='text-purple-500 font-semibold text-sm'
                 >
                   Sign in
                 </Link>

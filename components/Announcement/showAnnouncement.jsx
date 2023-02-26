@@ -3,6 +3,7 @@ import formatDate from '../../utils/tools';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { notify } from '../../utils/tools';
+import Image from 'next/image';
 import Form from './Form';
 import { Toaster } from 'react-hot-toast';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
@@ -94,7 +95,11 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode, courseId, 
                 className='text-gray-400 hover:text-purple-500 focus:outline-none mr-2'
                 onClick={() => handleDelete(ann._id)}
               >
-                <FontAwesomeIcon icon={faTrash} />
+                <Image
+                  src='/svgs/icons8-trash.svg'
+                  width={20}
+                  height={20}
+                />
               </button>
               <button
                 className='text-gray-400 hover:text-green-500 focus:outline-none'
