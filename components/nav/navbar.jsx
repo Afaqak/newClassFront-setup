@@ -203,7 +203,7 @@ const NavPhone = ({ toggle }) => {
             >
               Announcements
             </motion.li>
-            {user.admin && (
+            {user?.admin && (
               <Link href='/accounts'>
                 <motion.li
                   initial={{ y: -20, opacity: 0 }}

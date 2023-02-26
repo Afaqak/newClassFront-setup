@@ -107,7 +107,7 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode, courseId, 
           <p className='text-gray-600 text-xs font-medium mb-1'>{ann?.author}</p>
           <h1 className='text-lg font-semibold mb-2'>{ann?.title}</h1>
           <p className='text-gray-600 mb-2'>{ann?.body}</p>
-          <p className='text-gray-400 text-xs font-semibold text-right'>{formatDate(ann?.createdAt)}</p>
+          <p className='text-purple-500 text-xs font-semibold text-right'>{formatDate(ann?.createdAt)}</p>
         </div>
       ))}
       <Toaster />
