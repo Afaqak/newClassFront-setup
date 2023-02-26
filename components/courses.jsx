@@ -10,92 +10,160 @@ const CoursesTable = ({ courses, deleteCourse, toggleUpdateCourse, loading, noAc
   const user = useSelector(selectCurrentUser);
   const router = useRouter();
   return (
-    <table className='w-full mt-4'>
-      <thead className='border-b-2 bg-slate-900 text-white'>
-        <tr>
-          {tableHead.map((item) => (
-            <th
-              key={item}
-              className={`w-20 p-3 text-sm font-medium uppercase text-center tracking-wide ${item === 'Action' && !user?.user.admin && 'hidden'} ${item === 'Action' && noAction && 'hidden'}`}
-            >
-              {item}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody className='divide-y divide-gray-200 text-center'>
-        {courses?.map((item) => (
-          <tr
-            key={item?._id}
-            className='hover:bg-gray-100'
-          >
-            <td
-              onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}
-              className='p-3 whitespace-nowrap cursor-pointer hover:underline'
-            >
-              {item?.name}
-            </td>
-            <td
-              onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}
-              className='p-3 text-gray-700 whitespace-nowrap cursor-pointer hover:underline'
-            >
-              {item?.semester}
-            </td>
-            <td
-              onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}
-              className='p-3 text-gray-700 whitespace-nowrap cursor-pointer hover:underline'
-            >
-              {item?.group}
-            </td>
-            <td
-              onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}
-              className='p-4 text-gray-700 whitespace-nowrap cursor-pointer hover:underline'
-            >
-              {item?.teacher}
-            </td>
-            <td className='p-3 text-gray-700 whitespace-nowrap'>{item?.credit}</td>
-            <td
-              onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}
-              className='p-3 text-gray-700 whitespace-nowrap cursor-pointer hover:underline'
-            >
-              {item?.posts?.length || 0}
-            </td>
-            <td
-              onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}
-              className='p-3 text-gray-700 whitespace-nowrap cursor-pointer hover:underline'
-            >
-              {item?.participants?.length || 0}
-            </td>
-            {!noAction && user?.user.admin && (
-              <td className={`p-3 space-x-2 ${loading ? 'animate-pulse' : ''}`}>
-                <motion.button
-                  whileTap={{ opacity: 0.5 }}
-                  whileHover={{ translateY: -2 }}
-                  onClick={() => {
-                    deleteCourse(item?._id);
-                  }}
-                  disabled={loading}
-                  type='submit'
-                  className='bg-slate-900 text-white py-1 px-4 rounded-lg cursor-pointer mb-2'
-                >
-                  Delete
-                </motion.button>
-                <motion.button
-                  whileTap={{ opacity: 0.5 }}
-                  whileHover={{ translateY: -2 }}
-                  onClick={() => toggleUpdateCourse(item?._id)}
-                  type='submit'
-                  className='border-2 border-slate-900 py-1 px-3
-                  rounded-lg cursor-pointer '
-                >
-                  Update
-                </motion.button>
-              </td>
-            )}
+    <>
+      <table
+        className='w-full mt-4 
+      border-collapse table-auto hidden md:table
+      '
+      >
+        <thead className='border-b-2 bg-slate-900 text-white'>
+          <tr>
+            {tableHead.map((item) => (
+              <th
+                key={item}
+                className={`w-20 p-3 text-sm font-medium uppercase text-center tracking-wide ${item === 'Action' && !user?.user.admin && 'hidden'} ${item === 'Action' && noAction && 'hidden'}`}
+              >
+                {item}
+              </th>
+            ))}
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody className='divide-y divide-gray-200 text-center'>
+          {courses?.map((item) => (
+            <tr
+              key={item?._id}
+              className='hover:bg-gray-100'
+            >
+              <td
+                onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}
+                className='p-3 whitespace-nowrap cursor-pointer hover:underline'
+              >
+                {item?.name}
+              </td>
+              <td
+                onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}
+                className='p-3 text-gray-700 whitespace-nowrap cursor-pointer hover:underline'
+              >
+                {item?.semester}
+              </td>
+              <td
+                onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}
+                className='p-3 text-gray-700 whitespace-nowrap cursor-pointer hover:underline'
+              >
+                {item?.group}
+              </td>
+              <td
+                onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}
+                className='p-4 text-gray-700 whitespace-nowrap cursor-pointer hover:underline'
+              >
+                {item?.teacher}
+              </td>
+              <td className='p-3 text-gray-700 whitespace-nowrap'>{item?.credit}</td>
+              <td
+                onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}
+                className='p-3 text-gray-700 whitespace-nowrap cursor-pointer hover:underline'
+              >
+                {item?.posts?.length || 0}
+              </td>
+              <td
+                onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}
+                className='p-3 text-gray-700 whitespace-nowrap cursor-pointer hover:underline'
+              >
+                {item?.participants?.length || 0}
+              </td>
+              {!noAction && user?.user.admin && (
+                <td className={`p-3 space-x-2 ${loading ? 'animate-pulse' : ''}`}>
+                  <motion.button
+                    whileTap={{ opacity: 0.5 }}
+                    whileHover={{ translateY: -2 }}
+                    onClick={() => {
+                      deleteCourse(item?._id);
+                    }}
+                    disabled={loading}
+                    type='submit'
+                    className='bg-slate-900 text-white py-1 px-4 rounded-lg cursor-pointer mb-2'
+                  >
+                    Delete
+                  </motion.button>
+                  <motion.button
+                    whileTap={{ opacity: 0.5 }}
+                    whileHover={{ translateY: -2 }}
+                    onClick={() => toggleUpdateCourse(item?._id)}
+                    type='submit'
+                    className='border-2 border-slate-900 py-1 px-3
+                  rounded-lg cursor-pointer '
+                  >
+                    Update
+                  </motion.button>
+                </td>
+              )}
+            </tr>
+          ))}
+
+          {/* small screen */}
+        </tbody>
+      </table>
+      {courses?.map((item) => (
+        <div
+          className='grid grid-cols-1 gap-4 md:hidden 
+          bg-gray-200
+        '
+        >
+          <div
+            onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}
+            className='bg-gray-100 p-4 rounded-lg shadow-md'
+          >
+            <div className='flex items-center justify-between mb-4'>
+              <div className='text-lg font-medium'>{item?.name}</div>
+              <div className='text-sm text-gray-400'>S{item?.semester}</div>
+            </div>
+            <div className='grid grid-cols-2 gap-4 text-sm mb-4'>
+              <div>
+                <div className='text-gray-400'>Teacher:</div>
+                <div className='font-medium'>{item?.teacher}</div>
+              </div>
+              <div>
+                <div className='text-gray-400'>Credit:</div>
+                <div className='font-medium'>{item?.credit}</div>
+              </div>
+            </div>
+            <div className='grid grid-cols-2 gap-4 text-sm mb-4'>
+              <div>
+                <div className='text-gray-400'>Posts:</div>
+                <div className='font-medium'>{item?.posts?.length || 0}</div>
+              </div>
+              <div>
+                <div className='text-gray-400'>Participants:</div>
+                <div className='font-medium'>{item?.participants?.length || 0}</div>
+              </div>
+            </div>
+            <div className='flex items-center justify-between'>
+              <motion.button
+                whileTap={{ opacity: 0.5 }}
+                whileHover={{ translateY: -2 }}
+                onClick={() => deleteCourse(item?._id)}
+                disabled={loading}
+                type='submit'
+                className='bg-slate-900 text-white py-1 px-4 rounded-lg cursor-pointer focus:outline-none
+                  focus:ring-2 focus:ring-gray-400
+                focus:ring-opacity-50 transition-colors duration-300'
+              >
+                Delete
+              </motion.button>
+              <motion.button
+                whileTap={{ opacity: 0.5 }}
+                whileHover={{ translateY: -2 }}
+                onClick={() => toggleUpdateCourse(item?._id)}
+                type='submit'
+                className='px-4 py-1 bg-gray-100 text-gray-800 rounded-lg shadow-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 transition-colors duration-300'
+              >
+                Update
+              </motion.button>
+            </div>
+          </div>
+        </div>
+      ))}
+    </>
   );
 };
 

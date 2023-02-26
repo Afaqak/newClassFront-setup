@@ -51,7 +51,7 @@ const Main = () => {
               color='success'
               colorBg='bg-blue-600'
             />
-            <div className='w-1/2 md:w-full bg-gray-200 rounded-lg overflow-y-scroll h-52 shadow-md border'>
+            <div className='w-full bg-gray-200 rounded-lg overflow-y-scroll h-52 shadow-md border'>
               <GroupAnnouncement />
             </div>
           </div>

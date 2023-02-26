@@ -181,16 +181,15 @@ const Courses = () => {
             />
           </div>
         )}
-        <div className='overflow-auto rounded-lg shadow hidden md:block'>
-          <CoursesTable
-            courses={courses}
-            deleteCourse={deleteCourse}
-            toggleUpdateCourse={toggleUpdateCourse}
-            addCourse={addCourse}
-            loading={loading}
-            noAction={false}
-          />
-        </div>
+
+        <CoursesTable
+          courses={courses}
+          deleteCourse={deleteCourse}
+          toggleUpdateCourse={toggleUpdateCourse}
+          addCourse={addCourse}
+          loading={loading}
+          noAction={false}
+        />
       </div>
       <Toaster />
     </motion.div>
