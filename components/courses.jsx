@@ -31,46 +31,17 @@ const CoursesTable = ({ courses, deleteCourse, toggleUpdateCourse, loading, noAc
         <tbody className='divide-y divide-gray-200 text-center'>
           {courses?.map((item) => (
             <tr
+              onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}
               key={item?._id}
               className='hover:bg-gray-100'
             >
-              <td
-                onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}
-                className='p-3 whitespace-nowrap cursor-pointer hover:underline'
-              >
-                {item?.name}
-              </td>
-              <td
-                onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}
-                className='p-3 text-gray-700 whitespace-nowrap cursor-pointer hover:underline'
-              >
-                {item?.semester}
-              </td>
-              <td
-                onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}
-                className='p-3 text-gray-700 whitespace-nowrap cursor-pointer hover:underline'
-              >
-                {item?.group}
-              </td>
-              <td
-                onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}
-                className='p-4 text-gray-700 whitespace-nowrap cursor-pointer hover:underline'
-              >
-                {item?.teacher}
-              </td>
+              <td className='p-3 whitespace-nowrap cursor-pointer hover:underline'>{item?.name}</td>
+              <td className='p-3 text-gray-700 whitespace-nowrap cursor-pointer hover:underline'>{item?.semester}</td>
+              <td className='p-3 text-gray-700 whitespace-nowrap cursor-pointer hover:underline'>{item?.group}</td>
+              <td className='p-4 text-gray-700 whitespace-nowrap cursor-pointer hover:underline'>{item?.teacher}</td>
               <td className='p-3 text-gray-700 whitespace-nowrap'>{item?.credit}</td>
-              <td
-                onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}
-                className='p-3 text-gray-700 whitespace-nowrap cursor-pointer hover:underline'
-              >
-                {item?.posts?.length || 0}
-              </td>
-              <td
-                onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}
-                className='p-3 text-gray-700 whitespace-nowrap cursor-pointer hover:underline'
-              >
-                {item?.participants?.length || 0}
-              </td>
+              <td className='p-3 text-gray-700 whitespace-nowrap cursor-pointer hover:underline'>{item?.posts?.length || 0}</td>
+              <td className='p-3 text-gray-700 whitespace-nowrap cursor-pointer hover:underline'>{item?.participants?.length || 0}</td>
               {!noAction && user?.user.admin && (
                 <td className={`p-3 space-x-2 ${loading ? 'animate-pulse' : ''}`}>
                   <motion.button
@@ -106,16 +77,21 @@ const CoursesTable = ({ courses, deleteCourse, toggleUpdateCourse, loading, noAc
       {courses?.map((item) => (
         <div
           className='grid grid-cols-1 gap-4 md:hidden 
-          bg-gray-200
+           
         '
         >
           <div
             onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}
-            className='bg-gray-100 p-4 rounded-lg shadow-md'
+            className='bg-gray-100 p-4  shadow-lg hover:bg-gray-200 transition duration-300 ease-in-out cursor-pointer'
           >
             <div className='flex items-center justify-between mb-4'>
               <div className='text-lg font-medium'>{item?.name}</div>
-              <div className='text-sm text-gray-400'>S{item?.semester}</div>
+              <div
+                className='text-sm text-green-500 font-medium
+              '
+              >
+                S{item?.semester}
+              </div>
             </div>
             <div className='grid grid-cols-2 gap-4 text-sm mb-4'>
               <div>
@@ -137,29 +113,31 @@ const CoursesTable = ({ courses, deleteCourse, toggleUpdateCourse, loading, noAc
                 <div className='font-medium'>{item?.participants?.length || 0}</div>
               </div>
             </div>
-            <div className='flex items-center justify-between'>
-              <motion.button
-                whileTap={{ opacity: 0.5 }}
-                whileHover={{ translateY: -2 }}
-                onClick={() => deleteCourse(item?._id)}
-                disabled={loading}
-                type='submit'
-                className='bg-slate-900 text-white py-1 px-4 rounded-lg cursor-pointer focus:outline-none
+            {!noAction && user?.user.admin && (
+              <div className='flex items-center justify-between'>
+                <motion.button
+                  whileTap={{ opacity: 0.5 }}
+                  whileHover={{ translateY: -2 }}
+                  onClick={() => deleteCourse(item?._id)}
+                  disabled={loading}
+                  type='submit'
+                  className='bg-slate-900 text-white py-1 px-4 rounded-lg cursor-pointer focus:outline-none
                   focus:ring-2 focus:ring-gray-400
                 focus:ring-opacity-50 transition-colors duration-300'
-              >
-                Delete
-              </motion.button>
-              <motion.button
-                whileTap={{ opacity: 0.5 }}
-                whileHover={{ translateY: -2 }}
-                onClick={() => toggleUpdateCourse(item?._id)}
-                type='submit'
-                className='px-4 py-1 bg-gray-100 text-gray-800 rounded-lg shadow-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 transition-colors duration-300'
-              >
-                Update
-              </motion.button>
-            </div>
+                >
+                  Delete
+                </motion.button>
+                <motion.button
+                  whileTap={{ opacity: 0.5 }}
+                  whileHover={{ translateY: -2 }}
+                  onClick={() => toggleUpdateCourse(item?._id)}
+                  type='submit'
+                  className='px-4 py-1 bg-gray-100 text-gray-800 rounded-lg shadow-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 transition-colors duration-300'
+                >
+                  Update
+                </motion.button>
+              </div>
+            )}
           </div>
         </div>
       ))}

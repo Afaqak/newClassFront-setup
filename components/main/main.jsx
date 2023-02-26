@@ -46,7 +46,11 @@ const Main = () => {
               value={new Date().toLocaleDateString()}
             />
           </div>
-          <div className='insights mt-2 flex flex-col gap-y-3 md:flex-row justify-between gap-x-5 md:gap-x-2 overflow-hidden'>
+          <div
+            className='insights mt-2 flex gap-y-3 md:flex-row justify-between gap-x-5 md:gap-x-2 overflow-hidden flex-col-reverse
+          sm:flex-col
+          '
+          >
             <CoursesCard
               color='success'
               colorBg='bg-blue-600'
@@ -56,7 +60,7 @@ const Main = () => {
             </div>
           </div>
           <div
-            className='mt-3 
+            className='mt-3 py-4
     '
           >
             <Heading_1 label='Courses' />

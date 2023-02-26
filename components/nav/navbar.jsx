@@ -12,6 +12,7 @@ import { setToggleUserInfo } from '../../src/store/user/user.actions';
 import { faSignOutAlt, faUserGroup, faBookOpen, faClipboard, faBroadcastTower } from '@fortawesome/free-solid-svg-icons';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
+import Link from 'next/link';
 
 const Navbar = () => {
   const router = useRouter();
@@ -132,6 +133,11 @@ const Navbar = () => {
   );
 };
 const NavPhone = ({ toggle }) => {
+  const dispatch = useDispatch();
+  const toggleAnnouncement = useSelector(selectToggleAnnouncement);
+
+  const { user, token } = useSelector(selectCurrentUser) || {};
+
   return (
     <AnimatePresence initial={false}>
       <motion.nav
@@ -162,25 +168,32 @@ const NavPhone = ({ toggle }) => {
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             className='flex flex-col space-y-4 mt-5 p-4'
           >
+            <Link href='/'>
+              <motion.li
+                initial={{ y: -20, opacity: 0 }}
+                animate={{ x: toggle ? 0 : -20, opacity: toggle ? 1 : 0 }}
+                exit={{ x: -20, opacity: 0 }}
+                transition={{ delay: 0.2, duration: 0.5, ease: 'easeInOut' }}
+                className='text-gray-800 font-bold text-2xl tracking-wider'
+              >
+                Dashboard
+              </motion.li>
+            </Link>
+            <Link href='/courses'>
+              <motion.li
+                initial={{ y: -20, opacity: 0 }}
+                animate={{ y: toggle ? 0 : -20, opacity: toggle ? 1 : 0 }}
+                exit={{ y: -20, opacity: 0 }}
+                transition={{ delay: 0.4, duration: 0.5, ease: 'easeInOut' }}
+                className='text-gray-800 font-bold text-2xl tracking-wider'
+              >
+                Courses
+              </motion.li>
+            </Link>
             <motion.li
-              initial={{ y: -20, opacity: 0 }}
-              animate={{ x: toggle ? 0 : -20, opacity: toggle ? 1 : 0 }}
-              exit={{ x: -20, opacity: 0 }}
-              transition={{ delay: 0.2, duration: 0.5, ease: 'easeInOut' }}
-              className='text-gray-800 font-bold text-2xl tracking-wider'
-            >
-              Dashboard
-            </motion.li>
-            <motion.li
-              initial={{ y: -20, opacity: 0 }}
-              animate={{ y: toggle ? 0 : -20, opacity: toggle ? 1 : 0 }}
-              exit={{ y: -20, opacity: 0 }}
-              transition={{ delay: 0.4, duration: 0.5, ease: 'easeInOut' }}
-              className='text-gray-800 font-bold text-2xl tracking-wider'
-            >
-              Courses
-            </motion.li>
-            <motion.li
+              onClick={() => {
+                dispatch(setToggleAnnouncement(!toggleAnnouncement));
+              }}
               initial={{ y: -20, opacity: 0 }}
               animate={{ y: toggle ? 0 : -20, opacity: toggle ? 1 : 0 }}
               exit={{ y: -20, opacity: 0 }}
@@ -189,15 +202,19 @@ const NavPhone = ({ toggle }) => {
             >
               Announcements
             </motion.li>
-            <motion.li
-              initial={{ y: -20, opacity: 0 }}
-              animate={{ y: toggle ? 0 : -20, opacity: toggle ? 1 : 0 }}
-              exit={{ y: -20, opacity: 0 }}
-              transition={{ delay: 0.8, duration: 0.5, ease: 'easeInOut' }}
-              className='text-gray-800 font-bold text-2xl tracking-wider'
-            >
-              Accounts
-            </motion.li>
+            {user.admin && (
+              <Link href='/accounts'>
+                <motion.li
+                  initial={{ y: -20, opacity: 0 }}
+                  animate={{ y: toggle ? 0 : -20, opacity: toggle ? 1 : 0 }}
+                  exit={{ y: -20, opacity: 0 }}
+                  transition={{ delay: 0.8, duration: 0.5, ease: 'easeInOut' }}
+                  className='text-gray-800 font-bold text-2xl tracking-wider'
+                >
+                  Accounts
+                </motion.li>
+              </Link>
+            )}
           </motion.ul>
         </div>
       </motion.nav>
