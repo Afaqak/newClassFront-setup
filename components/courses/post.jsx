@@ -181,7 +181,7 @@ const CoursesPosts = ({ id, setLoading }) => {
         </div>
       ) : (
         <div className='flex flex-col items-center justify-center'>
-          <h1 className='text-2xl font-bold text-gray-600'>No Posts Found</h1>
+          <h1 className='text-xl text-gray-500 font-medium'>No Posts</h1>
         </div>
       )}
     </div>
