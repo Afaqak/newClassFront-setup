@@ -141,12 +141,12 @@ const CoursesPosts = ({ id, setLoading }) => {
         <div className='flex flex-col  px-4  font-sans'>
           {postDetails.map((post) => (
             <div className='my-4 shadow-md rounded-lg overflow-hidden'>
-              <div className='bg-slate-200 p-4'>
+              <div className='bg-gray-100 p-4'>
                 <p className='text-base font-medium text-gray-500 mb-2'>{post.author}</p>
                 <h2 className='text-3xl font-bold text-gray-900 mb-2'>{post.title}</h2>
-                <span className='text-sm text-gray-400 block'>{new Date(post.updatedAt).toDateString()}</span>
+                <span className='text-sm text-purple-500 block'>{new Date(post.updatedAt).toDateString()}</span>
               </div>
-              <div className='bg-slate-50 p-4'>
+              <div className='bg-gray-100 p-4'>
                 <div className='flex justify-between items-center'>
                   <div>
                     <Link href={`/courses/checkpost?courseId=${id}&postId=${post.id}`}>

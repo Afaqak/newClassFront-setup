@@ -91,13 +91,13 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode, courseId, 
           {admin && (
             <div className='flex justify-end mb-2'>
               <button
-                className='text-gray-400 hover:text-red-500 focus:outline-none mr-2'
+                className='text-gray-400 hover:text-purple-500 focus:outline-none mr-2'
                 onClick={() => handleDelete(ann._id)}
               >
                 <FontAwesomeIcon icon={faTrash} />
               </button>
               <button
-                className='text-gray-400 hover:text-blue-500 focus:outline-none'
+                className='text-gray-400 hover:text-green-500 focus:outline-none'
                 onClick={() => handleUpdate(ann._id)}
               >
                 <FontAwesomeIcon icon={faEdit} />

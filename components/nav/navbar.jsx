@@ -54,21 +54,21 @@ const Navbar = () => {
       >
         <div
           className='hidden px-2 py-2 md:flex mb-2 space-x-2
-            border-b 
+            border-b justify-between
           '
         >
           <div>
-            <h2 className='text-[0.67rem] text-slate-600'>{user?.admin ? <span className='text-[#404145] font-bold'>Admin</span> : <span className='text-gray-600 font-bold'>User</span>}</h2>
+            <h2 className='text-[0.67rem] '>{user?.admin ? <span className='text-purple-500 font-bold'>Admin</span> : <span className='text-gray-600 font-bold'>User</span>}</h2>
             <h2 className='text-[1rem] tracking-wider text-slate-600'>{user?.username}</h2>
           </div>
           <div
             className='
-            rounded-full w-10 h-10 bg-gray-200 cursor-pointer flex items-center justify-center
+            rounded-full w-10 h-10 bg-gray-200 cursor-pointer flex items-center 
           '
           >
             <Image
               onClick={() => dispatch(setToggleUserInfo(!toggleUserInfo))}
-              src={'/user8.png'}
+              src={'/svgs/icons8-account-48.png'}
               width={50}
               height={50}
               className='
@@ -158,11 +158,12 @@ const NavPhone = ({ toggle }) => {
             ease: 'easeInOut',
           },
         }}
-        className='sm:hidden clip_nav fixed right-0 z-[1000] top-0 font-serif bg-green-100'
+        className='sm:hidden clip_nav fixed right-0 z-[1000] top-0 font-serif bg-gradient-to-t from-black to-gray-900
+        '
       >
         <div className='text-gray-600 h-screen p-2 w-[18rem] rounded-md shadow-md mt-4  m-2 sm:m-0 transition-all duration-300 ease-in-out'>
           <div className='flex flex-col space-y-1 mt-5 px-4'>
-            <p className='text-gray-400 tracking-wider text-sm border-b border-gray-300 pb-2'>navigation</p>
+            <p className='text-[#999D9E] font-bold font-sans text-sm tracking-widest border-b border-gray-800 pb-4'>Navigation</p>
           </div>
           <motion.ul
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
@@ -174,7 +175,7 @@ const NavPhone = ({ toggle }) => {
                 animate={{ x: toggle ? 0 : -20, opacity: toggle ? 1 : 0 }}
                 exit={{ x: -20, opacity: 0 }}
                 transition={{ delay: 0.2, duration: 0.5, ease: 'easeInOut' }}
-                className='text-gray-800 font-bold text-2xl tracking-wider'
+                className='text-[#FFFFFF] font-bold text-2xl tracking-wider'
               >
                 Dashboard
               </motion.li>
@@ -185,7 +186,7 @@ const NavPhone = ({ toggle }) => {
                 animate={{ y: toggle ? 0 : -20, opacity: toggle ? 1 : 0 }}
                 exit={{ y: -20, opacity: 0 }}
                 transition={{ delay: 0.4, duration: 0.5, ease: 'easeInOut' }}
-                className='text-gray-800 font-bold text-2xl tracking-wider'
+                className='text-[#FFFFFF] font-bold text-2xl tracking-wider'
               >
                 Courses
               </motion.li>
@@ -198,7 +199,7 @@ const NavPhone = ({ toggle }) => {
               animate={{ y: toggle ? 0 : -20, opacity: toggle ? 1 : 0 }}
               exit={{ y: -20, opacity: 0 }}
               transition={{ delay: 0.6, duration: 0.5, ease: 'easeInOut' }}
-              className='text-gray-800 font-bold text-2xl tracking-wider'
+              className='text-[#FFFFFF] font-bold text-2xl tracking-wider'
             >
               Announcements
             </motion.li>
@@ -209,7 +210,7 @@ const NavPhone = ({ toggle }) => {
                   animate={{ y: toggle ? 0 : -20, opacity: toggle ? 1 : 0 }}
                   exit={{ y: -20, opacity: 0 }}
                   transition={{ delay: 0.8, duration: 0.5, ease: 'easeInOut' }}
-                  className='text-gray-800 font-bold text-2xl tracking-wider'
+                  className='text-[#FFFFFF] font-bold text-2xl tracking-wider'
                 >
                   Accounts
                 </motion.li>

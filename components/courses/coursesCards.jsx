@@ -6,7 +6,7 @@ const CoursesCard = ({ colorBg }) => {
       className='courses h-52 font-sans w-full
     border border-colorlight'
     >
-      <span className={`bg-slate-900 p-2 text-white`}>students</span>
+      <span className={`bg-green-500 p-2 text-white`}>students</span>
       <div
         className='
     border-b border-colorlight

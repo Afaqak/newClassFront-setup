@@ -11,6 +11,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { selectCurrentUser } from '../../../src/store/user/user.selector';
 
 import { setPost } from '../../../src/store/post/post.action';
+import Image from 'next/image';
 
 const initialValues = {
   title: '',
@@ -142,13 +143,12 @@ const Post = () => {
                 htmlFor='file-input'
                 className='my-label flex items-center mb-2'
               >
-                <span
-                  className='
-                hover:text-cyan-500
-                text-gray-600 dark:text-gray-400 material-symbols-sharp'
-                >
-                  attach_file
-                </span>
+                <Image
+                  className='cursor-pointer'
+                  src='/svgs/icons8-add-file-48.png'
+                  width={20}
+                  height={20}
+                />
                 <span className='ml-2'>Add File</span>
               </label>
               <input

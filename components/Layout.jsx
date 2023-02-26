@@ -25,11 +25,11 @@ const Layout = ({ children }) => {
         >
           <motion.button
             animate={{ rotate: toggle ? 45 : 0 }}
-            className='line-1 h-[0.20rem] w-6 bg-gray-500 '
+            className={`line-3 h-[0.20rem] w-6  ${toggle ? ' bg-slate-900' : 'bg-purple-500'}`}
           ></motion.button>
           <motion.button
             animate={{ rotate: toggle ? -45 : 0, translateY: toggle ? -4 : 0 }}
-            className='line-3 h-[0.20rem] w-6 bg-gray-500'
+            className={`line-3 h-[0.20rem] w-6  ${toggle ? 'bg-purple-500' : 'bg-slate-900'}`}
           ></motion.button>
         </motion.div>
       </div>
