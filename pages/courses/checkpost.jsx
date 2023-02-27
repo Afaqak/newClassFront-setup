@@ -42,6 +42,7 @@ const CheckPost = () => {
     <div className={`p-4 ${MontserratFont.className} tracking-wider`}>
       {toggle && (
         <UpdatePost
+          setPostDetails={setPostDetails}
           setToggle={setToggle}
           postDetails={postDetails}
         />
@@ -123,17 +124,67 @@ const CheckPost = () => {
 export default CheckPost;
 //update post
 
-const UpdatePost = ({ setToggle }) => {
+const UpdatePost = ({ setToggle, postDetails }) => {
+  const [inputs, setInputs] = useState({
+    title: '',
+    text: '',
+  });
+
+  const [files, setFiles] = useState(null);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setInputs((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    //this checks if any
+    const checkInputs = Object.values(inputs).some((input) => input !== '');
+    if (!checkInputs) {
+      return alert('please fill in the form');
+    }
+
+    const formData = new FormData();
+    console.log(checkInputs);
+
+    formData.append('title', inputs.title);
+    formData.append('text', inputs.text);
+    if (files) {
+      for (let i = 0; i < files.length; i++) {
+        formData.append('phile', files[i]);
+      }
+    }
+    try {
+      const response = await axios.patch(`https://vast-pink-moth-toga.cyclic.app/courses/${courseId}/posts/${postId}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const { data } = response;
+      console.log('data', data);
+    } catch (err) {
+      console.log(err?.response);
+      console.log(err?.response?.data);
+    }
+  };
+
   return (
     <div
       className='fixed 
     flex items-center justify-center
     top-0 left-0 w-full h-full backdrop-filter backdrop-blur-sm z-50'
     >
-      <div className={`p-4 w-1/2 ${MontserratFont.className} tracking-wider relative bg-white`}>
+      <form
+        onSubmit={handleSubmit}
+        className={`p-4 w-[90%] md:w-1/2
+        rounded-md ${MontserratFont.className} tracking-wider relative bg-white`}
+      >
         <Image
           onClick={() => setToggle(false)}
-          className='cursor-pointer absolute top-0 right-0'
+          className='cursor-pointer absolute top-3 right-3'
           src='/svgs/icons8-cancel.svg'
           width={30}
           height={30}
@@ -145,11 +196,14 @@ const UpdatePost = ({ setToggle }) => {
         <div className='grid grid-cols-1 gap-4 mt-4'>
           <label className='text-sm text-gray-400'>title</label>
           <input
+            onChange={handleChange}
             type='text'
+            name='title'
             className='create-post__input'
           />
           <label className='text-sm text-gray-400'>description</label>
           <input
+            name='text'
             type='text'
             className='create-post__input'
           />
@@ -173,9 +227,10 @@ const UpdatePost = ({ setToggle }) => {
             style={{ display: 'none' }}
             className='p-2 border border-gray-300 rounded-lg'
           />
+
           <button className='bg-green-500 text-white py-2 px-4 rounded-lg cursor-pointer'>update</button>
         </div>
-      </div>
+      </form>
     </div>
   );
 };
