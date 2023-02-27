@@ -4,7 +4,7 @@ import { selectCurrentUser } from '../../src/store/user/user.selector';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { notify } from '../../utils/tools';
-
+import Image from 'next/image';
 const UserInfo_card = ({ id, setToggle, mode }) => {
   const [loading, setLoading] = useState(false);
   const [userInfo, setUserInfo] = useState({});
@@ -121,14 +121,16 @@ const UserInfo_card = ({ id, setToggle, mode }) => {
           <div
             key={userInfo._id}
             onClick={(e) => e.stopPropagation()}
-            className='bg-white rounded-lg border-2 border-slate-900 shadow-lg p-8 w-full sm:max-w-2xl'
+            className='bg-white rounded-lg border-b-4 border-purple-500 shadow-lg p-8 w-full sm:max-w-2xl'
           >
             <div className='flex justify-between border-b mb-4 pb-1'>
-              <h2 className='text-xl font-bold text-slate-900 '>Account Details</h2>
-              <FontAwesomeIcon
+              <h2 className='text-xl font-bold text-purple-500'>User Info</h2>
+              <Image
+                src='/svgs/icons8-cancel.svg'
+                width={30}
+                className='cursor-pointer'
+                height={20}
                 onClick={handleClose}
-                icon={faClose}
-                className='text-blue-500 cursor-pointer'
               />
             </div>
             <div className='grid grid-cols-2 gap-3 sm:grid-cols-2'>
