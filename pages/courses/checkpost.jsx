@@ -54,12 +54,10 @@ const CheckPost = () => {
           
        '
         >
-          <div
-            onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}
-            className='bg-gray-100 p-4  shadow-lg hover:bg-gray-200 transition duration-300 ease-in-out cursor-pointer'
-          >
+          <div className='bg-gray-100 p-4  shadow-lg  transition duration-300 ease-in-out cursor-pointer'>
             <div className='flex items-center justify-between mb-4'>
               <div className='text-lg font-medium text-purple-500'>{postDetails?.author}</div>
+              <button className='text-sm bg-green-500 text-white py-1 px-3 rounded-lg cursor-pointer'>update</button>
             </div>
             <div className='grid grid-cols-2 gap-4 text-sm mb-4'>
               <div>
@@ -112,13 +110,4 @@ const CheckPost = () => {
 };
 
 export default CheckPost;
-
-// export async function getServerSideProps(context) {
-
-//   return {
-//     props: {
-//       courseId,
-//       postId,
-//     },
-//   };
-// }
+//update post

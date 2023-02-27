@@ -36,12 +36,12 @@ const CoursesTable = ({ courses, deleteCourse, toggleUpdateCourse, loading, noAc
               className='hover:bg-gray-100'
             >
               <td className='p-3 whitespace-nowrap cursor-pointer hover:underline'>{item?.name}</td>
-              <td className='p-3 text-gray-700 whitespace-nowrap cursor-pointer hover:underline'>{item?.semester}</td>
-              <td className='p-3 text-gray-700 whitespace-nowrap cursor-pointer hover:underline'>{item?.group}</td>
-              <td className='p-4 text-gray-700 whitespace-nowrap cursor-pointer hover:underline'>{item?.teacher}</td>
-              <td className='p-3 text-gray-700 whitespace-nowrap'>{item?.credit}</td>
-              <td className='p-3 text-gray-700 whitespace-nowrap cursor-pointer hover:underline'>{item?.posts?.length || 0}</td>
-              <td className='p-3 text-gray-700 whitespace-nowrap cursor-pointer hover:underline'>{item?.participants?.length || 0}</td>
+              <td className='table-row_style'>{item?.semester}</td>
+              <td className='table-row_style'>{item?.group}</td>
+              <td className='table-row_style'>{item?.teacher}</td>
+              <td className='table-row_style'>{item?.credit}</td>
+              <td className='table-row_style'>{item?.posts?.length || 0}</td>
+              <td className='table-row_style'>{item?.participants?.length || 0}</td>
               {!noAction && user?.user.admin && (
                 <td className={`p-3 space-x-2 ${loading ? 'animate-pulse' : ''}`}>
                   <motion.button
@@ -82,7 +82,7 @@ const CoursesTable = ({ courses, deleteCourse, toggleUpdateCourse, loading, noAc
         >
           <div
             onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}
-            className='bg-gray-100 p-4  shadow-lg hover:bg-gray-200 transition duration-300 ease-in-out cursor-pointer'
+            className='bg-gray-100 p-4 border-b-2 border-purple-600  shadow-lg hover:bg-gray-200 transition duration-300 ease-in-out cursor-pointer'
           >
             <div className='flex items-center justify-between mb-4'>
               <div className='text-lg font-medium'>{item?.name}</div>
@@ -121,9 +121,7 @@ const CoursesTable = ({ courses, deleteCourse, toggleUpdateCourse, loading, noAc
                   onClick={() => deleteCourse(item?._id)}
                   disabled={loading}
                   type='submit'
-                  className='bg-slate-900 text-white py-1 px-4 rounded-lg cursor-pointer focus:outline-none
-                  focus:ring-2 focus:ring-gray-400
-                focus:ring-opacity-50 transition-colors duration-300'
+                  className='course-btn_delete'
                 >
                   Delete
                 </motion.button>

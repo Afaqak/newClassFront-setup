@@ -77,5 +77,22 @@
             
             clip-path: circle(40px at 50% );
         }
-
+        .table-row_style{
+            @apply p-3 text-gray-700 whitespace-nowrap cursor-pointer hover:underline
+        }
+        .course-btn_delete{
+            @apply bg-slate-900 text-white py-1 px-4 rounded-lg cursor-pointer focus:outline-none
+            focus:ring-2 focus:ring-gray-400
+          focus:ring-opacity-50 transition-colors duration-300
+        }
+        .header__container{
+            @apply flex justify-between 
+            px-4 py-2 bg-white
+            border-b-2 border-green-500
+            rounded-sm text-white p-2 shadow-md items-center
+            w-full
+        }
+        .create-post__input{
+            @apply w-full px-4 py-2 focus:outline-none border-b-2 border-gray-300 focus:border-slate-500 dark:border-gray-700 dark:focus:border-slate-500 dark:bg-gray-800 dark:text-gray-300 bg-gray-100
+        }
 }

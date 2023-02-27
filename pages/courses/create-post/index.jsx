@@ -124,7 +124,7 @@ const Post = () => {
               type='text'
               name='title'
               onChange={handleChange}
-              class='w-full px-4 py-2 focus:outline-none border-b-2 border-gray-300 focus:border-slate-500 dark:border-gray-700 dark:focus:border-slate-500 dark:bg-gray-800 dark:text-gray-300 bg-gray-100'
+              class='create-post__input'
               placeholder='Enter text here'
             ></input>
           </div>
@@ -133,7 +133,7 @@ const Post = () => {
               type='text'
               name='text'
               onChange={handleChange}
-              class='w-full px-4 py-2 focus:outline-none border-b-2 border-gray-300 focus:border-slate-500 dark:border-gray-700 dark:focus:border-slate-500 dark:bg-gray-800 dark:text-gray-300 bg-gray-100'
+              class='create-post__input'
               placeholder='Enter text here'
             ></input>
           </div>
