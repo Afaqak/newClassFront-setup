@@ -7,10 +7,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { MontserratFont } from '../../../../../utils/fonts';
 import UserInfo_card from '../../../../../components/user accounts/UserInfo_card';
+import LinearProgress from '../../../../../components/LinearProgress';
 const Participant = () => {
   const router = useRouter();
   const user = useSelector(selectCurrentUser);
   const { batchId, programId, groupId } = router.query;
+  const [loading, setLoading] = useState(false);
   const [toggle, setToggle] = useState(false);
   const [id, setId] = useState('');
   console.log(batchId, programId, groupId);
@@ -18,6 +20,7 @@ const Participant = () => {
   useEffect(() => {
     const getParticipants = async () => {
       try {
+        setLoading(true);
         const res = await fetch(`https://vast-pink-moth-toga.cyclic.app/batches/${batchId}/programs/${programId}/groups/${groupId}`, {
           method: 'GET',
           headers: {
@@ -30,6 +33,8 @@ const Participant = () => {
         setParticipants(data);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
     getParticipants();
@@ -41,36 +46,39 @@ const Participant = () => {
   };
 
   return (
-    <div className={`py-2 px-4 ${MontserratFont.className}`}>
-      {toggle && (
-        <UserInfo_card
-          id={id}
-          setToggle={setToggle}
-        />
-      )}
-      <button
-        onClick={() => router.back()}
-        className='flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full my-4'
-      >
-        <FontAwesomeIcon icon={faArrowLeft} />
-      </button>
-      <Heading_1 label={'Participants'} />
-      <p className='text-sm text-gray-500 mb-2 py-2'>All participants in this group</p>
-      <div className='flex flex-col gap-2'>
-        {!participants.length ? (
-          <div className='text-center text-gray-500'>No participants yet</div>
-        ) : (
-          participants.map((p) => (
-            <div
-              onClick={() => setToggleAndId(p._id)}
-              key={p._id}
-              className='p-2 border-2 border-gray-300 
-            hover:bg-gray-200 '
-            >
-              <span className='text-lg cursor-pointer'>{p.username}</span>
-            </div>
-          ))
+    <div>
+      {loading && <LinearProgress />}
+      <div className={`py-2 px-4 ${MontserratFont.className}`}>
+        {toggle && (
+          <UserInfo_card
+            id={id}
+            setToggle={setToggle}
+          />
         )}
+        <button
+          onClick={() => router.back()}
+          className='flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full my-4'
+        >
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>
+        <Heading_1 label={'Participants'} />
+        <p className='text-sm text-gray-500 mb-2 py-2'>All participants in this group</p>
+        <div className='flex flex-col gap-2'>
+          {!participants.length ? (
+            <div className='text-center text-gray-500'>No participants yet</div>
+          ) : (
+            participants.map((p) => (
+              <div
+                onClick={() => setToggleAndId(p._id)}
+                key={p._id}
+                className='p-2 border-2 border-gray-300 
+            hover:bg-gray-200 '
+              >
+                <span className='text-lg cursor-pointer'>{p.username}</span>
+              </div>
+            ))
+          )}
+        </div>
       </div>
     </div>
   );

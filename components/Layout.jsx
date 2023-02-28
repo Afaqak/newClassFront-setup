@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { setToggleAnnouncement } from '../src/store/user/user.actions';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectCurrentUser, selectToggleUserInfo, selectToggleAnnouncement } from '../src/store/user/user.selector';
-import { setCurrentUser } from '../src/store/user/user.actions';
 import { setToggleUserInfo } from '../src/store/user/user.actions';
 import CreateAnnouncement from './Announcement/createAnnouncement';
 import UserInfo_card from './user accounts/UserInfo_card';

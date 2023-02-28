@@ -4,7 +4,7 @@ const LinearProgress = ({ progress }) => {
   return (
     <motion.div className='w-full h-1 flex rounded-full bg-white fixed'>
       <motion.div
-        className='w-24 h-1 bg-purple-500'
+        className='w-28 h-1 bg-purple-500'
         animate={{
           translateX: 1500,
         }}
@@ -15,7 +15,7 @@ const LinearProgress = ({ progress }) => {
         }}
       ></motion.div>
       <motion.div
-        className='w-24 h-1 bg-green-500'
+        className='w-28 h-1 bg-green-500'
         animate={{
           translateX: 1500,
         }}

@@ -7,7 +7,6 @@ import { selectCoursesList } from '../../src/store/courses/courses.reselect';
 import { MontserratFont } from '../../utils/fonts';
 import CoursesTable from '../courses';
 import Heading_1 from '../Heading_1';
-
 import CoursesCard from '../courses/coursesCards';
 import GroupAnnouncement from '../Announcement/GroupAnnouncement';
 const Main = () => {

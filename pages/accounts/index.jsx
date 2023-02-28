@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { MontserratFont } from '../../utils/fonts';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
 import UserInfo_card from '../../components/user accounts/UserInfo_card';
+import LinearProgress from '../../components/LinearProgress';
 
 const Accounts = () => {
   const user = useSelector(selectCurrentUser);
@@ -14,15 +15,19 @@ const Accounts = () => {
   const [data, setData] = useState([]);
   const [toggle, setToggle] = useState(false);
   const [id, setId] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getAccounts = async () => {
       try {
+        setLoading(true);
         const data = await FetchTypeGet('https://vast-pink-moth-toga.cyclic.app/accounts', user.token);
         console.log(data);
         setData(data);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
     getAccounts();
@@ -35,6 +40,7 @@ const Accounts = () => {
 
   return (
     <div className={` min-h-[95vh] ${MontserratFont.className} `}>
+      {loading && <LinearProgress />}
       {toggle && (
         <UserInfo_card
           id={id}

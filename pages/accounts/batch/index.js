@@ -4,7 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import Heading_1 from '../../../components/Heading_1';
-
+import LinearProgress from '../../../components/LinearProgress';
 import { notify } from '../../../utils/tools';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
@@ -84,7 +84,7 @@ const Batches = () => {
   console.log(batches);
   return (
     <div className={`min-h-screen w-full relative bg-white flex flex-col  ${MontserratFont.className}`}>
-      {/* {loading && <LinearProgress />} */}
+      {loading && <LinearProgress />}
       <button
         onClick={() => router.back()}
         className='flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full mx-4 my-4'

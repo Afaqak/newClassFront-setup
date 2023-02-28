@@ -12,8 +12,7 @@ import { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 
 const loginStyles = {
-  inputStyle: 'focus:outline-none border-2 border-gray-300 w-full shadow-md px-2 py-2',
-  labelStyle: 'absolute top-2 left-3 pointer-events-none z-10',
+  inputStyle: 'focus:outline-none border-2 border-gray-300 w-full shadow-md px-2 py-2 bg-gray-50 rounded-lg',
 };
 
 const SignUp = () => {
@@ -173,7 +172,7 @@ const SignUp = () => {
         >
           {inputFields.map((inputField) => (
             <FormInput
-              label={inputField.label}
+              placeholder={inputField.label}
               type={inputField.type || 'text'}
               name={inputField.name}
               loading={loading}
@@ -221,7 +220,7 @@ const SignUp = () => {
             ) : (
               selectedProgram && (
                 <select
-                  className={`shadow appearance-none border border-blue-500 rounded block py-2 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
+                  className={`shadow appearance-none border border-purple-500 rounded block py-2 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
                   onChange={handleProgramChange}
                 >
                   <option value={null}>Select Program</option>
@@ -247,7 +246,7 @@ const SignUp = () => {
             ) : (
               groups.length > 0 && (
                 <select
-                  className={`shadow appearance-none border border-blue-500 rounded block py-2 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
+                  className={`shadow appearance-none border border-purple-500 rounded block py-2 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
                   onChange={handleGroupChange}
                 >
                   <option value={null}>Select Group</option>

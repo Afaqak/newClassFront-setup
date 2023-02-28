@@ -8,9 +8,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { MontserratFont } from '../../../../utils/fonts';
 import withAuth from '../../../../components/withAuth';
+import LinearProgress from '../../../../components/LinearProgress';
 import Link from 'next/link';
 const groups = () => {
   const userData = useSelector(selectCurrentUser);
+  const [loading, setLoading] = useState(false);
   const [groups, setGroups] = useState([]);
   const router = useRouter();
   const { batchId, programId } = router.query;
@@ -38,33 +40,37 @@ const groups = () => {
   }, [batchId, programId]);
 
   return (
-    <div
-      className={`min-h-screen font-sans px-4 py-2
+    <div>
+      {loading && <LinearProgress />}
+
+      <div
+        className={`min-h-screen font-sans px-4 py-2
 w-full relative bg-white ${MontserratFont.className}
 flex flex-col 
 `}
-    >
-      <button
-        onClick={() => router.back()}
-        className='flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full my-4'
       >
-        <FontAwesomeIcon icon={faArrowLeft} />
-      </button>
-      <div className='flex flex-col '>
-        <Heading_1 label='Groups' />
-        <p className='text-sm text-gray-500 mb-2 py-2'>All groups in this program</p>
-      </div>
-      <div className='flex flex-col gap-2'>
-        {groups.map((g) => (
-          <Link
-            href={`/accounts/batch/group/participant?programId=${programId}&batchId=${batchId}&groupId=${g._id}`}
-            key={g.id}
-            className='p-2 border-2 border-gray-300 
+        <button
+          onClick={() => router.back()}
+          className='flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full my-4'
+        >
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>
+        <div className='flex flex-col '>
+          <Heading_1 label='Groups' />
+          <p className='text-sm text-gray-500 mb-2 py-2'>All groups in this program</p>
+        </div>
+        <div className='flex flex-col gap-2'>
+          {groups.map((g) => (
+            <Link
+              href={`/accounts/batch/group/participant?programId=${programId}&batchId=${batchId}&groupId=${g._id}`}
+              key={g.id}
+              className='p-2 border-2 border-gray-300 
           hover:bg-gray-200 '
-          >
-            <span className='text-lg cursor-pointer'>{g.group}</span>
-          </Link>
-        ))}
+            >
+              <span className='text-lg cursor-pointer'>{g.group}</span>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );

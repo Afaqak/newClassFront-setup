@@ -9,10 +9,12 @@ import { selectCurrentUser } from '../../src/store/user/user.selector';
 import axios from 'axios';
 import Link from 'next/link';
 import Image from 'next/image';
+import LinearProgress from '../../components/LinearProgress';
+import withAuth from '../../components/withAuth';
 const CheckPost = () => {
   const [toggle, setToggle] = useState(false);
   const [postDetails, setPostDetails] = useState({});
-  const [startUpdate, setStartUpdate] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { token } = useSelector(selectCurrentUser) || {
     token: null,
   };
@@ -23,6 +25,7 @@ const CheckPost = () => {
   useEffect(() => {
     const handleReq = async () => {
       try {
+        setLoading(true);
         const response = await axios.get(`https://vast-pink-moth-toga.cyclic.app/courses/${courseId}/posts/${postId}`, {
           headers: {
             'Content-Type': 'application/json',
@@ -35,97 +38,104 @@ const CheckPost = () => {
       } catch (err) {
         console.log(err?.response);
         console.log(err?.response?.data);
+      } finally {
+        setLoading(false);
       }
     };
     handleReq();
   }, []);
   return (
-    <div className={`p-4 ${MontserratFont.className} tracking-wider`}>
-      {toggle && (
-        <UpdatePost
-          setPostDetails={setPostDetails}
-          setToggle={setToggle}
-          postDetails={postDetails}
-        />
-      )}
-      <button
-        onClick={() => router.back()}
-        className='flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full mb-2'
-      >
-        <FontAwesomeIcon icon={faArrowLeft} />
-      </button>
-      <Heading_1 label='Check Post' />
-      <p className='text-sm text-gray-600'>displaying post details</p>
-      {postDetails && (
-        <div
-          className='grid grid-cols-1 gap-4 mt-4
+    <div>
+      {loading && <LinearProgress />}
+      <div className={`p-4 ${MontserratFont.className} tracking-wider`}>
+        {toggle && (
+          <UpdatePost
+            loading={loading}
+            setLoading={setLoading}
+            setPostDetails={setPostDetails}
+            setToggle={setToggle}
+            postDetails={postDetails}
+          />
+        )}
+        <button
+          onClick={() => router.back()}
+          className='flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full mb-2'
+        >
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>
+        <Heading_1 label='Check Post' />
+        <p className='text-sm text-gray-600'>displaying post details</p>
+        {postDetails && (
+          <div
+            className='grid grid-cols-1 gap-4 mt-4
           
        '
-        >
-          <div className='bg-gray-100 p-4  shadow-lg  transition duration-300 ease-in-out cursor-pointer'>
-            <div className='flex items-center justify-between mb-4'>
-              <div className='text-lg font-medium text-purple-500'>{postDetails?.author}</div>
-              <button
-                onClick={() => setToggle(true)}
-                className='text-sm bg-green-500 text-white py-1 px-3 rounded-lg cursor-pointer'
-              >
-                update
-              </button>
-            </div>
-            <div className='grid grid-cols-2 gap-4 text-sm mb-4'>
-              <div>
-                <div className='text-gray-400'>title:</div>
-                <div className='font-medium'>{postDetails?.title}</div>
+          >
+            <div className='bg-gray-100 p-4  shadow-lg  transition duration-300 ease-in-out cursor-pointer'>
+              <div className='flex items-center justify-between mb-4'>
+                <div className='text-lg font-medium text-purple-500'>{postDetails?.author}</div>
+                <button
+                  onClick={() => setToggle(true)}
+                  className='text-sm bg-green-500 text-white py-1 px-3 rounded-lg cursor-pointer'
+                >
+                  update
+                </button>
               </div>
-              <div>
+              <div className='grid grid-cols-2 gap-4 text-sm mb-4'>
                 <div>
-                  <div className='text-gray-400'>description:</div>
-                  <div className='font-medium'>{postDetails?.text}</div>
-                </div>
-              </div>
-            </div>
-            <div className='grid grid-cols-2 gap-4 text-sm mb-4'>
-              <div>
-                <div className='text-gray-400'>created at:</div>
-                <div className='font-medium'>{postDetails?.createdAt}</div>
-              </div>
-              <div>
-                <div className='text-gray-400'>updated at:</div>
-                <div className='font-medium'>{postDetails?.updatedAt}</div>
-              </div>
-            </div>
-            {postDetails?.files?.map((file) => (
-              <div
-                key={file?.secure_url}
-                className='grid grid-cols-2 gap-4 text-sm mb-4'
-              >
-                <div>
-                  <div className='text-gray-400'>file name:</div>
-                  <div>{file?.original_filename}</div>
+                  <div className='text-gray-400'>title:</div>
+                  <div className='font-medium'>{postDetails?.title}</div>
                 </div>
                 <div>
-                  <div className='text-gray-400'>file url:</div>
-                  <Link href={file?.secure_url}>
-                    <Image
-                      src='/svgs/icons8-external-link.svg'
-                      width={30}
-                      height={20}
-                    />
-                  </Link>
+                  <div>
+                    <div className='text-gray-400'>description:</div>
+                    <div className='font-medium'>{postDetails?.text}</div>
+                  </div>
                 </div>
               </div>
-            ))}
+              <div className='grid grid-cols-2 gap-4 text-sm mb-4'>
+                <div>
+                  <div className='text-gray-400'>created at:</div>
+                  <div className='font-medium'>{postDetails?.createdAt}</div>
+                </div>
+                <div>
+                  <div className='text-gray-400'>updated at:</div>
+                  <div className='font-medium'>{postDetails?.updatedAt}</div>
+                </div>
+              </div>
+              {postDetails?.files?.map((file) => (
+                <div
+                  key={file?.secure_url}
+                  className='grid grid-cols-2 gap-4 text-sm mb-4'
+                >
+                  <div>
+                    <div className='text-gray-400'>file name:</div>
+                    <div>{file?.original_filename}</div>
+                  </div>
+                  <div>
+                    <div className='text-gray-400'>file url:</div>
+                    <Link href={file?.secure_url}>
+                      <Image
+                        src='/svgs/icons8-external-link.svg'
+                        width={30}
+                        height={20}
+                      />
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
 
-export default CheckPost;
+export default withAuth(CheckPost);
 //update post
 
-const UpdatePost = ({ setToggle, setPostDetails }) => {
+const UpdatePost = ({ setToggle, setPostDetails, loading, setLoading }) => {
   const { token } = useSelector(selectCurrentUser) || {
     token: null,
   };
@@ -164,6 +174,7 @@ const UpdatePost = ({ setToggle, setPostDetails }) => {
     if (files) {
     }
     try {
+      setLoading(true);
       const response = await axios.put(`https://vast-pink-moth-toga.cyclic.app/courses/${courseId}/posts/${postId}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -174,10 +185,15 @@ const UpdatePost = ({ setToggle, setPostDetails }) => {
       const { data } = response;
       console.log('data', data);
       setPostDetails(data);
+      if (data) {
+        setToggle(false);
+      }
     } catch (err) {
       console.log('err', err);
       console.log(err?.response);
       console.log(err?.response?.data);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -223,6 +239,7 @@ const UpdatePost = ({ setToggle, setPostDetails }) => {
             className='my-label flex items-center mb-2'
           >
             <Image
+              alt='add file'
               className='cursor-pointer'
               src='/svgs/icons8-add-file-48.png'
               width={20}
@@ -239,13 +256,16 @@ const UpdatePost = ({ setToggle, setPostDetails }) => {
             style={{ display: 'none' }}
             className='p-2 border border-gray-300 rounded-lg'
           />
-
-          <button
-            type='submit'
-            className='bg-green-500 text-white py-2 px-4 rounded-lg cursor-pointer'
-          >
-            update
-          </button>
+          {loading ? (
+            <h1>loading...</h1>
+          ) : (
+            <button
+              type='submit'
+              className='bg-green-500 text-white py-2 px-4 rounded-lg cursor-pointer'
+            >
+              update
+            </button>
+          )}
         </div>
       </form>
     </div>
