@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../src/store/user/user.selector';
 import { useRouter } from 'next/router';
-
+import Link from 'next/link';
 const tableHead = ['Course', 'Semester', 'Group', 'Teacher', 'Credits', 'Posts', 'Participants', 'Action'];
 
 const CoursesTable = ({ courses, deleteCourse, toggleUpdateCourse, loading, noAction }) => {
@@ -31,17 +31,52 @@ const CoursesTable = ({ courses, deleteCourse, toggleUpdateCourse, loading, noAc
         <tbody className='divide-y divide-gray-200 text-center'>
           {courses?.map((item) => (
             <tr
-              onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}
               key={item?._id}
-              className='hover:bg-gray-100'
+              className='hover:bg-gray-100 cursor-pointer'
             >
-              <td className='p-3 whitespace-nowrap cursor-pointer hover:underline'>{item?.name}</td>
-              <td className='table-row_style'>{item?.semester}</td>
-              <td className='table-row_style'>{item?.group}</td>
-              <td className='table-row_style'>{item?.teacher}</td>
-              <td className='table-row_style'>{item?.credit}</td>
-              <td className='table-row_style'>{item?.posts?.length || 0}</td>
-              <td className='table-row_style'>{item?.participants?.length || 0}</td>
+              <td
+                onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}
+                className='p-3 whitespace-nowrap cursor-pointer hover:underline'
+              >
+                {item?.name}
+              </td>
+              <td
+                onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}
+                className='table-row_style'
+              >
+                {item?.semester}
+              </td>
+              <td
+                onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}
+                className='table-row_style'
+              >
+                {item?.group}
+              </td>
+              <td
+                onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}
+                className='table-row_style'
+              >
+                {item?.teacher}
+              </td>
+              <td
+                onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}
+                className='table-row_style'
+              >
+                {item?.credit}
+              </td>
+              <td
+                onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}
+                className='table-row_style'
+              >
+                {item?.posts?.length || 0}
+              </td>
+              <td
+                onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}
+                className='table-row_style'
+              >
+                {item?.participants?.length || 0}
+              </td>
+
               {!noAction && user?.user.admin && (
                 <td className={`p-3 space-x-2 ${loading ? 'animate-pulse' : ''}`}>
                   <motion.button
@@ -80,37 +115,36 @@ const CoursesTable = ({ courses, deleteCourse, toggleUpdateCourse, loading, noAc
            
         '
         >
-          <div
-            onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}
-            className='bg-gray-100 p-4 border-b-2 border-purple-600  shadow-lg hover:bg-gray-200 transition duration-300 ease-in-out cursor-pointer'
-          >
-            <div className='flex items-center justify-between mb-4'>
-              <div className='text-lg font-medium'>{item?.name}</div>
-              <div
-                className='text-sm text-green-500 font-medium
+          <div className='bg-gray-100 p-4 border-b-2 border-purple-600  shadow-lg hover:bg-gray-200 transition duration-300 ease-in-out cursor-pointer'>
+            <div onClick={() => router.push(`/courses/${item?._id}?user=${user?.token}`)}>
+              <div className='flex items-center justify-between mb-4'>
+                <div className='text-lg font-medium'>{item?.name}</div>
+                <div
+                  className='text-sm text-green-500 font-medium
               '
-              >
-                S{item?.semester}
+                >
+                  S{item?.semester}
+                </div>
               </div>
-            </div>
-            <div className='grid grid-cols-2 gap-4 text-sm mb-4'>
-              <div>
-                <div className='text-gray-400'>Teacher:</div>
-                <div className='font-medium'>{item?.teacher}</div>
+              <div className='grid grid-cols-2 gap-4 text-sm mb-4'>
+                <div>
+                  <div className='text-gray-400'>Teacher:</div>
+                  <div className='font-medium'>{item?.teacher}</div>
+                </div>
+                <div>
+                  <div className='text-gray-400'>Credit:</div>
+                  <div className='font-medium'>{item?.credit}</div>
+                </div>
               </div>
-              <div>
-                <div className='text-gray-400'>Credit:</div>
-                <div className='font-medium'>{item?.credit}</div>
-              </div>
-            </div>
-            <div className='grid grid-cols-2 gap-4 text-sm mb-4'>
-              <div>
-                <div className='text-gray-400'>Posts:</div>
-                <div className='font-medium'>{item?.posts?.length || 0}</div>
-              </div>
-              <div>
-                <div className='text-gray-400'>Participants:</div>
-                <div className='font-medium'>{item?.participants?.length || 0}</div>
+              <div className='grid grid-cols-2 gap-4 text-sm mb-4'>
+                <div>
+                  <div className='text-gray-400'>Posts:</div>
+                  <div className='font-medium'>{item?.posts?.length || 0}</div>
+                </div>
+                <div>
+                  <div className='text-gray-400'>Participants:</div>
+                  <div className='font-medium'>{item?.participants?.length || 0}</div>
+                </div>
               </div>
             </div>
             {!noAction && user?.user.admin && (

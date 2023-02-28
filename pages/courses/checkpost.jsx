@@ -12,13 +12,14 @@ import Image from 'next/image';
 const CheckPost = () => {
   const [toggle, setToggle] = useState(false);
   const [postDetails, setPostDetails] = useState({});
+  const [startUpdate, setStartUpdate] = useState(false);
   const { token } = useSelector(selectCurrentUser) || {
     token: null,
   };
   console.log(token);
   const router = useRouter();
   const { courseId, postId } = router.query;
-  console.log(courseId, postId);
+
   useEffect(() => {
     const handleReq = async () => {
       try {
@@ -124,7 +125,13 @@ const CheckPost = () => {
 export default CheckPost;
 //update post
 
-const UpdatePost = ({ setToggle, postDetails }) => {
+const UpdatePost = ({ setToggle, setPostDetails }) => {
+  const { token } = useSelector(selectCurrentUser) || {
+    token: null,
+  };
+  const router = useRouter();
+  const { courseId, postId } = router.query;
+  console.log(courseId, postId);
   const [inputs, setInputs] = useState({
     title: '',
     text: '',
@@ -139,7 +146,7 @@ const UpdatePost = ({ setToggle, postDetails }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log('inputs', inputs, files);
     //this checks if any
     const checkInputs = Object.values(inputs).some((input) => input !== '');
     if (!checkInputs) {
@@ -147,25 +154,28 @@ const UpdatePost = ({ setToggle, postDetails }) => {
     }
 
     const formData = new FormData();
-    console.log(checkInputs);
-
-    formData.append('title', inputs.title);
-    formData.append('text', inputs.text);
     if (files) {
+      formData.append('title', inputs.title);
+      formData.append('text', inputs.text);
       for (let i = 0; i < files.length; i++) {
         formData.append('phile', files[i]);
       }
     }
+    if (files) {
+    }
     try {
-      const response = await axios.patch(`https://vast-pink-moth-toga.cyclic.app/courses/${courseId}/posts/${postId}`, formData, {
+      const response = await axios.put(`https://vast-pink-moth-toga.cyclic.app/courses/${courseId}/posts/${postId}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log('res', response);
       const { data } = response;
       console.log('data', data);
+      setPostDetails(data);
     } catch (err) {
+      console.log('err', err);
       console.log(err?.response);
       console.log(err?.response?.data);
     }
@@ -204,6 +214,7 @@ const UpdatePost = ({ setToggle, postDetails }) => {
           <label className='text-sm text-gray-400'>description</label>
           <input
             name='text'
+            onChange={handleChange}
             type='text'
             className='create-post__input'
           />
@@ -220,6 +231,7 @@ const UpdatePost = ({ setToggle, postDetails }) => {
             <span className='ml-2'>Add File</span>
           </label>
           <input
+            onChange={(e) => setFiles(e.target.files)}
             type='file'
             name='phile'
             id='file-input'
@@ -228,7 +240,12 @@ const UpdatePost = ({ setToggle, postDetails }) => {
             className='p-2 border border-gray-300 rounded-lg'
           />
 
-          <button className='bg-green-500 text-white py-2 px-4 rounded-lg cursor-pointer'>update</button>
+          <button
+            type='submit'
+            className='bg-green-500 text-white py-2 px-4 rounded-lg cursor-pointer'
+          >
+            update
+          </button>
         </div>
       </form>
     </div>
