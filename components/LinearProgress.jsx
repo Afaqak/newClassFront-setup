@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 
-const LinearProgress = ({ progress }) => {
+const LinearProgress = () => {
   return (
     <motion.div className='w-full h-1 flex rounded-full bg-white fixed'>
       <motion.div
@@ -20,6 +20,8 @@ const LinearProgress = ({ progress }) => {
           translateX: 1500,
         }}
         transition={{
+          delay: 0.2,
+          damping: 10,
           duration: 1,
           repeat: Infinity,
           ease: 'easeInOut',

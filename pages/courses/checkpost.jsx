@@ -8,6 +8,8 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
 import axios from 'axios';
 import Link from 'next/link';
+import { notify } from '../../utils/tools';
+import { Toaster } from 'react-hot-toast';
 import Image from 'next/image';
 import LinearProgress from '../../components/LinearProgress';
 import withAuth from '../../components/withAuth';
@@ -158,9 +160,9 @@ const UpdatePost = ({ setToggle, setPostDetails, loading, setLoading }) => {
     e.preventDefault();
     console.log('inputs', inputs, files);
     //this checks if any
-    const checkInputs = Object.values(inputs).some((input) => input !== '');
+    const checkInputs = Object.values(inputs).every((input) => input !== '');
     if (!checkInputs) {
-      return alert('please fill in the form');
+      return notify('please fill all inputs', 'error');
     }
 
     const formData = new FormData();
@@ -256,18 +258,17 @@ const UpdatePost = ({ setToggle, setPostDetails, loading, setLoading }) => {
             style={{ display: 'none' }}
             className='p-2 border border-gray-300 rounded-lg'
           />
-          {loading ? (
-            <h1>loading...</h1>
-          ) : (
-            <button
-              type='submit'
-              className='bg-green-500 text-white py-2 px-4 rounded-lg cursor-pointer'
-            >
-              update
-            </button>
-          )}
+
+          <button
+            disabled={loading}
+            type='submit'
+            className='bg-green-500 text-white py-2 px-4 rounded-lg cursor-pointer'
+          >
+            {loading ? 'updating...' : 'update'}
+          </button>
         </div>
       </form>
+      <Toaster />
     </div>
   );
 };
