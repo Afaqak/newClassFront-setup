@@ -9,7 +9,7 @@ const Header = () => {
         className='
       '
       >
-        <div className='lg:w-2/3 w-full'>
+        <div className='lg:w-2/3 w-full z-10'>
           <h1 className='md:text-6xl text-4xl font-bold text-[#0A2540] mb-4'>Let’s learn about new Knowledge and abilities</h1>
           <p
             className='text-md md:text-lg  font-medium text-gray-500 mb-4 tracking-wide leading-7
@@ -32,7 +32,7 @@ const Header = () => {
           </button>
         </div>
       </div>
-      <div className='absolute md:relative'>
+      <div className='absolute md:relative -z-1'>
         <Image
           src='/svgs/curvs.svg'
           color='red'
