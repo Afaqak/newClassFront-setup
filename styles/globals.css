@@ -87,12 +87,15 @@
         }
         .header__container{
             @apply flex justify-between 
-            px-4 py-2 bg-white
+             bg-white p-4
             border-b-2 border-green-500
-            rounded-sm text-white p-2 shadow-md items-center
+            rounded-sm text-white shadow-md items-center
             w-full
         }
         .create-post__input{
             @apply w-full px-4 py-2 focus:outline-none border-b-2 border-gray-300 focus:border-slate-500 dark:border-gray-700 dark:focus:border-slate-500 dark:bg-gray-800 dark:text-gray-300 bg-gray-100
+        }
+        .hero-section{
+            clip-path: polygon(4% 0%, 100% 0%, 96% 100%, 0% 100%);
         }
 }

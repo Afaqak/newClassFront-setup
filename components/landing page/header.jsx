@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 const Header = () => {
   return (
-    <div className=' h-[90vh] relative flex justify-center flex-col md:flex-row md:justify-between items-center font-sans'>
+    <div className='h-[90vh] relative flex justify-center flex-col md:flex-row md:justify-between items-center font-sans'>
       <div
         className='
       '

@@ -15,7 +15,7 @@ const Header = () => {
         variants={titleAnimation}
         initial='hidden'
         animate='show'
-        className={`text-3xl font-medium py-2
+        className={`text-3xl font-medium
              text-gray-900 ${Galindo_Font.className}
             tracking-wider `}
       >
