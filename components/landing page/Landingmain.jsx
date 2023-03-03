@@ -4,6 +4,7 @@ import HeroSections from './HeroSections';
 import Features from './features';
 import Services from './services';
 import SaaS from './SaaS';
+import Footer from './footer';
 const Landingmain = () => {
   return (
     <div className='p-4'>
@@ -12,6 +13,7 @@ const Landingmain = () => {
       <Features />
       <Services />
       <SaaS />
+      <Footer />
     </div>
   );
 };

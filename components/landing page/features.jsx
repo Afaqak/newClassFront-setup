@@ -1,11 +1,12 @@
 import React from 'react';
 import Card from './Card';
+import { Inter_Font } from '../../utils/fonts';
 
 const Features = () => {
   return (
-    <div className='h-[80vh] font-sans flex flex-col justify-center items-center px-4'>
+    <div className={`h-[80vh] flex flex-col justify-center items-center px-4 ${Inter_Font.className}`}>
       <div className='self-start'>
-        <h1 className='text-lg font-bold  mb-4 text-purple-500'>Features</h1>
+        <h1 className='text-lg font-bold  mb-4 text-purple-500  tracking-widest'>Features</h1>
         <p className='text-2xl md:text-4xl  font-bold text-[#0A2540] mb-4 tracking-wide leading-7'>Following are the features of our application</p>
       </div>
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-20'>

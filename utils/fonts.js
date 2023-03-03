@@ -12,5 +12,5 @@ export const Galindo_Font = Galindo({
 
 export const Inter_Font = Inter({
   subsets: ['latin'],
-  weight: ['400'],
+  weight: ['400', '700', '900'],
 });

@@ -1,9 +1,10 @@
 import React from 'react';
 import Image from 'next/image';
-
+import Link from 'next/link';
+import { Inter_Font } from '../../utils/fonts';
 const Header = () => {
   return (
-    <div className='h-[90vh] relative flex justify-center flex-col md:flex-row md:justify-between items-center font-sans px-4'>
+    <div className={`h-[90vh] relative flex justify-center flex-col md:flex-row md:justify-between items-center ${Inter_Font.className} px-4`}>
       <div
         className='
       '
@@ -18,16 +19,16 @@ const Header = () => {
             other.
           </p>
         </div>
-        <div>
+        <div className='font-sans'>
           <button
             className='bg-purple-500 hover:bg-purple-600 text-white py-1 px-5 rounded-lg shadow-md 
             focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50 transition-colors duration-300 mr-4
           '
           >
-            Sign In
+            <Link href='/signin'>Sign In</Link>
           </button>
           <button className='px-5 py-1 bg-gray-100 text-gray-800 rounded-lg shadow-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 transition-colors duration-300'>
-            Update
+            <Link href='/signup'>Sign Up</Link>
           </button>
         </div>
       </div>
@@ -37,6 +38,7 @@ const Header = () => {
           color='red'
           width={600}
           height={250}
+          className='z-50'
         />
       </div>
       {/*buttons*/}
