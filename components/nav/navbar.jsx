@@ -142,7 +142,7 @@ const NavPhone = ({ toggle }) => {
     <AnimatePresence initial={false}>
       <motion.nav
         animate={{
-          clipPath: toggle ? 'circle(100% at 100% 60%)' : 'circle(80% at 250% 50%)',
+          clipPath: toggle ? 'circle(100% at 100% 60%)' : 'circle(80% at 330% 50%)',
           scale: toggle ? 1 : 1.1,
           transition: {
             duration: 0.5,

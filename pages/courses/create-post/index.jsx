@@ -155,7 +155,7 @@ const Post = () => {
                 type='file'
                 id='file-input'
                 multiple
-                className='mb-2 dark:text-gray-400'
+                className='mb-2 '
                 name='phile'
                 style={{ display: 'none' }}
                 onChange={(e) => setFile(e.target.files)}
@@ -163,7 +163,7 @@ const Post = () => {
               {file &&
                 Array.from(file).map((f) => (
                   <div className='flex items-center justify-between'>
-                    <span className='text-gray-600 dark:text-gray-400'>{f.name}</span>
+                    <span className='text-gray-600 '>{f.name}</span>
                   </div>
                 ))}
               {file && <button className='bg-purple-500 hover:bg-purple-600 text-white py-1 px-5 rounded'>Upload</button>}
