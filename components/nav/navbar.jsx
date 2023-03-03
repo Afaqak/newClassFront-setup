@@ -158,65 +158,115 @@ const NavPhone = ({ toggle }) => {
             ease: 'easeInOut',
           },
         }}
-        className='sm:hidden clip_nav fixed right-0 z-[1000] top-0 font-serif bg-gradient-to-t from-black to-gray-900
-        '
+        className={`sm:hidden
+          ${!user && 'block'}
+        clip_nav fixed right-0 z-[1000] top-0 font-serif bg-gradient-to-t from-black to-gray-900
+        `}
       >
         <div className='text-gray-600 h-screen p-2 w-[18rem] rounded-md shadow-md mt-4  m-2 sm:m-0 transition-all duration-300 ease-in-out'>
           <div className='flex flex-col space-y-1 mt-5 px-4'>
             <p className='text-[#999D9E] font-bold font-sans text-sm tracking-widest border-b border-gray-800 pb-4'>Navigation</p>
           </div>
-          <motion.ul
-            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            className='flex flex-col space-y-4 mt-5 p-4'
-          >
-            <Link href='/'>
-              <motion.li
-                initial={{ y: -20, opacity: 0 }}
-                animate={{ x: toggle ? 0 : -20, opacity: toggle ? 1 : 0 }}
-                exit={{ x: -20, opacity: 0 }}
-                transition={{ delay: 0.2, duration: 0.5, ease: 'easeInOut' }}
-                className='text-[#FFFFFF] font-bold text-2xl tracking-wider'
-              >
-                Dashboard
-              </motion.li>
-            </Link>
-            <Link href='/courses'>
-              <motion.li
-                initial={{ y: -20, opacity: 0 }}
-                animate={{ y: toggle ? 0 : -20, opacity: toggle ? 1 : 0 }}
-                exit={{ y: -20, opacity: 0 }}
-                transition={{ delay: 0.4, duration: 0.5, ease: 'easeInOut' }}
-                className='text-[#FFFFFF] font-bold text-2xl tracking-wider'
-              >
-                Courses
-              </motion.li>
-            </Link>
-            <motion.li
-              onClick={() => {
-                dispatch(setToggleAnnouncement(!toggleAnnouncement));
-              }}
-              initial={{ y: -20, opacity: 0 }}
-              animate={{ y: toggle ? 0 : -20, opacity: toggle ? 1 : 0 }}
-              exit={{ y: -20, opacity: 0 }}
-              transition={{ delay: 0.6, duration: 0.5, ease: 'easeInOut' }}
-              className='text-[#FFFFFF] font-bold text-2xl tracking-wider'
+          {user ? (
+            <motion.ul
+              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+              className='flex flex-col space-y-4 mt-5 p-4'
             >
-              Announcements
-            </motion.li>
-            {user?.admin && (
-              <Link href='/accounts'>
+              <Link href='/'>
+                <motion.li
+                  initial={{ y: -20, opacity: 0 }}
+                  animate={{ x: toggle ? 0 : -20, opacity: toggle ? 1 : 0 }}
+                  exit={{ x: -20, opacity: 0 }}
+                  transition={{ delay: 0.2, duration: 0.5, ease: 'easeInOut' }}
+                  className='text-[#FFFFFF] font-bold text-2xl tracking-wider'
+                >
+                  Dashboard
+                </motion.li>
+              </Link>
+              <Link href='/courses'>
                 <motion.li
                   initial={{ y: -20, opacity: 0 }}
                   animate={{ y: toggle ? 0 : -20, opacity: toggle ? 1 : 0 }}
                   exit={{ y: -20, opacity: 0 }}
-                  transition={{ delay: 0.8, duration: 0.5, ease: 'easeInOut' }}
+                  transition={{ delay: 0.4, duration: 0.5, ease: 'easeInOut' }}
                   className='text-[#FFFFFF] font-bold text-2xl tracking-wider'
                 >
-                  Accounts
+                  Courses
                 </motion.li>
               </Link>
-            )}
-          </motion.ul>
+              <motion.li
+                onClick={() => {
+                  dispatch(setToggleAnnouncement(!toggleAnnouncement));
+                }}
+                initial={{ y: -20, opacity: 0 }}
+                animate={{ y: toggle ? 0 : -20, opacity: toggle ? 1 : 0 }}
+                exit={{ y: -20, opacity: 0 }}
+                transition={{ delay: 0.6, duration: 0.5, ease: 'easeInOut' }}
+                className='text-[#FFFFFF] font-bold text-2xl tracking-wider'
+              >
+                Announcements
+              </motion.li>
+              {user?.admin && (
+                <Link href='/accounts'>
+                  <motion.li
+                    initial={{ y: -20, opacity: 0 }}
+                    animate={{ y: toggle ? 0 : -20, opacity: toggle ? 1 : 0 }}
+                    exit={{ y: -20, opacity: 0 }}
+                    transition={{ delay: 0.8, duration: 0.5, ease: 'easeInOut' }}
+                    className='text-[#FFFFFF] font-bold text-2xl tracking-wider'
+                  >
+                    Accounts
+                  </motion.li>
+                </Link>
+              )}
+            </motion.ul>
+          ) : (
+            <Link href='/features'>
+              <motion.li
+                initial={{ y: -20, opacity: 0 }}
+                animate={{ y: toggle ? 0 : -20, opacity: toggle ? 1 : 0 }}
+                exit={{ y: -20, opacity: 0 }}
+                transition={{ delay: 0.2, duration: 0.5, ease: 'easeInOut' }}
+                className='text-[#FFFFFF] font-bold text-2xl tracking-wider mb-2'
+              >
+                Features
+              </motion.li>
+            </Link>
+          )}
+
+          <Link href='/services'>
+            <motion.li
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: toggle ? 0 : -20, opacity: toggle ? 1 : 0 }}
+              exit={{ y: -20, opacity: 0 }}
+              transition={{ delay: 0.4, duration: 0.5, ease: 'easeInOut' }}
+              className='text-[#FFFFFF] font-bold text-2xl tracking-wider mb-2'
+            >
+              Services
+            </motion.li>
+          </Link>
+          <Link href='/saas'>
+            <motion.li
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: toggle ? 0 : -20, opacity: toggle ? 1 : 0 }}
+              exit={{ y: -20, opacity: 0 }}
+              transition={{ delay: 0.6, duration: 0.5, ease: 'easeInOut' }}
+              className='text-[#FFFFFF] font-bold text-2xl tracking-wider mb-2'
+            >
+              SaaS
+            </motion.li>
+          </Link>
+          <Link href='/about'>
+            <motion.li
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: toggle ? 0 : -20, opacity: toggle ? 1 : 0 }}
+              exit={{ y: -20, opacity: 0 }}
+              transition={{ delay: 0.8, duration: 0.5, ease: 'easeInOut' }}
+              className='text-[#FFFFFF] font-bold text-2xl tracking-wider'
+            >
+              About
+            </motion.li>
+          </Link>
         </div>
       </motion.nav>
     </AnimatePresence>

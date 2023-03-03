@@ -15,9 +15,21 @@ const Layout = ({ children }) => {
   const dispatch = useDispatch();
   const [toggle, setToggle] = useState(false);
 
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) {
+        setToggle(false);
+      }
+    });
+  }, []);
+
   return (
     <div className='flex min-h-screen'>
-      <div className='sm:hidden fixed top-1 right-2 z-[2000]'>
+      <div
+        className={`sm:hidden fixed top-1 right-2 z-[2000] 
+\
+      `}
+      >
         <motion.div
           onClick={() => setToggle(!toggle)}
           className='flex flex-col space-y-1 justify-end items-end p-3'

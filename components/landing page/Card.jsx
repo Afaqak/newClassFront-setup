@@ -1,7 +1,7 @@
 const Card = ({ title, description, noBorderShadow }) => {
   return (
     <div
-      className={`card p-4 
+      className={`card p-4
     ${noBorderShadow ? 'border-none shadow-none' : 'rounded-lg shadow-md border '}
     `}
     >

@@ -3,12 +3,16 @@ import Card from './Card';
 import { Inter_Font } from '../../utils/fonts';
 const Services = () => {
   return (
-    <div className={`h-screen bg-[#F6F9FC] py-10 flex flex-col justify-center items-center ${Inter_Font.className}`}>
+    <div className={` bg-[#F6F9FC] flex flex-col justify-center items-center ${Inter_Font.className} py-16`}>
       <div className='p-4'>
         <h1 className='text-lg font-bold mb-4 text-purple-500 tracking-widest'>Structure</h1>
         <p className='text-2xl md:text-4xl  font-bold text-[#0A2540] mb-4 tracking-wide leading-7'>Our application was built using the following cutting-edge technologies</p>
       </div>
-      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-20 divide-x-4 divide-dashed'>
+      <div
+        className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 mt-20 md:divide-x-4 divide-dashed 
+        divide-y-4 divide-gray-300 sm:divide-y-0 divide-opacity-50
+      '
+      >
         <Card
           noBorderShadow={true}
           title={'Front-end'}

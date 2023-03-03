@@ -4,12 +4,12 @@ import Link from 'next/link';
 import { Inter_Font } from '../../utils/fonts';
 const Header = () => {
   return (
-    <div className={`h-[90vh] relative flex justify-center flex-col md:flex-row md:justify-between items-center ${Inter_Font.className} px-4`}>
+    <div className={`h-[90vh] relative flex justify-center flex-col md:flex-row md:justify-between items-center ${Inter_Font.className} px-4 `}>
       <div
         className='
       '
       >
-        <div className='md:w-2/3 w-[80%]'>
+        <div className='lg:w-2/3 w-full'>
           <h1 className='md:text-6xl text-4xl font-bold text-[#0A2540] mb-4'>Let’s learn about new Knowledge and abilities</h1>
           <p
             className='text-md md:text-lg  font-medium text-gray-500 mb-4 tracking-wide leading-7
