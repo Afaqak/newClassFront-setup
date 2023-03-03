@@ -9,7 +9,7 @@ const Header = () => {
         className='
       '
       >
-        <div className='lg:w-2/3 w-full z-10'>
+        <div className='lg:w-2/3 w-full z-10 relative'>
           <h1 className='md:text-6xl text-4xl font-bold text-[#0A2540] mb-4'>Let’s learn about new Knowledge and abilities</h1>
           <p
             className='text-md md:text-lg  font-medium text-gray-500 mb-4 tracking-wide leading-7
@@ -21,7 +21,7 @@ const Header = () => {
         </div>
         <div className='font-sans'>
           <button
-            className='bg-purple-500 hover:bg-purple-600 text-white py-1 px-5 rounded-lg shadow-md 
+            className='bg-purple-500 hover:bg-purple-600 text-white py-1 px-5 rounded-lg shadow-md cursor-pointer 
             focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50 transition-colors duration-300 mr-4
           '
           >
@@ -32,7 +32,7 @@ const Header = () => {
           </button>
         </div>
       </div>
-      <div className='absolute md:relative -z-1'>
+      <div className='absolute md:relative -z-10'>
         <Image
           src='/svgs/curvs.svg'
           color='red'
