@@ -21,8 +21,10 @@ const SignUp = () => {
   const [programId, setProgramId] = useState(null);
   const [batches, setBatches] = useState([]);
   const [groups, setGroups] = useState([]);
+  const [mounted, setMounted] = useState(false);
   const [selectedProgram, setSelectedProgram] = useState(null);
-  const router = useRouter();
+
+  useEffect(() => setMounted(true), []);
 
   const userValues = {
     firstName: '',
@@ -33,6 +35,8 @@ const SignUp = () => {
     program: '',
     group: '',
   };
+  const [userData, setUserData] = useState(userValues);
+  const router = useRouter();
 
   const inputFields = [
     { label: 'Firstname', name: 'firstName' },
@@ -40,8 +44,6 @@ const SignUp = () => {
     { label: 'Username', name: 'username' },
     { label: 'Password', name: 'password', type: 'password' },
   ];
-
-  const [userData, setUserData] = useState(userValues);
 
   const handlechange = (e) => {
     const { name, value } = e.target;
@@ -60,7 +62,6 @@ const SignUp = () => {
         setLoading(true);
         const response = await axios.post('https://vast-pink-moth-toga.cyclic.app/users/signup', userData);
         const { data } = response;
-
         if (data) {
           setLoading(false);
           router.push('/');
@@ -101,6 +102,10 @@ const SignUp = () => {
   }, []);
 
   const handleYearChange = async (e) => {
+    const selectedOption = e.target.selectedOptions[0];
+    const name = selectedOption.getAttribute('name');
+    console.log(name);
+    setUserData({ ...userData, batch: name });
     if (e.target.value === 'Select Batch') {
       setSelectedProgram(null);
       setGroups([]);
@@ -109,7 +114,6 @@ const SignUp = () => {
 
     setProgramId(e.target.value);
 
-    setUserData({ ...userData, batch: e.target.value });
     try {
       const response = await axios.get(`https://vast-pink-moth-toga.cyclic.app/batches/${e.target.value}/programs`);
       const { data } = response;
@@ -122,11 +126,14 @@ const SignUp = () => {
   };
 
   const handleProgramChange = async (e) => {
+    const selectedOption = e.target.selectedOptions[0];
+    const name = selectedOption.getAttribute('name');
+
     if (e.target.value === 'Select Program') {
       setGroups([]);
       return;
     }
-    setUserData({ ...userData, program: e.target.value });
+    setUserData({ ...userData, program: name });
     try {
       const response = await axios.get(`https://vast-pink-moth-toga.cyclic.app/batches/${programId}/programs/${e.target.value}/groups`);
       const { data } = response;
@@ -138,8 +145,12 @@ const SignUp = () => {
   };
 
   const handleGroupChange = (e) => {
-    setUserData({ ...userData, group: e.target.value });
+    const selectedOption = e.target.selectedOptions[0];
+    const name = selectedOption.getAttribute('name');
+    setUserData({ ...userData, group: name });
   };
+
+  if (!mounted) return null;
 
   return (
     <motion.div
@@ -201,8 +212,9 @@ const SignUp = () => {
                 <option value={null}>Select Batch</option>
                 {batches?.map((batch) => (
                   <option
-                    key={batch._id}
+                    key={batch.session}
                     value={batch._id}
+                    name={batch.session}
                   >
                     {batch.session}
                   </option>
@@ -226,6 +238,7 @@ const SignUp = () => {
                   <option value={null}>Select Program</option>
                   {selectedProgram?.map((program) => (
                     <option
+                      name={program.program}
                       key={program._id}
                       value={program._id}
                     >
@@ -252,6 +265,7 @@ const SignUp = () => {
                   <option value={null}>Select Group</option>
                   {groups?.map((group) => (
                     <option
+                      name={group.group}
                       key={group._id}
                       value={group._id}
                     >

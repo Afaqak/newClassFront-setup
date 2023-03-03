@@ -84,15 +84,15 @@ const UserInfo_card = ({ id, setToggle, mode }) => {
   };
 
   //if user is not valid
-  if (!user.valid) return;
+  // if (!user.valid) return;
 
   const userInfoData = [
-    { label: 'Firstname', value: userInfo?.firstname },
-    { label: 'Lastname', value: userInfo?.lastname },
-    { label: 'Username', value: userInfo?.username },
-    { label: 'Batch', value: userInfo?.batch },
-    { label: 'Program', value: userInfo?.program },
-    { label: 'Group', value: userInfo?.group },
+    { label: 'Firstname', value: user?.firstname },
+    { label: 'Lastname', value: user?.lastname },
+    { label: 'Username', value: user?.username },
+    { label: 'Batch', value: user?.batch },
+    { label: 'Program', value: user?.program },
+    { label: 'Group', value: user?.group },
     {
       label: 'Semesters',
       value: userInfo?.semesters?.map((s) => s.semester).join(', '),

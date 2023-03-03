@@ -167,14 +167,13 @@ const UpdatePost = ({ setToggle, setPostDetails, loading, setLoading }) => {
 
     const formData = new FormData();
     if (files) {
-      formData.append('title', inputs.title);
-      formData.append('text', inputs.text);
       for (let i = 0; i < files.length; i++) {
         formData.append('phile', files[i]);
       }
     }
-    if (files) {
-    }
+    formData.append('title', inputs.title);
+    formData.append('text', inputs.text);
+
     try {
       setLoading(true);
       const response = await axios.put(`https://vast-pink-moth-toga.cyclic.app/courses/${courseId}/posts/${postId}`, formData, {

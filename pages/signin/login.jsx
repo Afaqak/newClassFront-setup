@@ -2,18 +2,18 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
-import checkError from '../utils/errorChecker';
-import { setCurrentUser } from '../src/store/user/user.actions';
-import FormInput from './FormInput';
+import checkError from '../../utils/errorChecker';
+import { setCurrentUser } from '../../src/store/user/user.actions';
+import FormInput from '../../components/FormInput';
 import { Toaster } from 'react-hot-toast';
-import LinearProgress from './LinearProgress';
+import LinearProgress from '../../components/LinearProgress';
 import { motion } from 'framer-motion';
-import { pageAnimation } from '../utils/animations/animations';
+import { pageAnimation } from '../../utils/animations/animations';
 import axios from 'axios';
-import { notify } from '../utils/tools';
-import { checkUserData } from '../utils/tools';
+import { notify } from '../../utils/tools';
+import { checkUserData } from '../../utils/tools';
 
-import { MontserratFont } from '../utils/fonts';
+import { MontserratFont } from '../../utils/fonts';
 const loginStyles = {
   inputStyle: 'focus:outline-none bg-gray-100 border-2 border-gray-300 w-full shadow-md px-2 py-2 rounded-lg ',
 };

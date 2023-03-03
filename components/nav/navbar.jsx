@@ -17,7 +17,7 @@ import Link from 'next/link';
 const Navbar = () => {
   const router = useRouter();
   const toggleUserInfo = useSelector(selectToggleUserInfo);
-  console.log('toggleUserInfo', toggleUserInfo);
+
   const toggleAnnouncement = useSelector(selectToggleAnnouncement);
   const [activeLink, setActiveLink] = React.useState(router.pathname);
   const dispatch = useDispatch();

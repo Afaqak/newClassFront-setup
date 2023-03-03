@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 const Form = ({ handleSubmit, handleInputChange, loading, setToggleAnnouncement, type, input }) => {
@@ -23,14 +23,11 @@ const Form = ({ handleSubmit, handleInputChange, loading, setToggleAnnouncement,
           setToggleAnnouncement(false);
         }}
       >
-        {loading ? (
-          <h1>Loading...</h1>
-        ) : (
-          <FontAwesomeIcon
-            icon={faClose}
-            size='30px'
-          />
-        )}
+        <Image
+          src='/svgs/icons8-cancel.svg'
+          width={30}
+          height={20}
+        />
       </button>
 
       <div>

@@ -3,7 +3,9 @@ import Main from '../components/main/main';
 import { motion, AnimatePresence } from 'framer-motion';
 import { selectCurrentUser } from '../src/store/user/user.selector';
 import { useSelector } from 'react-redux';
-import SignIn from '../components/login';
+
+import Landingmain from '../components/landing page/Landingmain';
+
 export default function Home() {
   const user = useSelector(selectCurrentUser);
 
@@ -25,25 +27,7 @@ export default function Home() {
             href='/favicon.ico'
           />
         </Head>
-        <>
-          <main
-            className=' 
-          min-h-screen flex flex-col-reverse sm:flex-col lg:flex-row  overflow-x-hidden
-  '
-          >
-            {user ? (
-              <Main />
-            ) : (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                <SignIn />
-              </motion.div>
-            )}
-          </main>
-        </>
+        <main className='min-h-screen'>{user ? <Main /> : <Landingmain />}</main>
       </AnimatePresence>
     </>
   );

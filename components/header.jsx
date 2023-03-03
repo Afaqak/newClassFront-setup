@@ -1,6 +1,6 @@
 import React from 'react';
 // import { useTheme } from 'next-themes';
-import { useSelector } from 'react-redux';
+
 import { motion } from 'framer-motion';
 import { titleAnimation } from '../utils/animations/animations';
 import { Galindo_Font } from '../utils/fonts';
@@ -15,8 +15,8 @@ const Header = () => {
         variants={titleAnimation}
         initial='hidden'
         animate='show'
-        className={`text-3xl font-medium  first-letter:
-             text-gray-800 ${Galindo_Font.className}
+        className={`text-3xl font-medium py-2
+             text-gray-900 ${Galindo_Font.className}
             tracking-wider `}
       >
         Blink.

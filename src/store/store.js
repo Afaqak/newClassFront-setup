@@ -6,17 +6,17 @@ import { persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 const middlewares = [logger];
 
-const config = {
-  key: 'root',
-  storage,
-  whitelist: ['user', 'courses'],
-};
+// const config = {
+//   key: 'root',
+//   storage,
+//   whitelist: ['user', 'courses'],
+// };
 //root reducer
-const persistedReducer = persistReducer(config, rootReducer);
+// const persistedReducer = persistReducer(config, rootReducer);
 
 //store
 
-export const store = createStore(persistedReducer, compose(applyMiddleware(...middlewares)));
+export const store = createStore(rootReducer, compose(applyMiddleware(...middlewares)));
 
 //persistor
-export const persistor = persistStore(store);
+// export const persistor = persistStore(store);
