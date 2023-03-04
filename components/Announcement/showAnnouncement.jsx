@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import formatDate from '../../utils/tools';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { notify } from '../../utils/tools';
 import Image from 'next/image';
-import Form from './Form';
+import UpdateAnnouncement from './updateAnnouncement';
+import { setAnnouncementRedux } from '../../src/store/announcement/ancment.action';
+import { selectAnnouncement } from '../../src/store/announcement/ancment.reselect';
 import { Toaster } from 'react-hot-toast';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 const ShowAnnouncement = ({ announcements, handleDelete, admin, mode, courseId, setAnnouncement }) => {
+  const selectedAnnouncement = useSelector(selectAnnouncement);
+  const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
   const [toggleUpdate, setToggleUpdate] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -59,7 +61,39 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode, courseId, 
         return;
       }
       setAnnouncement(newAnn);
+      notify('Announcement updated successfully', 'success');
+      setToggleUpdate(false);
+    } catch (error) {
+      notify(error.message, 'error');
+      setToggleUpdate(false);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  const handleGroupUpdate = async (event) => {
+    event.preventDefault();
+    console.log(input._id, input.title, input.subject);
+    const check = Object.values(input).every((item) => item !== '');
+    if (!check) {
+      notify('Please fill all fields', 'error');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      let res = await fetch(`https://vast-pink-moth-toga.cyclic.app/groups/announcements/${input._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify({ title: input.title, subject: input.subject }),
+      });
+      const data = await res.json();
+      console.log(data);
+
+      dispatch(setAnnouncementRedux(selectedAnnouncement.map((ann) => (ann._id === input._id ? data : ann))));
       notify('Announcement updated successfully', 'success');
       setToggleUpdate(false);
     } catch (error) {
@@ -80,7 +114,7 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode, courseId, 
         <UpdateAnnouncement
           type={'update'}
           handleInputChange={handleInputChange}
-          handleSubmit={handleUpdateSubmit}
+          handleSubmit={mode === 'groupAnnouncement' ? handleGroupUpdate : handleUpdateSubmit}
           loading={loading}
           input={input}
           setToggleUpdate={setToggleUpdate}
@@ -126,18 +160,3 @@ const ShowAnnouncement = ({ announcements, handleDelete, admin, mode, courseId, 
 //todo changing
 
 export default ShowAnnouncement;
-
-const UpdateAnnouncement = ({ type, handleInputChange, handleSubmit, loading, input, setToggleUpdate }) => {
-  return (
-    <div className='fixed z-50 left-0 top-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center'>
-      <Form
-        handleInputChange={handleInputChange}
-        type={type}
-        handleSubmit={handleSubmit}
-        loading={loading}
-        setToggleAnnouncement={setToggleUpdate}
-        input={input}
-      />
-    </div>
-  );
-};

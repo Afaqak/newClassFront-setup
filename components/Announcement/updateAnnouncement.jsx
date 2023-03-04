@@ -1,18 +1,16 @@
-import React from 'react';
 import Form from './Form';
 
-const UpdateAnnouncement = ({ type, loading, handleBackdropClick, handleInputChange, handleSubmit, setToggleAnnouncement }) => {
+const UpdateAnnouncement = ({ type, handleInputChange, handleSubmit, loading, input, setToggleUpdate }) => {
   return (
-    <div className=' w-full h-full fixed top-0 left-0 flex justify-center items-center bg-black bg-opacity-50 z-[1000] '>
-      <div className='flex flex-col items-center justify-center w-full px-10 md:px-0'>
-        <Form
-          type={type}
-          loading={loading}
-          handleInputChange={handleInputChange}
-          handleSubmit={handleSubmit}
-          setToggleAnnouncement={setToggleAnnouncement}
-        />
-      </div>
+    <div className='fixed z-50 left-0 top-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center'>
+      <Form
+        handleInputChange={handleInputChange}
+        type={type}
+        handleSubmit={handleSubmit}
+        loading={loading}
+        setToggleAnnouncement={setToggleUpdate}
+        input={input}
+      />
     </div>
   );
 };

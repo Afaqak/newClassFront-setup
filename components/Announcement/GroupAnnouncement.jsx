@@ -3,6 +3,7 @@ import { selectCurrentUser } from '../../src/store/user/user.selector';
 import { useSelector, useDispatch } from 'react-redux';
 import { setAnnouncementRedux } from '../../src/store/announcement/ancment.action';
 import ShowAnnouncement from './showAnnouncement';
+import axios from 'axios';
 import { selectAnnouncement } from '../../src/store/announcement/ancment.reselect';
 const GroupAnnouncement = () => {
   const announcement = useSelector(selectAnnouncement);
@@ -43,15 +44,15 @@ const GroupAnnouncement = () => {
   const handleDeleteAnnouncement = async (idCourse) => {
     console.log(idCourse, token);
     try {
-      const res = await fetch(`https://vast-pink-moth-toga.cyclic.app/groups/announcements/${idCourse}`, {
-        method: 'DELETE',
+      const res = await axios.delete(`https://vast-pink-moth-toga.cyclic.app/groups/announcements/${idCourse}`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
       });
-      const data = await res.json();
-      console.log(res);
+      const { data } = res;
+
+      console.log(data, 'data');
       if (res.ok) {
         dispatch(setAnnouncementRedux(announcement.filter((item) => item._id !== idCourse)));
       }
