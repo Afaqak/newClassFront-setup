@@ -105,7 +105,9 @@ const SignUp = () => {
     const selectedOption = e.target.selectedOptions[0];
     const name = selectedOption.getAttribute('name');
     console.log(name);
+
     setUserData({ ...userData, batch: name });
+    console.log(userData);
     if (e.target.value === 'Select Batch') {
       setSelectedProgram(null);
       setGroups([]);
@@ -221,6 +223,7 @@ const SignUp = () => {
                 ))}
               </select>
             )}
+
             {teacher ? (
               <input
                 className={`${loginStyles.inputStyle}`}
@@ -242,7 +245,7 @@ const SignUp = () => {
                       key={program._id}
                       value={program._id}
                     >
-                      {program.program}
+                      {userData.batch === 'teacher' ? program.email : program.program}
                     </option>
                   ))}
                 </select>
