@@ -5,7 +5,7 @@ const SaaS = () => {
     <div className={`py-16 flex flex-col justify-center ${Inter_Font.className}`}>
       <div className='p-4 self-start'>
         <h1 className='text-lg font-bold  mb-4 text-purple-500  tracking-widest'>SAAS</h1>
-        <p className='text-2xl md:text-4xl  font-bold text-[#0A2540] mb-4 tracking-wide leading-7'>Following are the SaaS features of our application</p>
+        <p className='text-3xl md:text-4xl  font-bold text-[#0A2540] mb-4 tracking-wide leading-10'>Following are the SaaS features of our application</p>
       </div>
       <div className='flex p-4 flex-col gap-y-10  justify-center border-4 border-dashed rounded-md'>
         <SServe
