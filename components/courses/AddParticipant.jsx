@@ -186,7 +186,7 @@ const AddParticipant = ({ batch, setIsOpen, id, setData }) => {
           </div>
           <button
             type='submit'
-            className='px-10 py-1 md:w-1/2 w-full rounded-md bg-blue-500 text-white'
+            className='px-10 py-1 md:w-1/2 w-full rounded-md bg-purple-500 text-white'
           >
             Add
           </button>

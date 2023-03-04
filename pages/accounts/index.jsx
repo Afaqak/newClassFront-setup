@@ -11,8 +11,10 @@ import LinearProgress from '../../components/LinearProgress';
 
 const Accounts = () => {
   const user = useSelector(selectCurrentUser);
-  const { admin, teacher } = user.user || {};
   const [data, setData] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [filteredData, setFilteredData] = useState(data);
+  const { admin, teacher } = user.user || {};
   const [toggle, setToggle] = useState(false);
   const [id, setId] = useState('');
   const [loading, setLoading] = useState(false);
@@ -32,6 +34,18 @@ const Accounts = () => {
     };
     getAccounts();
   }, []);
+
+  useEffect(() => {
+    if (selectedCategory === 'all') {
+      setFilteredData(data);
+    } else if (selectedCategory === 'student') {
+      setFilteredData(data.filter((user) => !user.admin && !user.teacher));
+    } else if (selectedCategory === 'teacher') {
+      setFilteredData(data.filter((user) => user.teacher));
+    } else if (selectedCategory === 'admin') {
+      setFilteredData(data.filter((user) => user.admin));
+    }
+  }, [data, selectedCategory]);
 
   const setToggleAndId = (id) => {
     setToggle(!toggle);
@@ -72,12 +86,39 @@ const Accounts = () => {
         <div className='p-4'>
           <Heading_1 label='Accounts' />
           <p className='text-sm text-gray-500 mb-2'>List of all accounts</p>
+          <div className='flex justify-center'>
+            <button
+              className={`${selectedCategory === 'all' ? 'bg-gray-500 text-white' : 'text-gray-500'} font-medium mx-1 px-2 md:px-4 py-2 rounded`}
+              onClick={() => setSelectedCategory('all')}
+            >
+              All
+            </button>
+            <button
+              className={`${selectedCategory === 'student' ? 'bg-gray-500 text-white' : 'text-gray-500'} font-medium mx-1 px-2 md:px-4 py-2 rounded`}
+              onClick={() => setSelectedCategory('student')}
+            >
+              Students
+            </button>
+            <button
+              className={`${selectedCategory === 'teacher' ? 'bg-gray-500 text-white' : 'text-gray-500'} font-medium mx-1 px-2 md:px-4 py-2 rounded`}
+              onClick={() => setSelectedCategory('teacher')}
+            >
+              Teachers
+            </button>
+            <button
+              className={`${selectedCategory === 'admin' ? 'bg-gray-500 text-white' : 'text-gray-500'} font-medium mx-1 px-2 md:px-4 py-2 rounded`}
+              onClick={() => setSelectedCategory('admin')}
+            >
+              Admins
+            </button>
+          </div>
+
           <div
             className='
-          grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4
-        '
+            grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4
+          '
           >
-            {data.map((user) => (
+            {filteredData.map((user) => (
               <UserProfile
                 setToggleAndId={setToggleAndId}
                 key={user.id}
@@ -93,6 +134,24 @@ const Accounts = () => {
 
 export default withAuth(Accounts);
 
+function getRandomGradient() {
+  const colors = [
+    'from-purple-400 to-pink-500',
+    'from-green-400 to-blue-500',
+    'from-yellow-400 to-red-500',
+    'from-indigo-400 to-purple-500',
+    'from-pink-400 to-red-500',
+    'from-red-400 to-yellow-500',
+    'from-blue-400 to-green-500',
+    'from-gray-400 to-gray-500',
+    'from-purple-500 via-pink-500 to-red-500',
+    'from-blue-500 via-purple-500 to-pink-500',
+    'from-green-500 via-blue-500 to-purple-500',
+  ];
+
+  const randomIndex = Math.floor(Math.random() * colors.length);
+  return `bg-gradient-to-r ${colors[randomIndex]}`;
+}
 const UserProfile = ({ user, setToggleAndId }) => {
   return (
     <div
@@ -102,20 +161,12 @@ const UserProfile = ({ user, setToggleAndId }) => {
     '
     >
       <div
-        className=' bg-gray-50  border 
-
-      w-full  user__image--path'
-      >
-        <img
-          src={`https://robohash.org/${Math.random() * 100}?set=set5&size=100x100`}
-          alt='user'
-          className='rounded-full w-20 h-20 p-1'
-        />
-        <div></div>
-      </div>
+        className={` bg-gray-50  border  ${getRandomGradient()} h-20
+      w-full `}
+      ></div>
 
       <div
-        className='flex  font-sans border-b-2 border-blue-500
+        className='flex  font-sans border-b-2 border-[#0A2540] 
      shadow-lg p-2  flex-col bg-slate-100  
       '
       >
@@ -123,7 +174,7 @@ const UserProfile = ({ user, setToggleAndId }) => {
           <h2 className='text-lg font-semibold'>{user.username}</h2>
           <h2 className='text-sm text-gray-500'>{user.program}</h2>
           <h2 className='text-sm text-gray-500'>{user.batch}</h2>
-          <div className=''>{user.admin ? <p className='font-bold'>Admin</p> : <p className='font-bold'>User</p>}</div>
+          <div className='text-purple-500'>{user.admin ? <p className='font-bold'>Admin</p> : <p className='font-bold'>User</p>}</div>
         </div>
         <div className='w-full'>
           <button

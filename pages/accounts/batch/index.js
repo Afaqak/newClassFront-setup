@@ -65,6 +65,33 @@ const Batches = () => {
       setLoading(false);
     }
   };
+
+  const handleAdminChange = async (id) => {
+    try {
+      setLoading(true);
+      let res = await fetch(`https://vast-pink-moth-toga.cyclic.app/accounts/markAdmin/${id} `, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ admin: true }),
+      });
+
+      const data = await res.json();
+      console.log(data, 'data');
+      setUserInfo({ ...userInfo, admin: true });
+      // const newBatches = batches.map((batchInfo) => (batchInfo._id === data._id ? data : batchInfo));
+      // userInfo(newBatches);
+      notify('changed status');
+    } catch (err) {
+      notify(err.message, 'error');
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     const getBatches = async () => {
       try {
@@ -96,7 +123,7 @@ const Batches = () => {
           <Heading_1 label='students' />
           <p className='text-sm text-gray-600 mb-2 px-3 py-2'>List of all students</p>
           {batches.map((userinfo) => (
-            <div className='bg-gray-100 mb-3 border-l-4 border-r-4 border-blue-400 text-gray-800 p-2 rounded-lg'>
+            <div className='bg-gray-100 mb-3 border-l-4 border-r-4 border-purple-500 text-gray-800 p-2 rounded-lg'>
               <p className='text-xl font-bold'>{userinfo.email}</p>
               <div className='flex flex-row items-center'></div>
               <div className='flex flex-row items-center mt-2'>
@@ -120,6 +147,17 @@ const Batches = () => {
                   }}
                 />
                 <p className='text-sm ml-2'>Valid</p>
+              </div>
+              <div className='flex flex-row items-center'>
+                <input
+                  type='checkbox'
+                  checked={userinfo.admin}
+                  disabled={userinfo.admin || loading}
+                  onChange={(e) => {
+                    handleAdminChange(userinfo._id);
+                  }}
+                />
+                <p className='text-sm ml-2'>Admin</p>
               </div>
             </div>
           ))}

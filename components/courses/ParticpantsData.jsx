@@ -57,13 +57,14 @@ const ParticpantsData = ({ data, id, setData }) => {
           batch={batch}
         />
       )}
-
-      <button
-        onClick={toggleAddParticipant}
-        className='px-4 py-1 rounded-md bg-purple-500 text-white'
-      >
-        Add a user
-      </button>
+      {user?.user.teacher && (
+        <button
+          onClick={toggleAddParticipant}
+          className='px-4 py-1 rounded-md bg-purple-500 text-white'
+        >
+          Add a user
+        </button>
+      )}
       <div className='mt-4'>
         {!data.length ? (
           <p className='text-gray-500'>No participants yet</p>

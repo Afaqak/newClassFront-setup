@@ -8,6 +8,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { MontserratFont } from '../../../../../utils/fonts';
 import UserInfo_card from '../../../../../components/user accounts/UserInfo_card';
 import LinearProgress from '../../../../../components/LinearProgress';
+import withAuth from '../../../../../components/withAuth';
 const Participant = () => {
   const router = useRouter();
   const user = useSelector(selectCurrentUser);
@@ -84,4 +85,4 @@ const Participant = () => {
   );
 };
 
-export default Participant;
+export default withAuth(Participant);

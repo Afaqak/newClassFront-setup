@@ -1,8 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../src/store/user/user.selector';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { notify } from '../../utils/tools';
 import Image from 'next/image';
 const UserInfo_card = ({ id, setToggle, mode }) => {
@@ -48,6 +46,32 @@ const UserInfo_card = ({ id, setToggle, mode }) => {
       const data = await res.json();
       setUserInfo({ ...userInfo, valid: value });
       console.log(data, 'data');
+      // const newBatches = batches.map((batchInfo) => (batchInfo._id === data._id ? data : batchInfo));
+      // userInfo(newBatches);
+      notify('changed status');
+    } catch (err) {
+      notify(err.message, 'error');
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleAdminChange = async (id) => {
+    try {
+      setLoading(true);
+      let res = await fetch(`https://vast-pink-moth-toga.cyclic.app/accounts/markAdmin/${id} `, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ admin: true }),
+      });
+
+      const data = await res.json();
+      console.log(data, 'data');
+      setUserInfo({ ...userInfo, admin: true });
       // const newBatches = batches.map((batchInfo) => (batchInfo._id === data._id ? data : batchInfo));
       // userInfo(newBatches);
       notify('changed status');
@@ -149,34 +173,36 @@ const UserInfo_card = ({ id, setToggle, mode }) => {
                 ) : (
                   <>
                     <h2 className='text-lg font-bold text-slate-900'>validate student</h2>
-                    <div className='flex'>
-                      <div className='flex flex-row items-center '>
+                    <div className='flex space-x-4 items-center mt-4'>
+                      <div className='flex flex-row items-center space-x-2'>
                         <input
                           disabled={userInfo?.teacher || loading}
                           checked={userInfo?.teacher}
                           onChange={(e) => handleTeacherChange(userInfo?._id, e.target.checked)}
                           type='checkbox'
                         />
-                        {/* <Checkbox
-                          disabled={userInfo?.teacher || loading}
-                          checked={userInfo?.teacher}
-                          onChange={(e) => handleTeacherChange(userInfo?._id, e.target.checked)}
-                        /> */}
+
                         <p className='text-sm '>Teacher</p>
                       </div>
-                      <div className='flex flex-row items-center'>
+                      <div className='flex flex-row items-center space-x-2'>
                         <input
                           disabled={userInfo?.teacher || loading}
                           checked={userInfo?.valid}
                           onChange={(e) => handleValidChange(userInfo?._id, e.target.checked)}
                           type='checkbox'
                         />
-                        {/* <Checkbox
-                          disabled={loading}
-                          onChange={(e) => handleValidChange(userInfo?._id, e.target.checked)}
-                          checked={userInfo?.valid}
-                        /> */}
+
                         <p className='text-sm '>Valid</p>
+                      </div>
+                      <div className='flex flex-row items-center space-x-2'>
+                        <input
+                          disabled={userInfo?.admin || loading}
+                          checked={userInfo?.admin}
+                          onChange={(e) => handleAdminChange(userInfo?._id)}
+                          type='checkbox'
+                        />
+
+                        <p className='text-sm '>Admin</p>
                       </div>
                     </div>
                   </>

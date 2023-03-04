@@ -1,6 +1,6 @@
 import React from 'react';
 
-const FormInput = ({ label, type, name, value, onChange, className, labelClassName, error, onBlur, loading, placeholder }) => {
+const FormInput = ({ type, name, value, onChange, className, error, onBlur, loading, placeholder }) => {
   return (
     <div className='relative'>
       <input
