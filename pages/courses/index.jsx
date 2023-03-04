@@ -82,7 +82,7 @@ const Courses = () => {
 
   const updateCourse = async (e) => {
     e.preventDefault();
-    const check = Object.values(coursesD).every((item) => item !== '');
+    const check = Object.values(coursesD).some((item) => item !== '');
     console.log(coursesD);
 
     if (!check) {
@@ -173,6 +173,7 @@ const Courses = () => {
         {toggle && (
           <div className='  rounded-lg mb-4 w-1/2'>
             <Form
+              coursesD={coursesD}
               handleInputChange={handleInputChange}
               addCourse={addCourse}
               updateCourse={updateCourse}

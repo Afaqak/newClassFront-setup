@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 const Labels = ['name', 'teacher', 'credit', 'semester', 'group'];
 const types = ['text', 'text', 'number', 'text', 'text'];
 
-const Form = ({ handleInputChange, addCourse, updateCourse, formType }) => {
+const Form = ({ handleInputChange, addCourse, updateCourse, formType, courseD }) => {
   return (
     <form
       onSubmit={formType === 'add' ? addCourse : updateCourse}

@@ -16,7 +16,7 @@ const Header = () => {
         initial='hidden'
         animate='show'
         className={`text-3xl font-medium
-             text-gray-900 ${Galindo_Font.className}
+        text-[#0A2540] ${Galindo_Font.className}
             tracking-wider `}
       >
         Blink.
